@@ -374,12 +374,18 @@
     filename.textContent = d.filename;
 
     const btn = document.createElement('a');
-    // Only allow URLs from trusted origins: Azure blob storage (production)
-    // or localhost (local dev). Prevents a compromised API response from
-    // injecting javascript: or off-domain hrefs in production.
-    const safeUrl = /^https:\/\/[a-z0-9]+\.blob\.core\.windows\.net\//i.test(d.url) ||
-                    /^https?:\/\/localhost(:\d+)?\//i.test(d.url)
-      ? d.url : null;
+    let safeUrl = null;
+    try {
+      const parsed = new URL(d.url);
+      const isBlobUrl = /^https:\/\/[a-z0-9]+\.blob\.core\.windows\.net\//i.test(parsed.href);
+      const isLocalUrl = /^https?:\/\/localhost(:\d+)?\//i.test(parsed.href);
+      const isTrustedDownloadApp = parsed.origin === API_BASE_URL && parsed.pathname === '/DownloadApp';
+      if (isBlobUrl || isLocalUrl || isTrustedDownloadApp) {
+        safeUrl = parsed.href;
+      }
+    } catch {
+      safeUrl = null;
+    }
     if (safeUrl) {
       btn.href = safeUrl;
     } else {
