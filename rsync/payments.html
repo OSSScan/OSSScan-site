@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSScan: Purchase License</title>
+  <style>
+    /* ── Reset / base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Brand header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .site-header-wordmark .brand-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .site-header-wordmark .brand-tagline {
+      font-size: 11px;
+      color: #4ab3f4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      gap: 18px;
+    }
+    .header-nav a {
+      color: #a8c8ea;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+
+    /* ── Page body ── */
+    .page-body {
+      flex: 1;
+      padding: 32px 24px 40px;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+
+    /* ── Page title area ── */
+    .page-title { font-size: 22px; margin: 0 0 6px; color: #0b1a3d; }
+    p { margin: 0 0 12px; line-height: 1.45; }
+
+    /* ── Card ── */
+    .card {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(11,26,61,.07);
+    }
+
+    /* ── Form layout ── */
+    .row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+    @media (min-width: 600px) { .row.two { grid-template-columns: 1fr 1fr; } }
+    label { display: block; font-size: 13px; font-weight: 600; color: #0b1a3d; margin: 0 0 6px; }
+    input, select {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 8px;
+      border: 1px solid #c2cfe0;
+      background: #fff;
+      color: #111;
+      outline: none;
+      font-size: 14px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    input:focus, select:focus {
+      border-color: #1a6bbf;
+      box-shadow: 0 0 0 3px rgba(74,179,244,.18);
+    }
+    .help { font-size: 13px; color: #556; line-height: 1.45; margin-top: 6px; }
+
+    /* ── Actions ── */
+    .actions { display: flex; gap: 10px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
+    button {
+      appearance: none;
+      border: none;
+      background: linear-gradient(135deg, #1056b8 0%, #0d2460 100%);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 6px rgba(11,26,61,.25);
+      transition: opacity .15s, box-shadow .15s;
+    }
+    button:hover { opacity: .9; box-shadow: 0 4px 12px rgba(11,26,61,.3); }
+    button:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+    .secondary {
+      background: #fff;
+      border: 1px solid #c2cfe0;
+      color: #0b1a3d;
+      box-shadow: none;
+    }
+    .secondary:hover { background: #f0f4fa; opacity: 1; }
+
+    /* ── Status ── */
+    .status { font-size: 13px; color: #556; }
+    .status.ok { color: #0a7a3c; }
+    .status.err { color: #b00020; }
+
+    /* ── Misc ── */
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; }
+    .small { font-size: 12px; color: #667; margin-top: 14px; line-height: 1.5; }
+
+    /* ── Footer ── */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .site-footer p {
+      margin: 0;
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+    }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    /* ── Tier highlight accent ── */
+    select option[value="30day"] { font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Branded header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="downloads.html">Downloads</a>
+        <a href="mailto:jim@ossscan.com">Support</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <!-- ── Page content ── -->
+  <div class="page-body">
+    <div class="wrap">
+      <h1 class="page-title">Request Beta License</h1>
+      <p>Enter your machine fingerprint and email address below. Your 7-day beta license will be delivered to your inbox shortly after submitting.</p>
+
+      <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
+        <strong>Beta is currently at capacity.</strong> We have reached the maximum number of beta participants.
+        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> to join the waitlist for the next cohort.
+      </div>
+
+      <div id="alreadyLicensedNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
+        <strong>A license has already been issued for this machine.</strong>
+        <span id="alreadyLicensedDetail"></span>
+        <br/>Please check your inbox and junk mail folder for the license download link.
+        If you cannot find the email or believe the wrong address was used,
+        contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a>.
+        <div id="alreadyLicensedMismatch" hidden style="margin-top:8px;padding:8px 10px;background:#fce8e6;border:1px solid #d93025;border-radius:6px;color:#7a1a14;font-size:12px;line-height:1.55;"></div>
+      </div>
+
+      <div class="card">
+        <form id="purchaseForm">
+          <div class="row">
+            <div>
+              <label for="machineFingerprint">Machine fingerprint</label>
+              <input id="machineFingerprint" name="machineFingerprint" placeholder="ossscan-hwid-v1:..." autocomplete="off" spellcheck="false" />
+              <div class="help" id="fpHelp">
+                If you arrived here from the app, this is auto-filled. If you came from the website, open OSSScan on the machine you want to license and copy the <strong>Machine fingerprint</strong> from the startup license dialog (use <strong>Copy Fingerprint</strong>) or from <strong>Compatibility Check</strong> (use <strong>Copy fingerprint</strong>), then paste it here.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" />
+              <div class="help">Used for license delivery. Please double-check for typos. If your address is wrong we can still resend using your machine fingerprint, but it causes delays.</div>
+            </div>
+          </div>
+
+          <!-- Beta: tier is fixed at 7-day free. Restore the tier select for general availability. -->
+          <input id="tier" name="tier" type="hidden" value="7day" />
+          <div class="row">
+            <div>
+              <label>License</label>
+              <div style="padding:10px 12px;border-radius:8px;border:1px solid #d0d9e8;background:#f4f6f9;font-size:14px;color:#334;">
+                7-day Beta License &nbsp;&mdash;&nbsp; <strong>Free</strong>
+              </div>
+              <div class="help">Beta participants receive a complimentary 7-day license. Pricing will apply at general availability.</div>
+            </div>
+          </div>
+
+          <div class="row" id="betaCodeRow">
+            <div>
+              <label for="betaCode">Beta access code</label>
+              <input id="betaCode" name="betaCode" type="password" placeholder="Enter your beta access code" autocomplete="off" />
+              <div class="help">Required during the beta period. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> if you do not have a code.</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="submitBtn" type="submit">Request Beta License</button>
+            <button id="clearBtn" type="button" class="secondary">Clear</button>
+            <span id="status" class="status"></span>
+          </div>
+
+          <div class="small">
+            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. No payment information is collected during the beta.</div>
+            <div>For details, see the Privacy Policy shipped with OSSScan.</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Branded footer ── -->
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="refund.html">Refund Policy</a>
+    </p>
+  </footer>
+
+  <script>
+    const API_BASE_URL =
+      location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+        ? 'http://localhost:7072'
+        : 'https://ossscanfunctions.azurewebsites.net';
+
+    // Expected behavior: POST { email, machineFingerprint, tier }
+    // Response:
+    //   - live/test checkout: { url: "https://checkout.stripe.com/..." } JSON, OR a 303 redirect
+    //   - simulated mode: { simulated: true, message: "..." } JSON
+    const CREATE_CHECKOUT_URL  = `${API_BASE_URL}/CreateCheckout`;
+    const BETA_STATUS_URL      = `${API_BASE_URL}/GetBetaStatus`;
+    const CHECKOUT_SUCCESS_URL = "checkout-success.html";
+
+    const form = document.getElementById('purchaseForm');
+    const fpInput = document.getElementById('machineFingerprint');
+    const emailInput = document.getElementById('email');
+    const tierInput = document.getElementById('tier');
+    const betaCodeInput = document.getElementById('betaCode');
+    const submitBtn = document.getElementById('submitBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const statusEl = document.getElementById('status');
+
+    function setStatus(text, kind) {
+      statusEl.textContent = text || '';
+      statusEl.className = 'status' + (kind ? ' ' + kind : '');
+    }
+
+    function getParam(name) {
+      const params = new URLSearchParams(location.search);
+      const value = params.get(name);
+      return value && value.trim() ? value.trim() : null;
+    }
+
+    function validateEmail(email) {
+      if (!email) return false;
+      if (email.length > 254) return false;
+      return email.includes('@');
+    }
+
+    function validateFingerprint(fp) {
+      // Keep this intentionally loose; the server must validate strictly.
+      if (!fp) return false;
+      if (fp.length > 200) return false;
+      return fp.startsWith('ossscan-hwid-v');
+    }
+
+    async function createCheckoutSession(payload) {
+      // Some environments want CORS; set your Function to allow your domain.
+      const res = await fetch(CREATE_CHECKOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        redirect: 'manual'
+      });
+
+      // If the function responds with a redirect, use it.
+      if (res.status >= 300 && res.status < 400) {
+        const loc = res.headers.get('Location');
+        if (loc) return { url: loc };
+      }
+
+      if (res.status === 403) {
+        sessionStorage.removeItem('ossscan_beta_code');
+        throw new Error('Beta access code is incorrect.');
+      }
+      if (!res.ok) {
+        throw new Error(`Server error (${res.status}). Please try again.`);
+      }
+
+      // All success responses are JSON. Possible shapes:
+      //   { alreadyLicensed: true, email, tier, issuedAt } - duplicate fingerprint
+      //   { simulated: true, message }                      - STRIPE_SKIP mode
+      //   { url: "https://checkout.stripe.com/..." }        - live/test checkout
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error('Unexpected response from server.');
+      }
+      if (data && data.alreadyLicensed) {
+        return data;
+      }
+      if (data && data.simulated) {
+        return data;
+      }
+      if (!data || typeof data.url !== 'string') {
+        console.error('Unexpected server response:', text);
+        throw new Error('Server did not return a checkout URL.');
+      }
+      return data;
+    }
+
+    // Prefill fingerprint from ?fp=...
+    const fpFromQuery = getParam('fp');
+    if (fpFromQuery) {
+      fpInput.value = fpFromQuery;
+    }
+
+    // Check beta license capacity on load — disable the form if the limit has been reached.
+    (async () => {
+      try {
+        const resp = await fetch(BETA_STATUS_URL);
+        if (resp.ok) {
+          const status = await resp.json();
+          if (!status.available) {
+            document.getElementById('betaFullNotice').hidden = false;
+            submitBtn.disabled = true;
+            setStatus('Beta is currently at capacity. No further licenses are available at this time.', 'err');
+          }
+        }
+      } catch { /* network error — allow through, server enforces the limit */ }
+    })();
+
+    // Prefill beta code from sessionStorage so testers don't retype it.
+    const savedCode = sessionStorage.getItem('ossscan_beta_code');
+    if (savedCode) betaCodeInput.value = savedCode;
+
+    clearBtn.addEventListener('click', () => {
+      fpInput.value = '';
+      emailInput.value = '';
+      tierInput.value = '7day';
+      betaCodeInput.value = '';
+      sessionStorage.removeItem('ossscan_beta_code');
+      setStatus('');
+      fpInput.focus();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setStatus('');
+
+      const machineFingerprint = (fpInput.value || '').trim();
+      const email = (emailInput.value || '').trim();
+      const tier = (tierInput.value || '').trim();
+      const betaCode = (betaCodeInput.value || '').trim();
+
+      if (!validateFingerprint(machineFingerprint)) {
+        setStatus('Enter a valid machine fingerprint.', 'err');
+        fpInput.focus();
+        return;
+      }
+      if (!validateEmail(email)) {
+        setStatus('Enter a valid email address.', 'err');
+        emailInput.focus();
+        return;
+      }
+      if (!tier) {
+        setStatus('Select a tier.', 'err');
+        tierInput.focus();
+        return;
+      }
+      if (!betaCode) {
+        setStatus('Enter your beta access code.', 'err');
+        betaCodeInput.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      setStatus('Creating Stripe checkout…');
+
+      try {
+        const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode });
+        sessionStorage.setItem('ossscan_beta_code', betaCode);
+
+        if (result && result.alreadyLicensed) {
+          const parts = [];
+          if (result.tier && result.issuedAt)
+            parts.push(`A ${result.tier} license was issued on ${new Date(result.issuedAt).toLocaleDateString()}`);
+          if (result.email)
+            parts.push(`to ${result.email}`);
+          const detail = document.getElementById('alreadyLicensedDetail');
+          detail.textContent = parts.length ? ' ' + parts.join(' ') + '.' : '';
+
+          const mismatch = document.getElementById('alreadyLicensedMismatch');
+          if (result.email && result.email.toLowerCase() !== email.toLowerCase()) {
+            mismatch.textContent =
+              `Note: you entered ${email} but the license was sent to ${result.email}. ` +
+              `If you used a different email address when purchasing, please check that inbox instead.`;
+            mismatch.hidden = false;
+          } else {
+            mismatch.hidden = true;
+          }
+
+          document.getElementById('alreadyLicensedNotice').hidden = false;
+          submitBtn.disabled = false;
+          setStatus('');
+          return;
+        }
+        if (result && result.simulated === true) {
+          sessionStorage.setItem('ossscan_checkout_notice',
+            'Request received. Your beta license will be delivered to your email address shortly.');
+          location.assign(CHECKOUT_SUCCESS_URL);
+          return;
+        }
+
+        const { url } = result;
+        // Validate the redirect target before following it (open-redirect defence-in-depth).
+        let parsed;
+        try { parsed = new URL(url); } catch { throw new Error('Server returned an invalid URL.'); }
+        if (parsed.origin !== 'https://checkout.stripe.com') {
+          throw new Error('Unexpected redirect target from server.');
+        }
+        setStatus('Redirecting to Stripe…', 'ok');
+        location.assign(url);
+      } catch (err) {
+        setStatus(err && err.message ? err.message : 'Failed to start checkout.', 'err');
+        submitBtn.disabled = false;
+      }
+    });
+
+  </script>
+</body>
+</html>

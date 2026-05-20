@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSScan: Payment Complete</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .site-header-wordmark .brand-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .site-header-wordmark .brand-tagline {
+      font-size: 11px;
+      color: #4ab3f4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      gap: 18px;
+    }
+    .header-nav a {
+      color: #a8c8ea;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .page-body {
+      flex: 1;
+      padding: 40px 24px 56px;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    .card {
+      background: #fff;
+      border: 1px solid #d0d9e8;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(11,26,61,.08);
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e7f6ed;
+      color: #0a7a3c;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      line-height: 1.15;
+      color: #0b1a3d;
+    }
+    p {
+      margin: 0 0 14px;
+      line-height: 1.6;
+      color: #334;
+    }
+    .callout {
+      margin: 22px 0;
+      padding: 16px 18px;
+      border-radius: 10px;
+      border: 1px solid #cfe3f8;
+      background: #f5faff;
+      color: #123;
+    }
+    .callout.simulated {
+      border-color: #e6b800;
+      background: #fff8db;
+      color: #4a3800;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: opacity .15s, box-shadow .15s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #1056b8 0%, #0d2460 100%);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(11,26,61,.25);
+    }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #c2cfe0;
+    }
+    .btn:hover { opacity: .92; }
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .site-footer p {
+      margin: 0;
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+    }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="downloads.html">Downloads</a>
+        <a href="mailto:jim@ossscan.com">Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="secondary-nav">
+    <div class="secondary-nav-inner">
+      <a href="index.html">Home</a>
+      <a href="downloads.html" class="nav-action">Downloads</a>
+      <a href="payments.html" class="nav-action">Buy License</a>
+      <a href="help.html">Help</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+      <a href="about.html">About</a>
+      <a href="security.html">Security</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </nav>
+
+  <main class="page-body">
+    <div class="wrap">
+      <div class="card">
+        <div class="eyebrow">Payment complete</div>
+        <h1>Thank you. Your payment was received.</h1>
+        <p>Your license is delivered separately by email. Most purchases are fulfilled quickly, but the email can take a short time to arrive because delivery happens from the payment webhook, not this page.</p>
+        <div id="simulatedNotice" class="callout simulated" hidden></div>
+        <div class="callout">
+          Please check your inbox and junk mail folder for the license download link. If nothing arrives after a reasonable delay, contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> and include the email address you used at checkout.
+        </div>
+        <p>This page does not contain your license file or download link. That keeps fulfillment on the server side and avoids exposing license data in the browser redirect.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="downloads.html">Download OSSScan</a>
+          <a class="btn btn-secondary" href="payments.html">Back to payments</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 BigBrainCorp LLC. OSSScan is a BigBrainCorp product.</p>
+    <p style="margin-top:6px;">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="refund.html">Refund Policy</a>
+    </p>
+  </footer>
+
+  <script>
+    const simulatedNotice = sessionStorage.getItem('ossscan_checkout_notice');
+    if (simulatedNotice) {
+      const noticeEl = document.getElementById('simulatedNotice');
+      if (noticeEl) {
+        noticeEl.textContent = simulatedNotice;
+        noticeEl.hidden = false;
+      }
+      sessionStorage.removeItem('ossscan_checkout_notice');
+    }
+  </script>
+</body>
+</html>

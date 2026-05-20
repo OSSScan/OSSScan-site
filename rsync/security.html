@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSScan: Security Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    /* Header */
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    /* Page */
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:760px; margin:0 auto; }
+    .doc-header { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:28px; box-shadow:0 2px 8px rgba(11,26,61,.06); }
+    .doc-header h1 { font-size:24px; font-weight:800; color:#0b1a3d; margin:0 0 8px; }
+    .doc-meta { font-size:13px; color:#667; line-height:1.6; }
+    .doc-meta strong { color:#445; }
+    /* Content */
+    .doc-section { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.04); }
+    .doc-section h2 { font-size:16px; font-weight:700; color:#0b1a3d; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid #e8eef7; }
+    .doc-section h3 { font-size:14px; font-weight:700; color:#0b1a3d; margin:16px 0 8px; }
+    .doc-section p { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; }
+    .doc-section p:last-child { margin-bottom:0; }
+    .doc-section ul, .doc-section ol { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; padding-left:20px; }
+    .doc-section li { margin-bottom:4px; }
+    .doc-section strong { color:#0b1a3d; }
+    .doc-section a { color:#1056b8; }
+    .doc-section table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+    .doc-section th { background:#f0f4fa; color:#0b1a3d; font-weight:700; padding:8px 12px; text-align:left; border:1px solid #d0d9e8; }
+    .doc-section td { padding:8px 12px; border:1px solid #d0d9e8; color:#334; vertical-align:top; }
+    .doc-section code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:#f0f4fa; padding:1px 5px; border-radius:4px; }
+    /* Footer */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Buy License</a>
+    </nav>
+  </div>
+</header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+
+    <div class="doc-header">
+      <h1>Security Policy</h1>
+      <div class="doc-meta">
+        <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
+        <strong>Contact:</strong> <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>
+      </div>
+    </div>
+
+    <div class="doc-section">
+      <h2>What OSSScan Can Access</h2>
+      <p>OSSScan operates with a minimal and explicit footprint on your machine:</p>
+      <ul>
+        <li><strong>Reads</strong> the folder you select for scanning, limited to file paths, manifest files, and package metadata; it does not read arbitrary files outside that folder.</li>
+        <li><strong>Spawns</strong> third-party tool processes (Syft, Grype, ScanCode) that you have separately installed, passing them only the scan target path.</li>
+        <li><strong>Writes</strong> output reports to the destination you choose; it does not write files to arbitrary locations.</li>
+        <li><strong>Does not access</strong> your clipboard, keychain, credential stores, browser data, environment variables, or any files outside the scan folder.</li>
+        <li><strong>Does not require</strong> elevated privileges (root/Administrator) for normal operation.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>What Leaves Your Machine</h2>
+      <p>In normal (non-Light) mode, OSSScan makes a small number of outbound HTTPS requests. The table below documents every category of outbound call. <strong>Light mode makes zero outbound calls.</strong> All analysis is performed offline using locally cached data.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Purpose</th>
+            <th>Destination</th>
+            <th>Data sent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>License metadata lookup</td>
+            <td>deps.dev (Google)</td>
+            <td>Package name, version, ecosystem (e.g., <code>npm/lodash@4.17.21</code>)</td>
+          </tr>
+          <tr>
+            <td>License metadata lookup</td>
+            <td>Package registries (npmjs.org, pypi.org, etc.)</td>
+            <td>Package name and version only</td>
+          </tr>
+          <tr>
+            <td>Pre-computed license harvest</td>
+            <td>api.clearlydefined.io</td>
+            <td>Package coordinates (type/provider/namespace/name/revision)</td>
+          </tr>
+          <tr>
+            <td>Tool update checks</td>
+            <td>ossscan.com (BigBrainCorp)</td>
+            <td>Current app version and OS platform</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>No source code, file contents, directory listings, or personal information are included in any of these requests.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>How to Verify the App Is Genuine</h2>
+      <h3>macOS</h3>
+      <p>The OSSScan macOS application is <strong>code-signed with an Apple Developer ID</strong> and <strong>notarized by Apple</strong>. Gatekeeper verifies the app automatically on first launch. If macOS accepted it without a warning, the OS has already confirmed the binary came from BigBrainCorp LLC and has not been tampered with since it was signed. You can also verify manually in Terminal:</p>
+      <p><code>spctl --assess --type exec --verbose /Applications/OSSScan.app</code></p>
+      <p>A genuine build returns: <code>accepted source=Notarized Developer ID</code>. If you see a "developer cannot be verified" warning instead, do not open the app and contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.</p>
+      <h3>Windows</h3>
+      <p>Windows Authenticode signing is in progress. Until it is available, unsigned installers will trigger a SmartScreen warning. This is expected, and is itself a signal that something may be wrong if the warning does not appear for a build that claims to be signed. A <strong>SHA-256 checksum</strong> for each release is published on the <a href="downloads.html">Downloads</a> page. Verify using PowerShell before running the installer:</p>
+      <p><code>Get-FileHash OSSScan-Setup.exe -Algorithm SHA256</code></p>
+      <p>Compare the output against the published hash. As a secondary cross-check, the same hash is published on our GitHub Releases page, which is an independent channel an attacker would also need to compromise.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Third-Party Tools (Syft, Grype, ScanCode)</h2>
+      <p>OSSScan integrates with Syft (SBOM generation), Grype (vulnerability scanning), and ScanCode (deep license detection), but <strong>does not bundle these tools</strong>. They are installed separately by the user, typically via their own official installers or package managers, and OSSScan invokes them as child processes when a scan requires their capabilities. This design means you retain full control over which versions are installed, can audit them independently, and are not exposed to supply-chain risks from bundled binaries you did not explicitly choose. OSSScan passes only the scan target path to each tool and reads their output from stdout or a temporary file; no other data is exchanged.</p>
+      <h3>Why OSSScan does not bundle Syft and Grype</h3>
+      <p>This was not the original plan. During development, OSSScan bundled Syft and Grype directly. Before shipping, we ran a Deep scan of OSSScan itself using its own tooling.</p>
+      <p>The results were instructive. While Syft and Grype are themselves permissively licensed, a Deep scan revealed that their transitive dependency trees pull in packages carrying copyleft licenses. These obligations would not be visible from a top-level review of Syft or Grype's own declared licenses. They only surfaced when OSSScan scanned the full dependency graph, including indirect dependencies, and cross-referenced the actual source files.</p>
+      <p>This is precisely the scenario OSSScan is built to catch. Bundling those packages would have created unintended IP obligations for OSSScan's own distribution. So we removed them.</p>
+      <p>The practical outcome is that users install Syft and Grype themselves, using the instructions OSSScan provides, and retain full control over which versions they run. But the more important point is this: <strong>a surface-level license check of your direct dependencies is not sufficient.</strong> Copyleft obligations can hide several layers deep in a transitive dependency tree, in packages that carry permissive top-level licenses. OSSScan's Deep scan exists precisely to find them.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Network Isolation</h2>
+      <p>OSSScan includes a proxy-based network monitor that intercepts all outbound HTTP/HTTPS calls made by the application and its child tool processes. In <strong>Strict mode</strong>, any call to a destination not on the pre-approved allowlist is blocked and logged, giving you a complete record of every network attempt. In <strong>Balanced mode</strong>, calls to known-safe endpoints are allowed automatically while unexpected destinations are flagged. In both modes, a blocked-call log is written to the application data folder so you can audit any deviations. This mechanism is designed to give security-conscious teams confidence that OSSScan is behaving as documented, and to surface unexpected behavior from third-party tools.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Telemetry</h2>
+      <p>OSSScan collects <strong>no telemetry, analytics, or usage data</strong> of any kind. There are no analytics SDKs in the application and no data is ever sent to OSSScan or BigBrainCorp for the purpose of tracking usage.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Machine Fingerprinting</h2>
+      <p>When you purchase an OSSScan license, your machine fingerprint is collected as part of the checkout process. It is a one-way hash derived from stable hardware characteristics of your system (such as firmware UUIDs) and is used solely to bind the license file to your machine at the time it is generated.</p>
+      <p>There is no licensing server. Once the license file is delivered to you, all validation happens entirely on your device. On every launch, OSSScan verifies the cryptographic signature of the license file and confirms the fingerprint it contains matches the current machine. No network call is made. The license works fully offline.</p>
+      <p>The fingerprint is produced using SHA-256, a cryptographic hash function. SHA-256 is a one-way mathematical transformation: given only the hash output, it is computationally infeasible to reconstruct the original hardware identifiers that were used to produce it. This is a fundamental property of cryptographic hash functions and is why the fingerprint cannot be used to identify you personally, locate your machine on a network, or recover any hardware details. It is not shared with any third party.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Honest Limitations</h2>
+      <p>We believe in transparency about what our security controls do not cover:</p>
+      <ul>
+        <li><strong>Non-HTTP exfiltration is not monitored.</strong> The proxy-based network monitor intercepts HTTP/HTTPS traffic only. DNS-based exfiltration, raw TCP/UDP connections, or other non-HTTP channels made by third-party tools would not be detected.</li>
+        <li><strong>Disk staging is not monitored.</strong> OSSScan does not audit whether third-party tools write temporary files to unexpected locations on disk. Users with strict data-residency requirements should run scans in an isolated environment.</li>
+        <li><strong>The Windows installer is currently unsigned.</strong> Until Windows code signing is complete, the installer will trigger a SmartScreen warning. Verify the published SHA-256 checksum before running it. We consider this a known gap and are actively working to close it.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Official Domain &amp; Lookalike Risks</h2>
+      <p>OSSScan is distributed exclusively from <strong>ossscan.com</strong>. There are no other spellings, hyphens, or look-alike domains. Any site that resembles OSSScan but is not at that exact address should be treated as a spoofed site.</p>
+      <p>To confirm you are on the genuine site, check all three of the following:</p>
+      <ol>
+        <li>Your browser&rsquo;s address bar shows <code>https://ossscan.com</code> with a valid padlock.</li>
+        <li>The downloaded binary passes <strong>code-signature verification</strong> (see <em>How to Verify the App Is Genuine</em> above). A binary served from a spoofed site cannot carry our Apple Developer ID or Authenticode signature.</li>
+        <li>If in doubt, cross-check the SHA-256 checksum against the value published on our <a href="https://github.com/bigbraincorp/ossscan/releases" rel="noopener noreferrer">GitHub Releases page</a>, which is an independent channel an attacker would also need to compromise.</li>
+      </ol>
+      <p>To report a suspected spoofed site or phishing campaign impersonating OSSScan, contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Implementation Status</h2>
+      <p>The following table summarizes the current state of security features:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>macOS code signing + notarization</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>HTTPS-only outbound calls</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Proxy-based network monitor (Strict / Balanced modes)</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Blocked-call audit log</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Light mode (zero outbound calls)</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Machine fingerprint (license enforcement only)</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>SHA-256 checksum for Windows installer</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Downloads page: official domain banner (osscan.com warning)</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Downloads page: download URL origin validation</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
+            <td>Downloads page: Content Security Policy</td>
+            <td>Implemented</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="margin-top:16px;">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Windows code signing (Authenticode)</td>
+            <td>Planned</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+  <p style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+    <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+    <a href="refund.html">Refund Policy</a>
+  </p>
+</footer>
+
+</body>
+</html>

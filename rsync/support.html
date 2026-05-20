@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSScan: Support Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    /* Header */
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    /* Page */
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:760px; margin:0 auto; }
+    .doc-header { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:28px; box-shadow:0 2px 8px rgba(11,26,61,.06); }
+    .doc-header h1 { font-size:24px; font-weight:800; color:#0b1a3d; margin:0 0 8px; }
+    .doc-meta { font-size:13px; color:#667; line-height:1.6; }
+    .doc-meta strong { color:#445; }
+    /* Content */
+    .doc-section { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.04); }
+    .doc-section h2 { font-size:16px; font-weight:700; color:#0b1a3d; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid #e8eef7; }
+    .doc-section h3 { font-size:14px; font-weight:700; color:#0b1a3d; margin:16px 0 8px; }
+    .doc-section p { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; }
+    .doc-section p:last-child { margin-bottom:0; }
+    .doc-section ul, .doc-section ol { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; padding-left:20px; }
+    .doc-section li { margin-bottom:4px; }
+    .doc-section strong { color:#0b1a3d; }
+    .doc-section a { color:#1056b8; }
+    .doc-section table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+    .doc-section th { background:#f0f4fa; color:#0b1a3d; font-weight:700; padding:8px 12px; text-align:left; border:1px solid #d0d9e8; }
+    .doc-section td { padding:8px 12px; border:1px solid #d0d9e8; color:#334; vertical-align:top; }
+    .doc-section code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:#f0f4fa; padding:1px 5px; border-radius:4px; }
+    /* Footer */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Buy License</a>
+    </nav>
+  </div>
+</header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+
+    <div class="doc-header">
+      <h1>Support &amp; Maintenance Policy</h1>
+      <div class="doc-meta">
+        <strong>Effective date:</strong> May 6, 2026 &nbsp;&middot;&nbsp;
+        <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
+        <strong>Contact:</strong> <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>
+      </div>
+    </div>
+
+    <div class="doc-section">
+      <h2>Beta Status and Expectations</h2>
+      <ul>
+        <li><strong>OSSScan is currently in public beta.</strong> The software is functional and actively used in production environments, but it may contain bugs, incomplete features, or rough edges that are still being resolved.</li>
+        <li><strong>APIs, configuration formats, and report schemas may change</strong> between beta releases without advance notice as we refine the product based on user feedback.</li>
+        <li><strong>Support is provided on a best-effort basis</strong> by a small team. We are committed to being responsive and helpful, but we cannot guarantee formal SLAs during the beta period.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Support Eligibility and Channels</h2>
+      <p>Support is available to all customers with a valid OSSScan license.</p>
+      <p><strong>Support channel:</strong> Email only: <a href="mailto:jim@ossscan.com">jim@ossscan.com</a></p>
+      <p>To help us resolve your issue as quickly as possible, please include the following in your support email:</p>
+      <ul>
+        <li>OSSScan version number (shown in the application title bar or About screen)</li>
+        <li>Operating system and version (e.g., macOS 15.4, Windows 11 23H2)</li>
+        <li>A clear description of the problem and the steps to reproduce it</li>
+        <li>Any error messages displayed in the application or written to the log file</li>
+        <li>Whether the issue is reproducible and, if so, how consistently</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Response Times</h2>
+      <p>We aim to acknowledge all support emails within <strong>2 business days</strong> and to provide a substantive response or resolution within <strong>5 business days</strong> for common issues. Complex bugs or feature-related inquiries may take longer. No formal Service Level Agreement (SLA) is offered during the beta period. Support is provided Monday through Friday, excluding US public holidays.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>How support works</h2>
+      <p>OSSScan is designed to be simple to use. The application handles the scanning and generates the investigation prompts. Your AI coding agent handles the investigation. Most questions are answered by working through that flow.</p>
+      <p>We are a small team. We do our best to respond to every email, but we cannot provide hands-on investigation assistance, one-on-one guidance through scan results, or dedicated troubleshooting sessions. The product is built so that you should not need that kind of support.</p>
+      <p>If something is unclear, check the in-app help and FAQ first. If the application is broken or a license was not delivered, contact us and we will fix it.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>What we can help with</h2>
+      <ul>
+        <li>License delivery issues, including emails not received or fingerprint mismatches</li>
+        <li>Application errors, crashes, or behavior that appears to be a bug</li>
+        <li>Bug reports; confirmed bugs are prioritized for a future release</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>What is out of scope</h2>
+      <ul>
+        <li>Investigating specific scan findings on your behalf; that is the job of your AI agent working from the AgentPrompt.md OSSScan generates</li>
+        <li>Legal advice on open source license compliance obligations</li>
+        <li>Support for third-party tools (Syft, Grype, ScanCode); consult their own documentation and communities</li>
+        <li>Custom development, scripting, or integration work</li>
+        <li>Phone calls, screen-sharing sessions, or on-site support</li>
+        <li>Guaranteed fix timelines for specific bugs or feature requests</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Updates and Maintenance</h2>
+      <ul>
+        <li>New versions of OSSScan are published to the <a href="downloads.html">Downloads</a> page. There is no automatic update mechanism; users can download and install a newer version at any time and their existing license will continue to apply.</li>
+        <li>We recommend checking the Downloads page periodically for new releases.</li>
+        <li>Breaking changes to configuration files or output schemas will be documented in release notes on the Downloads page.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>End-of-Life and Compatibility</h2>
+      <p>Before purchasing a license, <a href="downloads.html">download OSSScan</a> and run the built-in <strong>Compatibility Check</strong>. This is the definitive way to confirm the application works correctly on your specific machine and operating system. No license is required to run the Compatibility Check.</p>
+      <p>We strongly recommend completing the Compatibility Check before every purchase. Incompatibility with your machine or OS is not grounds for a refund once a license has been issued.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Changes to This Policy</h2>
+      <p>This Support &amp; Maintenance Policy may be updated as OSSScan moves from beta to general availability; the current version will always be available at <a href="https://ossscan.com">ossscan.com</a>.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+</footer>
+
+</body>
+</html>

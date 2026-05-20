@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSScan: Open Source License &amp; Security Scanning</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .site-header-wordmark .brand-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .site-header-wordmark .brand-tagline {
+      font-size: 11px;
+      color: #4ab3f4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .header-nav a {
+      color: #a8c8ea;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav {
+      background: #4ab3f4;
+      color: #0b1a3d;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 72px 24px 80px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 46px);
+      font-weight: 800;
+      margin: 0 0 16px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 span { color: #4ab3f4; }
+    .hero p {
+      font-size: clamp(15px, 2vw, 18px);
+      color: #a8c8ea;
+      max-width: 660px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #4ab3f4;
+      color: #0b1a3d;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background .15s, transform .1s;
+    }
+    .btn-primary:hover { background: #6cc6f8; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.4);
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color .15s, transform .1s;
+    }
+    .btn-outline:hover { border-color: #4ab3f4; color: #4ab3f4; transform: translateY(-1px); }
+    .hero-agents {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #6e8db5;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hero-agents span {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .agent-chip {
+      background: rgba(74,179,244,.12);
+      border: 1px solid rgba(74,179,244,.25);
+      color: #4ab3f4;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    /* ── Section base ── */
+    section { padding: 64px 24px; }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1056b8;
+      margin: 0 0 10px;
+    }
+    h2 {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      margin: 0 0 12px;
+      color: #0b1a3d;
+      line-height: 1.2;
+    }
+    .section-intro {
+      font-size: 16px;
+      color: #445;
+      line-height: 1.65;
+      max-width: 680px;
+      margin: 0 0 40px;
+    }
+
+    /* ── How it works flow ── */
+    .flow-section { background: #f4f6f9; }
+    .flow-steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      position: relative;
+    }
+    @media (min-width: 700px) {
+      .flow-steps {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 0;
+      }
+    }
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 28px 24px;
+      position: relative;
+    }
+    @media (min-width: 700px) {
+      .flow-step:not(:last-child)::after {
+        content: '→';
+        position: absolute;
+        right: -10px;
+        top: 36px;
+        font-size: 20px;
+        color: #4ab3f4;
+        font-weight: 700;
+        z-index: 1;
+      }
+    }
+    .flow-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0d2460;
+      color: #4ab3f4;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+    .flow-step h3 { font-size: 15px; font-weight: 700; color: #0b1a3d; margin: 0 0 8px; }
+    .flow-step p  { font-size: 13px; color: #556; line-height: 1.55; margin: 0; }
+
+    /* ── What OSSScan generates ── */
+    .generates-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 640px) { .generates-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .generates-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .gen-card {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(11,26,61,.05);
+    }
+    .gen-card .icon { font-size: 26px; margin-bottom: 12px; display: block; }
+    .gen-card h3 { font-size: 15px; font-weight: 700; color: #0b1a3d; margin: 0 0 8px; }
+    .gen-card p  { font-size: 13px; color: #556; line-height: 1.55; margin: 0; }
+
+    /* ── Agent prompt example ── */
+    .prompt-section { background: #0b1a3d; }
+    .prompt-section .section-label { color: #4ab3f4; }
+    .prompt-section h2 { color: #fff; }
+    .prompt-section .section-intro { color: #a8c8ea; }
+    .prompt-box {
+      background: #060e22;
+      border: 1px solid #1e3a6e;
+      border-radius: 12px;
+      padding: 28px 28px 22px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .prompt-box-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 14px;
+    }
+    .prompt-text {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      color: #c8dff7;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
+    .prompt-text .hl { color: #4ab3f4; }
+    .prompt-caption {
+      font-size: 12px;
+      color: #6e8db5;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* ── Scan Modes ── */
+    .modes-section { background: #f4f6f9; }
+    .modes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 700px) { .modes-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .mode-card {
+      background: #fff;
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 24px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .mode-card.light::before { background: #22c55e; }
+    .mode-card.deep::before  { background: #4ab3f4; }
+    .mode-card.audit::before { background: #f07c20; }
+    .mode-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .mode-card.light .mode-badge { background: #dcfce7; color: #166534; }
+    .mode-card.deep  .mode-badge { background: #dbeafe; color: #1e40af; }
+    .mode-card.audit .mode-badge { background: #ffedd5; color: #9a3412; }
+    .mode-card h3 { font-size: 17px; font-weight: 700; color: #0b1a3d; margin: 0 0 10px; }
+    .mode-card p  { font-size: 13px; color: #556; line-height: 1.6; margin: 0 0 14px; }
+    .mode-meta { font-size: 12px; color: #889; }
+    .mode-meta strong { color: #445; }
+
+    /* ── Security section ── */
+    .security-section { background: #fff; }
+    .security-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 640px) { .security-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .security-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .security-item {
+      border: 1px solid #d0d9e8;
+      border-radius: 10px;
+      padding: 20px;
+      background: #f4f6f9;
+    }
+    .security-item h3 { font-size: 14px; font-weight: 700; color: #0b1a3d; margin: 0 0 8px; }
+    .security-item p  { font-size: 13px; color: #556; line-height: 1.55; margin: 0; }
+
+    /* ── CTA / Pricing ── */
+    .cta-section {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 24px;
+    }
+    .cta-section h2 { color: #fff; margin-bottom: 12px; }
+    .cta-section p  { color: #a8c8ea; font-size: 16px; max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .pricing-cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .pricing-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(74,179,244,.3);
+      border-radius: 14px;
+      padding: 28px 32px;
+      min-width: 200px;
+      text-align: center;
+    }
+    .pricing-card .tier-name  { font-size: 13px; font-weight: 700; color: #4ab3f4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .pricing-card .tier-price { font-size: 36px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 6px; }
+    .pricing-card .tier-duration { font-size: 13px; color: #a8c8ea; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer {
+      background: #060e22;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="downloads.html">Downloads</a>
+        <a href="payments.html" class="btn-nav">Buy License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <h1>Let your AI agent tell you<br><span>what to worry about.</span></h1>
+    <p>Open source scanning shouldn't mean reading reports about hundreds of CVEs and license findings. OSSScan creates the investigation facts that let Claude Code, GitHub Copilot, and other AI coding agents do the analysis for you, delivering a concise briefing on which vulnerabilities are actually exploitable in your application, and what actions to take. You review conclusions, not noise.</p>
+    <div class="hero-actions">
+      <a href="downloads.html" class="btn-primary">Download OSSScan</a>
+      <a href="payments.html" class="btn-outline">Buy a License</a>
+    </div>
+    <div class="hero-agents">
+      Works with your AI coding agent
+      <div style="font-size:11px; color:#4e6a8a; margin:4px 0 6px;">✓ verified by us</div>
+      <span>
+        <span class="agent-chip">Claude Code ✓</span>
+        <span class="agent-chip">GitHub Copilot ✓</span>
+        <span class="agent-chip">Cursor</span>
+        <span class="agent-chip">Windsurf</span>
+        <span class="agent-chip">Any file-capable agent</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ── Origin / Why ── -->
+  <section style="padding:64px 24px; background:#fff;">
+    <div class="wrap" style="max-width:1000px; margin:0 auto;">
+      <div class="section-label">Why OSSScan exists</div>
+      <h2>We needed this tool ourselves.<br>So we built it.</h2>
+      <div style="display:grid; grid-template-columns:1fr; gap:20px; margin-top:8px;">
+        <div style="display:grid; grid-template-columns:1fr; gap:20px;">
+          <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">BigBrainCorp builds software products. Like any development team, we needed to understand our open source exposure: which licenses imposed obligations on our distributions, and which dependency versions carried known vulnerabilities. Existing tools were expensive and produced long lists of potential issues that translated into weeks of developer time just to investigate; most of which turned out to be noise.</p>
+          <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">Our first instinct was to simply ask our AI coding agent to analyze the project and report any risk. What we found is that a bridge application was needed first. Before an AI agent can investigate intelligently, it needs structured facts: the full SBOM, licenses in use, and CVEs matched to the specific package versions in the project. Without that grounding, the agent is guessing. With it, the agent can reason about whether each reported issue is actually exploitable or obligating given how the code uses the package.</p>
+          <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">OSSScan is that bridge. It creates the structured facts, builds the investigation prompts, and enables a single sentence to your AI agent to turn a list of possibilities into a focused set of findings. Work that previously took weeks now takes minutes to hours. <a href="about.html" style="color:#1056b8; font-weight:600;">Read the full story.</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ── -->
+  <section class="flow-section">
+    <div class="wrap">
+      <div class="section-label">How it works</div>
+      <h2>OSSScan is the bridge between your codebase<br>and an AI agent that advises you</h2>
+      <p class="section-intro">The problem with open source compliance isn't a lack of data; it's too much of it, unstructured, with no clear signal on what matters. OSSScan closes that gap.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <h3>OSSScan scans</h3>
+          <p>Points at your source folder and runs a full SBOM analysis, detecting every dependency, its license, CVE exposure, and risk classification across all ecosystems.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <h3>OSSScan writes the prompt</h3>
+          <p>OSSScan bundles all the investigation facts (findings, risk rankings, source-file references, CVE context) into a ready-to-use <strong>AgentPrompt.md</strong> file. No prompt engineering required.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <h3>One sentence to your agent</h3>
+          <p>Tell Claude Code: <em>"Open AgentPrompt.md and follow it exactly."</em> Or in Copilot Chat (Agent mode): <em>"Read the AgentPrompt.md file and follow it exactly."</em> Both have been tested. The same instruction works in Cursor, Windsurf, and any other AI coding agent that can read files and take actions.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <h3>You review the briefing</h3>
+          <p>Your agent delivers a focused investigation report: exploitable CVEs, license obligations, files to change, actions to take. You decide, not triage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What OSSScan generates ── -->
+  <section>
+    <div class="wrap">
+      <div class="section-label">The investigation facts</div>
+      <h2>Structured output your AI agent<br>can actually reason about</h2>
+      <p class="section-intro">Raw scan output is a list. OSSScan builds a structured picture, the kind of grounded, specific context that lets an AI agent give you actionable guidance instead of generic advice.</p>
+      <div class="generates-grid">
+        <div class="gen-card">
+          <span class="icon">🛡️</span>
+          <h3>CVE findings with context</h3>
+          <p>Known vulnerabilities are matched to your actual dependencies. Instead of a wall of CVEs, your AI agent gets the facts it needs to reason about which ones are exploitable given how your application uses the affected package.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">🚨</span>
+          <h3>Copyleft risk findings</h3>
+          <p>Strong copyleft (GPL, AGPL) and weak copyleft (LGPL, MPL) dependencies called out with risk level, direct vs. transitive classification, and the source files that import them.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">🔎</span>
+          <h3>License disagreements</h3>
+          <p>In Audit mode, OSSScan compares what a package declares against what its actual source files contain. Discrepancies, especially undeclared copyleft, are flagged explicitly.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">🗺️</span>
+          <h3>Source-file references</h3>
+          <p>For every copyleft dependency, OSSScan traces which files in your codebase import it, with line numbers, so an AI agent can give you precise remediation targets.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">📊</span>
+          <h3>Enriched license data</h3>
+          <p>Unknown licenses are resolved via deps.dev, ClearlyDefined, and ScanCode before the output is generated. Your AI agent works from complete facts, not gaps.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">📝</span>
+          <h3>Provenance audit trail</h3>
+          <p>Every license determination is annotated with how it was reached: Syft, registry lookup, or ScanCode scan. Your agent can cite sources, not just conclusions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Prompt example ── -->
+  <section class="prompt-section">
+    <div class="wrap">
+      <div class="section-label">AI agent workflow</div>
+      <h2 style="color:#fff;">OSSScan builds every prompt.<br>Investigate one finding or all of them.</h2>
+      <p class="section-intro">Every investigation, license or CVE, comes with a ready-to-use prompt. Copy it for a single deep-dive, or use <strong style="color:#fff;">Bulk export</strong> to bundle all your filtered investigations into one <strong style="color:#fff;">AgentPrompt.md</strong> and let your AI agent work through them all with a single command.</p>
+
+      <div class="prompt-box">
+        <div class="prompt-box-label">Single investigation: copy and paste</div>
+        <pre class="prompt-text">Each license or CVE finding in OSSScan has a <span class="hl">Copy Prompt</span> action.
+
+Paste it directly into Claude Code, Copilot Chat (Agent mode), or any other AI coding agent. The prompt includes the finding context, the relevant
+source-file references, and specific instructions for the agent.
+<span class="hl">No prompt engineering on your part.</span></pre>
+        <div class="prompt-caption">Use this when you want to investigate one specific dependency or CVE in depth.</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-box-label">Bulk: all filtered investigations, one command</div>
+        <pre class="prompt-text">Use <span class="hl">Bulk → License investigation requests</span> or
+    <span class="hl">Bulk → CVE investigation requests</span>
+
+OSSScan builds a single <span class="hl">AgentPrompt.md</span> containing every
+filtered investigation, structured, prioritized, and ready
+for your AI agent to work through end to end.</pre>
+        <div class="prompt-caption">Filter to the findings that matter, bulk export, then hand the whole investigation to your agent in one go.</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-box-label">Claude Code</div>
+        <pre class="prompt-text"><span class="hl">Open AgentPrompt.md and follow it exactly.</span></pre>
+        <div class="prompt-caption">Claude reads the full investigation context OSSScan built, works through every finding, and delivers a briefing. Approve the file-read permission when prompted.</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-box-label">GitHub Copilot: Agent mode</div>
+        <pre class="prompt-text"><span class="hl">Read the AgentPrompt.md file in the active VS Code editor (this tab), and follow it exactly.</span></pre>
+        <div class="prompt-caption">Open AgentPrompt.md in a VS Code tab, switch Copilot Chat to Agent mode, then send this. Copilot investigates the full set of findings OSSScan prepared.</div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="prompt-box-label" style="color:#22c55e;">Sample agent output: license investigation</div>
+        <div class="prompt-box" style="border-color:#1a4a2a; background:#040d04;">
+          <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+            <span style="background:#14532d; color:#86efac; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">No concern</span>
+            <span style="background:#713f12; color:#fde68a; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">Review required</span>
+            <span style="background:#7f1d1d; color:#fca5a5; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">Likely issue</span>
+          </div>
+          <pre class="prompt-text" style="font-size:12px; line-height:1.65;">{
+  <span class="hl">"no_material_copyleft_concern"</span>: [
+    {
+      "package": "jszip@3.10.1",
+      "licenses": ["MIT OR GPL-3.0-or-later"],
+      "reason": <span style="color:#86efac;">"OR expression; MIT (most permissive option) applies. No evidence
+        of GPL election. Package is a runtime dependency shipped in the
+        production bundle, but MIT is permissive with no copyleft obligations.
+        Only obligation is to include MIT copyright notice in distribution."</span>
+    },
+    {
+      "package": "node-forge@1.3.2",
+      "licenses": ["BSD-3-Clause OR GPL-2.0"],
+      "reason": <span style="color:#86efac;">"OR expression; BSD-3-Clause applies. No evidence of GPL election.
+        Package is a transitive dependency with no direct imports in the
+        workspace. Obligations limited to copyright notice retention and
+        non-endorsement clause."</span>
+    }
+  ],
+  <span class="hl">"review_required"</span>: [],
+  <span class="hl">"likely_compliance_issue"</span>: []
+}</pre>
+          <div class="prompt-caption" style="margin-top:14px;">This is the actual output of an AI agent investigation driven by an OSSScan AgentPrompt.md. Every finding is explained in plain English with a clear verdict, so you know exactly what to act on and what to ignore.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="prompt-box-label" style="color:#4ab3f4;">Sample agent output: CVE investigation</div>
+        <div class="prompt-box" style="border-color:#1e3a6e; background:#040810;">
+          <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+            <span style="background:#14532d; color:#86efac; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">Not exploitable: 10</span>
+            <span style="background:#713f12; color:#fde68a; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">Needs investigation: 4</span>
+            <span style="background:#7f1d1d; color:#fca5a5; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;">Exploitable: 0</span>
+          </div>
+          <pre class="prompt-text" style="font-size:12px; line-height:1.65;">{
+  <span class="hl">"Not exploitable"</span>: [
+    {
+      "cve": "GHSA-2xpw-w6gg-jr37",  "confidence": "high",
+      "reason": <span style="color:#86efac;">"urllib3 2.5.0 exists only in the Python .venv development
+        tooling. The project is a .NET 8 Azure Functions app with no Python
+        runtime code. The streaming decompression API is never called
+        at runtime."</span>
+    },
+    {
+      "cve": "GHSA-x674-v45j-fwxw",  "confidence": "high",
+      "reason": <span style="color:#86efac;">"CVE-2024-27086 explicitly affects only Xamarin Android and
+        .NET Android (MAUI) targets. This project targets net8.0 as an Azure
+        Functions application — the vulnerable Android-specific code paths
+        are never executed."</span>
+    }
+    <span style="color:#6e8db5;">// ... 8 more, all high confidence, all not exploitable</span>
+  ],
+
+  <span class="hl">"Needs further investigation"</span>: [
+    {
+      "cve": "GHSA-98g6-xh36-x2p7",  "confidence": "medium",
+      "reason": <span style="color:#fde68a;">"Microsoft.Data.SqlClient 5.1.1 is an indirect dependency via
+        EF Core SqlServer, and the application actively uses SQL Server
+        connections (AppDbContextFactory.cs, UseSqlServer). CVE-2024-0056
+        is a TLS bypass requiring network MitM (AC:H). TLS connection string
+        settings and network topology need verification."</span>
+    },
+    {
+      "cve": "GHSA-m5vv-6r4h-3vj9",  "confidence": "medium",
+      "reason": <span style="color:#fde68a;">"Azure.Identity 1.10.2 is a direct dependency in DAL.csproj.
+        CVE-2024-35255 EoP via MSAL token caching requires local access.
+        Confirm whether managed identity is enabled. Upgrading to
+        Azure.Identity 1.11.4 resolves this and the related MSAL finding."</span>
+    }
+    <span style="color:#6e8db5;">// ... 2 more requiring verification</span>
+  ],
+
+  <span class="hl">"Exploitable"</span>: []
+}</pre>
+          <div class="prompt-caption" style="margin-top:14px;">10 CVEs dismissed with high confidence. 4 flagged for targeted follow-up with specific files, upgrade paths, and conditions to verify. Zero noise to sift through.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Scan Modes ── -->
+  <section class="modes-section">
+    <div class="wrap">
+      <div class="section-label">Scan depth</div>
+      <h2>More depth means more facts<br>for your agent to work with</h2>
+      <p class="section-intro">Choose the scan mode that matches what you need to know. A daily Light scan keeps your agent informed of drift. An Audit scan gives it the full picture for a release or acquisition review.</p>
+      <div class="modes-grid">
+        <div class="mode-card light">
+          <div class="mode-badge">Light</div>
+          <h3>Daily drift detection</h3>
+          <p>Fully offline. Runs Syft locally and produces a clean SBOM your agent can diff against yesterday's. Ideal for catching new dependencies before they accumulate.</p>
+          <div class="mode-meta"><strong>Network:</strong> None &nbsp;·&nbsp; <strong>Speed:</strong> Seconds</div>
+        </div>
+        <div class="mode-card deep">
+          <div class="mode-badge">Deep</div>
+          <h3>Periodic compliance check</h3>
+          <p>Enriches unknown licenses via deps.dev, ClearlyDefined, and ScanCode so your agent isn't reasoning about gaps. Only package names and versions leave your machine.</p>
+          <div class="mode-meta"><strong>Network:</strong> Package coords only &nbsp;·&nbsp; <strong>Speed:</strong> Minutes</div>
+        </div>
+        <div class="mode-card audit">
+          <div class="mode-badge">Audit</div>
+          <h3>Release sign-off &amp; M&amp;A review</h3>
+          <p>Scans every package's actual source files and surfaces disagreements between declared and detected licenses. Gives your agent the strongest possible factual foundation for a full compliance briefing.</p>
+          <div class="mode-meta"><strong>Network:</strong> Package coords only &nbsp;·&nbsp; <strong>Speed:</strong> Tens of minutes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Proof section ── -->
+  <section style="background:#f4f6f9; padding:64px 24px;">
+    <div class="wrap" style="max-width:1000px; margin:0 auto;">
+      <div class="section-label">Built from experience</div>
+      <h2>We ran OSSScan on OSSScan.<br>It changed how we ship.</h2>
+      <p class="section-intro">The clearest proof that a top-level license review is not enough came from our own development process.</p>
+      <div style="display:grid; grid-template-columns:1fr; gap:20px;">
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:28px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#1056b8; margin-bottom:12px;">The finding</div>
+          <p style="font-size:15px; color:#0b1a3d; font-weight:600; margin:0 0 12px; line-height:1.5;">Syft and Grype are permissively licensed. But their transitive dependencies are not.</p>
+          <p style="font-size:14px; color:#445; line-height:1.7; margin:0;">Early in development, OSSScan bundled Syft and Grype directly. Before shipping, we ran a Deep scan of OSSScan itself. While both tools carry permissive top-level licenses, the Deep scan found copyleft-licensed packages several layers into their transitive dependency trees, obligations that would never appear in a surface-level review of their declared licenses.</p>
+        </div>
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:28px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#f07c20; margin-bottom:12px;">The decision</div>
+          <p style="font-size:15px; color:#0b1a3d; font-weight:600; margin:0 0 12px; line-height:1.5;">We removed the bundled tools. OSSScan now provides installation instructions and users install them independently.</p>
+          <p style="font-size:14px; color:#445; line-height:1.7; margin:0;">Bundling those packages would have created unintended IP obligations in OSSScan's own distribution. Removing them eliminated the risk entirely. Users retain full control over which versions they install, and OSSScan's own distribution stays clean.</p>
+        </div>
+        <div style="background:#0b1a3d; border:1px solid #1e3a6e; border-radius:12px; padding:28px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#4ab3f4; margin-bottom:12px;">The lesson</div>
+          <p style="font-size:15px; color:#fff; font-weight:600; margin:0 0 12px; line-height:1.5;">A code review of your direct dependencies' licenses is not sufficient due diligence.</p>
+          <p style="font-size:14px; color:#a8c8ea; line-height:1.7; margin:0;">Copyleft obligations can hide several layers deep in a transitive dependency tree, inside packages that look permissive at the surface. This is exactly why OSSScan's Deep scan enriches every dependency, resolves every unknown license, and traces obligations all the way down the graph. It is the only way to know what you are actually distributing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Security ── -->
+  <section class="security-section">
+    <div class="wrap">
+      <div class="section-label">Security &amp; privacy</div>
+      <h2>Your source code stays on your machine.<br>Always.</h2>
+      <p class="section-intro">OSSScan is built for teams scanning unreleased, sensitive code. The investigation facts it generates are grounded in local analysis; your source never travels.</p>
+      <div class="security-grid">
+        <div class="security-item">
+          <h3>No source code transmitted</h3>
+          <p>Enrichment calls send only package name, ecosystem, and version. No file contents, no directory structure, no SBOM payload.</p>
+        </div>
+        <div class="security-item">
+          <h3>Zero telemetry</h3>
+          <p>No analytics, no crash reporting, no background services. OSSScan does not phone home. Ever.</p>
+        </div>
+        <div class="security-item">
+          <h3>Network isolation for tools</h3>
+          <p>Syft, Grype, and ScanCode run through a local monitoring proxy. Every outbound call is logged. Unexpected destinations are blocked by default.</p>
+        </div>
+        <div class="security-item">
+          <h3>Light mode is fully offline</h3>
+          <p>Zero outbound calls in Light mode, suitable for air-gapped environments and the most sensitive codebases.</p>
+        </div>
+        <div class="security-item">
+          <h3>macOS signed &amp; notarized</h3>
+          <p>Code-signed with an Apple Developer ID and notarized by Apple. Gatekeeper verifies the binary is genuine before it runs.</p>
+        </div>
+        <div class="security-item">
+          <h3>Local license verification</h3>
+          <p>License files are verified on-device using Ed25519 cryptography. No network call is needed on launch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA / Pricing ── -->
+  <section class="cta-section">
+    <div class="wrap">
+      <h2>Give your AI agent something to work with.</h2>
+      <p>Download OSSScan, run a scan, and let your AI coding agent turn the findings into a focused briefing, so you make decisions instead of sifting data.</p>
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="tier-name">7-Day License</div>
+          <div class="tier-price">$100</div>
+          <div class="tier-duration">One-time purchase</div>
+        </div>
+        <div class="pricing-card">
+          <div class="tier-name">30-Day License</div>
+          <div class="tier-price">$200</div>
+          <div class="tier-duration">One-time purchase</div>
+        </div>
+      </div>
+      <div class="cta-actions">
+        <a href="downloads.html" class="btn-primary">Download OSSScan</a>
+        <a href="payments.html" class="btn-outline">Buy a License</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── */
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="refund.html">Refund Policy</a>
+    </p>
+  </footer>
+
+</body>
+</html>

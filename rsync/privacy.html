@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSScan: Privacy Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    /* Header */
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    /* Page */
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:760px; margin:0 auto; }
+    .doc-header { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:28px; box-shadow:0 2px 8px rgba(11,26,61,.06); }
+    .doc-header h1 { font-size:24px; font-weight:800; color:#0b1a3d; margin:0 0 8px; }
+    .doc-meta { font-size:13px; color:#667; line-height:1.6; }
+    .doc-meta strong { color:#445; }
+    /* Content */
+    .doc-section { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.04); }
+    .doc-section h2 { font-size:16px; font-weight:700; color:#0b1a3d; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid #e8eef7; }
+    .doc-section h3 { font-size:14px; font-weight:700; color:#0b1a3d; margin:16px 0 8px; }
+    .doc-section p { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; }
+    .doc-section p:last-child { margin-bottom:0; }
+    .doc-section ul, .doc-section ol { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; padding-left:20px; }
+    .doc-section li { margin-bottom:4px; }
+    .doc-section strong { color:#0b1a3d; }
+    .doc-section a { color:#1056b8; }
+    .doc-section table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+    .doc-section th { background:#f0f4fa; color:#0b1a3d; font-weight:700; padding:8px 12px; text-align:left; border:1px solid #d0d9e8; }
+    .doc-section td { padding:8px 12px; border:1px solid #d0d9e8; color:#334; vertical-align:top; }
+    .doc-section code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:#f0f4fa; padding:1px 5px; border-radius:4px; }
+    /* Footer */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Buy License</a>
+    </nav>
+  </div>
+</header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+
+    <div class="doc-header">
+      <h1>Privacy Policy</h1>
+      <div class="doc-meta">
+        <strong>Effective date:</strong> May 10, 2026 &nbsp;&middot;&nbsp;
+        <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
+        <strong>Contact:</strong> <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>
+      </div>
+    </div>
+
+    <div class="doc-section">
+      <h2>Summary</h2>
+      <ul>
+        <li><strong>No telemetry.</strong> OSSScan collects zero usage analytics, crash reports, or behavioral telemetry.</li>
+        <li><strong>Your source code never leaves your machine.</strong> OSSScan reads files locally; it does not upload source code, scan results, SBOM data, company information, or product details to any server.</li>
+        <li><strong>No licensing server.</strong> License validation happens entirely on your device using a signed license file tied to your hardware. There is no backend licensing server and no call home on launch.</li>
+        <li><strong>Designed for anonymous use.</strong> You can purchase and use OSSScan without associating it with your company or product. Any email address works for license delivery; it does not have to be a corporate address or linked to the codebase you are scanning.</li>
+        <li><strong>Outbound network requests are minimal and purposeful.</strong> In normal operation, requests go only to well-known package registries and metadata services (deps.dev, ClearlyDefined, npm, PyPI, etc.) to look up license and vulnerability data for the packages you scan.</li>
+        <li><strong>Light mode makes zero outbound calls.</strong> When you use OSSScan in Light mode, all analysis is performed offline.</li>
+        <li><strong>Payment data is handled by Stripe.</strong> OSSScan never stores your credit card number; payment processing is handled entirely by Stripe.</li>
+        <li><strong>GDPR-friendly by design.</strong> Because personal data processed is limited and purposeful, the compliance surface is small. You retain rights of access, correction, and deletion for any personal data we hold.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Information Processed Locally</h2>
+      <p>The following information is processed entirely on your machine and is never transmitted to OSSScan or any third party:</p>
+      <ul>
+        <li>File system paths and directory structures of the folder you choose to scan</li>
+        <li>Source code file contents read during scanning</li>
+        <li>Package manifest files (e.g., <code>package.json</code>, <code>requirements.txt</code>, <code>pom.xml</code>)</li>
+        <li>Output reports written to your chosen destination</li>
+        <li>Application preferences and configuration stored in your local application data folder</li>
+        <li>Results from third-party tools (Syft, Grype, ScanCode) when invoked</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Outbound Network Requests</h2>
+      <h3>What is sent</h3>
+      <p>When OSSScan makes outbound requests, only the minimum data necessary is transmitted, typically package names, versions, and ecosystems (e.g., <code>npm/lodash@4.17.21</code>). No file contents, source code, or personal information are included in these requests.</p>
+      <h3>Which third parties receive requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Destination</th>
+            <th>Purpose</th>
+            <th>Data sent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>deps.dev (Google)</td>
+            <td>License metadata and dependency graph lookups</td>
+            <td>Package name, version, ecosystem</td>
+          </tr>
+          <tr>
+            <td>registry.npmjs.org</td>
+            <td>npm package license metadata</td>
+            <td>Package name, version</td>
+          </tr>
+          <tr>
+            <td>pypi.org</td>
+            <td>Python package license metadata</td>
+            <td>Package name, version</td>
+          </tr>
+          <tr>
+            <td>api.clearlydefined.io</td>
+            <td>Pre-computed license harvest data</td>
+            <td>Package coordinates (type/provider/name/version)</td>
+          </tr>
+          <tr>
+            <td>licensing.ossscan.com (BigBrainCorp)</td>
+            <td>License key validation</td>
+            <td>License key, machine fingerprint (non-reversible)</td>
+          </tr>
+          <tr>
+            <td>Update check endpoint (BigBrainCorp)</td>
+            <td>Checking for application updates</td>
+            <td>Current app version, OS platform</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>All requests use HTTPS. No request includes personal identifiers beyond the machine fingerprint used for licensing.</p>
+    </div>
+
+    <div class="doc-section" style="border-color:#1056b8; background:#f0f4fa;">
+      <h2 style="color:#1056b8;">Designed for Anonymous Use</h2>
+      <p>OSSScan is built to protect your privacy at every level. There is no backend server that knows what you are scanning, no licensing server that tracks your activity, and no telemetry of any kind. The following design choices are intentional:</p>
+      <ul>
+        <li><strong>No scan data ever leaves your machine.</strong> Your SBOM, license findings, CVE results, source-file references, and the names of the codebases you scan are never transmitted to the Vendor or any third party controlled by the Vendor.</li>
+        <li><strong>No licensing server.</strong> OSSScan does not call home to validate your license. The license file is verified locally on your device using a cryptographic signature tied to your hardware fingerprint. Once delivered, the license works entirely offline.</li>
+        <li><strong>Any email address works for license delivery.</strong> You are not required to use a company email address. A personal address, an alias, or any address you control is sufficient. The email is used only to deliver your license file and for re-send support; it is not linked to the codebases you scan.</li>
+        <li><strong>Your company and product names are never collected.</strong> The Vendor has no knowledge of which products you scan, which repositories you analyze, or which organization you belong to.</li>
+        <li><strong>Hardware fingerprint is pseudonymous and local.</strong> The fingerprint sent at purchase is a one-way hash of OS-provided hardware identifiers. It cannot be used to identify you or your machine beyond binding your license to it.</li>
+      </ul>
+      <p>The practical result is that you can use OSSScan to scan sensitive, unreleased, or commercially confidential codebases with no risk that the scanning activity itself becomes visible to a third party.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Telemetry and Analytics</h2>
+      <p>OSSScan collects <strong>no telemetry, analytics, or usage data of any kind.</strong> There are no analytics SDKs embedded in the application. We do not record which features you use, how long you run scans, what packages you scan, or any other behavioral information.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Legal Basis for Processing (GDPR)</h2>
+      <p>For users in the European Economic Area, the United Kingdom, and Switzerland, the legal basis for processing the limited personal data described in this policy is as follows: license validation (including machine fingerprint) is processed on the basis of <strong>contract performance</strong>, as it is necessary to provide the software license you have purchased. Update checks are processed on the basis of our <strong>legitimate interests</strong> in keeping customers informed of security and feature updates. You may disable update checks in application settings at any time.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Sharing and Disclosure</h2>
+      <p>We do not sell, rent, or trade personal data. We share data only with the sub-processors necessary to operate the service (Stripe for payment processing, Microsoft Azure for licensing infrastructure, and transactional email providers for license delivery). We may disclose data if required by law or to protect the rights, property, or safety of BigBrainCorp LLC, our customers, or the public, but we will notify you where legally permitted.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Data Retention</h2>
+      <p>License purchase records (email address, machine fingerprint, transaction ID) are retained for as long as your license is active and for a reasonable period thereafter for accounting and fraud-prevention purposes. Payment card data is never stored by us; Stripe retains it subject to their own privacy policy. You may request deletion of your personal data at any time by contacting <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>; deletion may affect your ability to reactivate a license.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>License Purchases</h2>
+      <h3>Data collected at purchase</h3>
+      <ul>
+        <li><strong>Email address:</strong> used to deliver your license key and send important product notices</li>
+        <li><strong>Payment information:</strong> collected and processed directly by Stripe; BigBrainCorp LLC never sees or stores your full card number</li>
+        <li><strong>Machine fingerprint (at activation):</strong> a one-way hash derived from stable hardware characteristics of the machine where you activate OSSScan, used solely to enforce per-seat licensing and cannot be used to identify you personally or reconstruct your hardware configuration</li>
+        <li><strong>Transaction metadata:</strong> order ID, purchase date, license tier, and country of purchase, retained for accounting purposes</li>
+      </ul>
+      <h3>Processors used</h3>
+      <ul>
+        <li><strong>Stripe:</strong> payment processing (<a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>)</li>
+        <li><strong>Microsoft Azure:</strong> license key storage and validation infrastructure</li>
+        <li><strong>Transactional email provider:</strong> delivery of license keys and order confirmations to your email address</li>
+      </ul>
+      <h3>Your rights</h3>
+      <p>You have the right to access, correct, or request deletion of any personal data we hold about you. To exercise these rights, contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>. We will respond within 30 days.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Children's Privacy</h2>
+      <p>OSSScan is not directed at children under 13, and we do not knowingly collect personal data from anyone under 13 years of age.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time; material changes will be announced via the OSSScan website and, where possible, by email to license holders.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Contact</h2>
+      <p>Privacy questions and data subject requests: <a href="mailto:jim@ossscan.com">jim@ossscan.com</a></p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://ossscanfunctions.azurewebsites.net http://localhost:7072; img-src 'self' data:; font-src 'self';" />
+  <title>OSSScan: Downloads</title>
+  <style>
+    /* ── Reset / base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Brand header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .site-header-wordmark .brand-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .site-header-wordmark .brand-tagline {
+      font-size: 11px;
+      color: #4ab3f4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      gap: 18px;
+    }
+    .header-nav a {
+      color: #a8c8ea;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+
+    /* ── Page body ── */
+    .page-body {
+      flex: 1;
+      padding: 32px 24px 40px;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+
+    /* ── Typography ── */
+    h1 { font-size: 22px; margin: 0 0 4px; color: #0b1a3d; }
+    h2 { font-size: 16px; margin: 28px 0 10px; color: #0b1a3d; }
+    p  { margin: 0 0 12px; line-height: 1.45; }
+    .version { font-size: 13px; color: #667; margin: 0 0 20px; }
+
+    /* ── Download cards ── */
+    .cards { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 28px; }
+    @media (min-width: 600px) { .cards { grid-template-columns: 1fr 1fr; } }
+    .card {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 18px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(11,26,61,.07);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-title { font-size: 15px; font-weight: 600; margin: 0; color: #0b1a3d; }
+    .card-filename { font-size: 12px; color: #667; margin: 0; }
+
+    /* ── Download button ── */
+    .dl-btn {
+      appearance: none;
+      border: none;
+      background: linear-gradient(135deg, #1056b8 0%, #0d2460 100%);
+      color: #fff;
+      padding: 11px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      box-shadow: 0 2px 6px rgba(11,26,61,.25);
+      transition: opacity .15s, box-shadow .15s;
+    }
+    .dl-btn:hover { opacity: .9; box-shadow: 0 4px 12px rgba(11,26,61,.3); }
+
+    /* ── Checksum ── */
+    .checksum-label { font-size: 12px; color: #667; margin: 0; }
+    .checksum {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      word-break: break-all;
+      background: #f0f4fa;
+      border: 1px solid #d0d9e8;
+      border-radius: 6px;
+      padding: 8px;
+      margin: 0;
+      color: #334;
+    }
+
+    /* ── Verify command ── */
+    .verify-cmd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background: #f0f4fa;
+      border: 1px solid #d0d9e8;
+      border-radius: 6px;
+      padding: 10px 12px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: #334;
+    }
+
+    /* ── Steps ── */
+    ol { margin: 0 0 12px; padding-left: 20px; line-height: 1.7; }
+    .note { font-size: 13px; color: #667; line-height: 1.5; }
+    a { color: #1056b8; }
+    a:hover { color: #0b1a3d; }
+
+    /* ── Authenticity banner ── */
+    .auth-banner {
+      background: #fff8e6;
+      border: 1px solid #e6b800;
+      border-left: 4px solid #e6b800;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #4a3800;
+      line-height: 1.55;
+    }
+    .auth-banner strong { color: #2a2000; }
+    .auth-banner .domain-pill {
+      display: inline-block;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 1px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Loading / error states ── */
+    .status { font-size: 14px; color: #667; padding: 24px 0; }
+    .status.err { color: #b00020; }
+
+    /* ── Footer ── */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .site-footer p {
+      margin: 0;
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+    }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Branded header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="payments.html">Buy License</a>
+        <a href="mailto:jim@ossscan.com">Support</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <!-- ── Page content ── -->
+  <div class="page-body">
+    <div class="wrap">
+
+      <h1>Download OSSScan</h1>
+
+      <div class="auth-banner">
+        <strong>Official site notice.</strong> OSSScan is distributed exclusively from
+        <span class="domain-pill">ossscan.com</span>. There are no other spellings, hyphens,
+        or look-alike domains. Before downloading, confirm your browser&rsquo;s address bar
+        shows <strong>ossscan.com</strong> with a valid padlock. If it does not, do not
+        download. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> to
+        report it. Every genuine build is <strong>code-signed</strong>; the SHA-256 checksums
+        below are a secondary integrity check only.
+      </div>
+
+      <div id="loading" class="status">Loading downloads&hellip;</div>
+      <div id="error" class="status err" hidden>
+        Unable to load download information. Please try again later or contact
+        <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.
+      </div>
+
+      <div id="betaGate" hidden>
+        <div style="background:#fff;border:1px solid #d0d9e8;border-radius:12px;padding:24px;max-width:420px;box-shadow:0 2px 8px rgba(11,26,61,.07);">
+          <p style="font-weight:700;color:#0b1a3d;margin:0 0 6px;">Beta access required</p>
+          <p style="font-size:13px;color:#556;margin:0 0 16px;">Enter your beta access code to continue. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> if you need one.</p>
+          <label style="display:block;font-size:13px;font-weight:600;color:#0b1a3d;margin-bottom:6px;" for="betaCodeInput">Beta access code</label>
+          <input id="betaCodeInput" type="password" placeholder="Enter your beta code"
+            style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid #c2cfe0;font-size:14px;outline:none;box-sizing:border-box;" />
+          <div style="display:flex;gap:10px;align-items:center;margin-top:12px;">
+            <button id="betaCodeSubmit"
+              style="padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#1056b8,#0d2460);color:#fff;font-weight:700;font-size:14px;cursor:pointer;">
+              Continue
+            </button>
+            <span id="betaCodeError" style="font-size:13px;color:#b00020;"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="content" hidden>
+
+        <p class="version" id="version-line"></p>
+
+        <div class="cards" id="cards"></div>
+
+        <h2>After downloading</h2>
+        <ol>
+          <li>Unzip the archive and open <strong>OSSScan</strong>.</li>
+          <li>Run a <strong>Compatibility Check</strong>, which generates your machine fingerprint.</li>
+          <li>Copy the fingerprint and go to <a href="payments.html">ossscan.com/payments</a> to purchase a license.</li>
+          <li>Click the download link in your purchase confirmation email to receive your license file.</li>
+        </ol>
+
+        <h2>Verify your download</h2>
+        <p class="note">Compare the SHA-256 checksum shown on your platform card against the output of:</p>
+        <div class="verify-cmd" id="verify-cmd"></div>
+        <p class="note" style="margin-top:10px;">
+          A matching checksum confirms the file was not corrupted in transit.
+          For stronger authenticity assurance, verify the <strong>code signature</strong> using the
+          instructions on the <a href="security.html">Security page</a>. Code signing
+          cannot be forged without our Apple Developer ID or Authenticode certificate,
+          even if this page were compromised.
+        </p>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Branded footer ── -->
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="refund.html">Refund Policy</a>
+    </p>
+  </footer>
+
+  <script>
+  const API_BASE_URL =
+    location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:7072'
+      : 'https://ossscanfunctions.azurewebsites.net';
+
+  const MANIFEST_URL  = `${API_BASE_URL}/GetDownloads`;
+
+  const OS = (() => {
+    const ua = navigator.userAgent;
+    if (/Win/.test(ua))     return 'win';
+    if (/Mac/.test(ua))     return 'mac';
+    return 'other';
+  })();
+
+  function verifyCommand(filename) {
+    if (/win/i.test(filename)) {
+      return `# PowerShell\nGet-FileHash ${filename} -Algorithm SHA256`;
+    }
+    return `# macOS \nshasum -a 256 ${filename}`;
+  }
+
+  function buildCard(d) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const title = document.createElement('p');
+    title.className = 'card-title';
+    title.textContent = d.platform;
+
+    const filename = document.createElement('p');
+    filename.className = 'card-filename';
+    filename.textContent = d.filename;
+
+    const btn = document.createElement('a');
+    // Only allow URLs from trusted origins: Azure blob storage (production)
+    // or localhost (local dev). Prevents a compromised API response from
+    // injecting javascript: or off-domain hrefs in production.
+    const safeUrl = /^https:\/\/[a-z0-9]+\.blob\.core\.windows\.net\//i.test(d.url) ||
+                    /^https?:\/\/localhost(:\d+)?\//i.test(d.url)
+      ? d.url : null;
+    if (safeUrl) {
+      btn.href = safeUrl;
+    } else {
+      btn.removeAttribute('href');
+      btn.style.opacity = '0.4';
+      btn.style.cursor = 'not-allowed';
+      btn.title = 'Download URL could not be verified';
+    }
+    btn.textContent = `Download${d.version ? ' v' + d.version : ''}`;
+    btn.className = 'dl-btn';
+
+    const hashLabel = document.createElement('p');
+    hashLabel.className = 'checksum-label';
+    hashLabel.textContent = 'SHA-256';
+
+    const hash = document.createElement('pre');
+    hash.className = 'checksum';
+    hash.textContent = d.sha256 || '—';
+
+    card.append(title, filename, btn, hashLabel, hash);
+    return card;
+  }
+
+  (async () => {
+    try {
+      const resp = await fetch(MANIFEST_URL, {
+        headers: { 'X-Beta-Code': sessionStorage.getItem('ossscan_beta_code') || '' }
+      });
+      if (resp.status === 403) {
+        document.getElementById('loading').hidden  = true;
+        document.getElementById('betaGate').hidden = false;
+        return;
+      }
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const manifest = await resp.json();
+      renderManifest(manifest);
+
+    } catch (err) {
+      console.error('GetDownloads fetch failed:', err);
+      document.getElementById('loading').hidden = true;
+      document.getElementById('error').hidden   = false;
+    }
+  })();
+
+  function renderManifest(manifest) {
+    // Version line
+    const vLine = document.getElementById('version-line');
+    vLine.textContent = manifest.downloads?.length
+      ? `Current release, updated ${manifest.updated ?? ''}`
+      : 'No downloads available yet.';
+
+    // Platform cards
+    const cards = document.getElementById('cards');
+    cards.innerHTML = '';
+    for (const d of (manifest.downloads ?? [])) {
+      cards.appendChild(buildCard(d));
+    }
+
+    // Verify command: show the one matching the visitor's OS, fall back to first entry
+    const match = manifest.downloads?.find(d =>
+      OS === 'win' ? /win/i.test(d.filename) : /mac/i.test(d.filename)
+    ) ?? manifest.downloads?.[0];
+
+    if (match) {
+      document.getElementById('verify-cmd').textContent = verifyCommand(match.filename);
+    }
+
+    document.getElementById('loading').hidden = true;
+    document.getElementById('content').hidden = false;
+  }
+
+  // ── Beta gate submit ─────────────────────────────────────────────────────
+  document.getElementById('betaCodeSubmit').addEventListener('click', async () => {
+    const input    = document.getElementById('betaCodeInput');
+    const errorEl  = document.getElementById('betaCodeError');
+    const code     = (input.value || '').trim();
+    const btn      = document.getElementById('betaCodeSubmit');
+
+    errorEl.textContent = '';
+    if (!code) { errorEl.textContent = 'Please enter your access code.'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Checking...';
+
+    const resp = await fetch(MANIFEST_URL, {
+      headers: { 'X-Beta-Code': code }
+    });
+
+    if (resp.status === 403) {
+      errorEl.textContent = 'Incorrect code. Please try again.';
+      input.value = '';
+      input.focus();
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+      return;
+    }
+
+    if (!resp.ok) {
+      errorEl.textContent = 'Unable to connect. Please try again later.';
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+      return;
+    }
+
+    // Code accepted — store it and render the page.
+    sessionStorage.setItem('ossscan_beta_code', code);
+    document.getElementById('betaGate').hidden = true;
+    const manifest = await resp.json();
+    renderManifest(manifest);
+  });
+
+  document.getElementById('betaCodeInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('betaCodeSubmit').click();
+  });
+
+  </script>
+</body>
+</html>

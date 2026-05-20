@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSScan: Help</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    /* Header */
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Page */
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:860px; margin:0 auto; }
+    .page-title { font-size:28px; font-weight:800; color:#0b1a3d; margin:0 0 6px; }
+    .page-subtitle { font-size:15px; color:#556; margin:0 0 32px; }
+    /* Content styles */
+    h2 { font-size:18px; font-weight:700; color:#0b1a3d; margin:32px 0 12px; padding-bottom:8px; border-bottom:2px solid #e8eef7; }
+    h3 { font-size:15px; font-weight:700; color:#0b1a3d; margin:20px 0 8px; }
+    p { font-size:14px; color:#334; line-height:1.7; margin:0 0 10px; }
+    ul, ol { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; padding-left:20px; }
+    li { margin-bottom:4px; }
+    a { color:#1056b8; }
+    a:hover { color:#0b1a3d; }
+    code { font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:12px; background:#e8eef7; border:1px solid #d0d9e8; border-radius:4px; padding:1px 5px; color:#0b1a3d; }
+    .muted { font-size:13px; color:#667; font-style:italic; }
+    /* FAQ cards */
+    .faq-card { background:#fff; border:1px solid #d0d9e8; border-radius:10px; padding:18px 20px; margin-bottom:14px; box-shadow:0 2px 6px rgba(11,26,61,.05); }
+    .faq-q { font-size:15px; font-weight:700; color:#0b1a3d; margin-bottom:10px; }
+    .faq-a { font-size:14px; color:#334; }
+    .faq-a p { margin:0 0 8px; }
+    .faq-a p:last-child { margin-bottom:0; }
+    .faq-a ul, .faq-a ol { margin:6px 0 8px; }
+    .faq-a .muted { display:block; margin-top:6px; }
+    /* Workflow checklist */
+    .workflow-checklist { background:#fff; border:1px solid #d0d9e8; border-radius:10px; padding:20px 24px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.05); }
+    .workflow-checklist ol { margin:8px 0 0 20px; }
+    .workflow-checklist li { margin-bottom:6px; font-size:14px; color:#334; line-height:1.65; }
+    /* Footer */
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Buy License</a>
+    </nav>
+  </div>
+</header>
+<nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Buy License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+    <h1 class="page-title">OSSScan Help</h1>
+    <p class="page-subtitle">How to scan a local project, review license findings, and run CVE analysis</p>
+
+    <h2>How OSSScan Works</h2>
+    <div class="workflow-checklist">
+      <ol>
+        <li>Pass compatibility check ensuring all components are installed and up to date</li>
+        <li>Install license file</li>
+        <li>Accept the Terms of Use (EULA)</li>
+        <li>Select network isolation settings</li>
+        <li>Select the project directory to scan</li>
+        <li>Select scan mode: Light, Deep, or Audit</li>
+        <li>Scan the project, or load a previously saved SBOM</li>
+        <li>Use filters to review license findings; optionally export the License Report</li>
+        <li>Optionally run Deep Enrich to resolve remaining unknown licenses</li>
+        <li>Optionally save the SBOM for later use</li>
+        <li>Optionally run Bulk License Investigation to prepare AI Agent prompts, then use the Launch Agent button</li>
+        <li>Check and refresh the Grype CVE database</li>
+        <li>Run a CVE Scan</li>
+        <li>Use filters to review CVE findings; optionally export the CVE Report</li>
+        <li>Optionally run Bulk CVE Investigation to prepare AI Agent prompts, then use the Launch Agent button</li>
+        <li>At any point, click the 🤖 Robot button on any row to copy an individual investigation prompt (license or CVE) for your AI agent</li>
+        <li>Perform bulk investigations using your AI agent of choice</li>
+      </ol>
+    </div>
+
+    <h2>Compatibility Check and Required Tools</h2>
+    <p>
+      Before purchasing a license, run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan can run on this machine and to generate your machine fingerprint.
+    </p>
+
+    <h3>Required and Optional Tools</h3>
+    <p>
+      OSSScan uses external command-line tools for SBOM and CVE analysis:
+    </p>
+    <ul>
+      <li><strong>Syft</strong> — required. Generates the SBOM from the folder you selected.</li>
+      <li><strong>Grype</strong> — optional. Scans the in-memory SBOM for known vulnerabilities.</li>
+      <li><strong>ScanCode Toolkit</strong> — used for Deep and Audit scan modes. Reads files on disk to detect license text for packages where metadata is incomplete or missing.</li>
+    </ul>
+    <p>
+      These tools are <strong>not bundled</strong> with OSSScan — you install them once on your machine.
+      This keeps OSSScan smaller, lets you update tools independently, and avoids redistributing the tools' full dependency trees.
+    </p>
+
+    <h3>Tooling strip status colors</h3>
+    <p>
+      The tooling strip at the top of the main window summarizes tool health. Click a chip to open the tooling drawer.
+    </p>
+    <ul>
+      <li><strong>Green</strong> — installed and up to date (verified).</li>
+      <li><strong>Yellow</strong> — installed but needs attention (update available, stale DB, or OSSScan can't verify the latest version).</li>
+      <li><strong>Red</strong> — missing or unusable (not installed, not executable, or DB is too old/missing).</li>
+      <li><strong>Gray</strong> — checking status.</li>
+    </ul>
+
+    <h3>Installing Syft and Grype</h3>
+    <p class="muted">
+      Installing Syft and Grype:
+      <a href="https://oss.anchore.com/docs/installation/syft/" target="_blank">Syft</a>
+      and
+      <a href="https://oss.anchore.com/docs/installation/grype/" target="_blank">Grype</a>.
+      If you use Homebrew on macOS, the common commands are <code>brew install syft</code> and <code>brew install grype</code>.
+      On Windows with WinGet, use <code>winget install Anchore.Syft</code> and <code>winget install Anchore.Grype</code>.
+      The Anchore pages start with a Unix-style <code>curl | sh</code> example, so on Windows you should scroll down to the <strong>WinGet</strong> section instead.
+    </p>
+
+    <h3>Keeping Syft/Grype up to date</h3>
+    <ul>
+      <li>Click the Syft/Grype chip in the tooling strip to open the tooling drawer.</li>
+      <li>Use <strong>Install/Update</strong> to open the official install instructions.</li>
+      <li>After updating, click <strong>Re-check</strong> to refresh detection without restarting OSSScan.</li>
+      <li>If you install via Homebrew on macOS, updating is typically <code>brew upgrade syft</code> and <code>brew upgrade grype</code>.</li>
+    </ul>
+
+    <h3>Why OSSScan does not bundle Syft or Grype</h3>
+    <p>
+      During OSSScan development, we ran a deep scan of OSSScan itself. When Syft or Grype were bundled inside the application,
+      OSSScan (and other compliance tools) surfaced <strong>copyleft‑licensed</strong> components embedded inside those third‑party binaries.
+      These findings came from the compiled dependency trees of Syft and Grype—not from OSSScan's own code.
+    </p>
+    <p>
+      This experience is a good example of why OSSScan exists at all: to give developers clear insight into the open‑source components they
+      rely on and the licensing risks that may be hidden inside them.
+    </p>
+    <p>
+      Bundling Syft or Grype would expand OSSScan's redistribution scope and could trigger automated "copyleft risk" alerts in customer environments.
+      To keep OSSScan's distribution clean and to give customers full control over which versions they install and approve, OSSScan now treats Syft
+      and Grype as external, user‑installed tools.
+    </p>
+    <p>
+      This approach is common in developer tools. For example, VS Code typically does not bundle Git (which is GPL‑licensed). Instead, it detects Git on the system
+      and prompts the user to install it. OSSScan follows the same pattern.
+    </p>
+    <p class="muted">
+      Important: This is an implementation and distribution choice, not legal advice. Copyleft obligations depend on the specific licenses involved,
+      how software is combined and distributed, and your jurisdiction. For release or compliance decisions, consult qualified counsel.
+    </p>
+
+    <h2>Licensing</h2>
+    <p>
+      OSSScan uses a single license type. A valid license unlocks the full feature set.
+    </p>
+    <p>
+      Licenses are <strong>machine-bound</strong>. When requesting a license, you'll send a
+      <strong>Machine fingerprint</strong> generated by OSSScan on the computer you intend to run OSSScan on.
+    </p>
+    <p class="muted">
+      The machine fingerprint is a <strong>pseudonymous device identifier</strong> generated locally by OSSScan.
+      On supported platforms (macOS and Windows), it is derived from an OS-provided machine identifier and then
+      <strong>hashed</strong> so OSSScan does not need to send or store the underlying raw identifier.
+      It does not include the contents of your files, scan results, code, contacts, or browsing history.
+      (Note: device identifiers may still be considered "personal data" under GDPR.)
+    </p>
+    <p class="muted">
+      If OSSScan cannot generate a machine fingerprint on your computer, it cannot issue or validate a machine-bound
+      license for that computer. In that case, run <strong>Compatibility Check</strong> to see the fingerprint error,
+      then try a different machine (or contact <strong>Jim@OSSScan.com</strong> if you believe the error is unexpected).
+    </p>
+    <ol>
+      <li>Install and launch OSSScan.</li>
+      <li>Run <strong>Compatibility Check</strong> to confirm OSSScan can run on this machine.</li>
+      <li>Copy the <strong>Machine fingerprint</strong> shown in the report.</li>
+      <li>Click <strong>Buy a License…</strong> to open checkout (the purchase page uses your machine fingerprint).</li>
+      <li>When you receive <code>license.json</code>, install it using the startup dialog (<strong>Install License…</strong>) or copy it into the userData folder shown by <strong>Show Folder</strong>.</li>
+    </ol>
+    <p class="muted">
+      Tip: If OSSScan won't start because no license is installed, the startup license dialog shows your
+      machine fingerprint and includes a <strong>Copy Fingerprint</strong> button. You can also click
+      <strong>Compatibility Check…</strong> and use <strong>Copy fingerprint</strong> there.
+    </p>
+    <p class="muted">
+      If you replace/rebuild the machine (your "system of record" changes) the fingerprint will change.
+      In that case OSSScan will ask you to contact <strong>Jim@OSSScan.com</strong> to re-issue a license for the new machine.
+    </p>
+
+    <h2>Terms of Use</h2>
+    <p>
+      OSSScan shows the Terms of Use once per license on first launch. You must accept to proceed. If the Terms text changes in a later version you may be prompted again. Declining quits the app.
+    </p>
+
+    <h2>Network Isolation Settings</h2>
+    <p>
+      Before scanning, decide how OSSScan should handle outbound network calls made by the tool processes (Syft, Grype, ScanCode). The network isolation setting is shown in the scan options panel before every scan.
+    </p>
+    <ul>
+      <li><strong>Strict mode</strong> (default): the proxy blocks all outbound HTTP/HTTPS connections from tool processes. Safest option. Some scans may produce incomplete results if a tool needed network access (for example, Syft resolving Go modules).</li>
+      <li><strong>Balanced mode</strong>: allows connections to known-safe destinations for each tool (Anchore CDN, Go module proxy, package registries) and blocks everything else. Produces complete scans while still protecting against unexpected destinations.</li>
+    </ul>
+    <p>
+      In both modes, every connection attempt made by a tool process is logged. The blocked-call log is shown after the scan and can be exported. To disable isolation entirely, uncheck the network isolation checkbox in the scan options panel.
+    </p>
+    <p>
+      See the <a href="security.html">Security page</a> for full details on what is monitored and why.
+    </p>
+
+    <h2>Scanning a Project</h2>
+    <ol>
+      <li>Click <strong>Browse…</strong> and select a local folder (for example, a folder containing a GitHub repository).</li>
+      <li>Select a scan mode:
+        <ul>
+          <li><strong>Light</strong> — fast, offline inventory scan.</li>
+          <li><strong>Deep</strong> — slower; uses additional sources to improve license coverage.</li>
+          <li><strong>Audit</strong> — slowest; compares tools and highlights license disagreements.</li>
+        </ul>
+      </li>
+      <li>Click <strong>Scan</strong> and wait for the stages to complete.</li>
+    </ol>
+
+    <p class="muted">
+      Note: Scanning requires <strong>Syft</strong>. If the Syft chip in the <strong>tooling strip</strong> shows Syft is missing (or unavailable),
+      OSSScan will keep scanning disabled until Syft is installed and detected. Click the Syft chip to open the tooling drawer for install/update
+      guidance and a <strong>Re-check</strong> button.
+    </p>
+
+    <h2>How License Resolution Works (Light vs Deep vs Audit)</h2>
+    <p>
+      OSSScan always starts by generating an SBOM and baseline license data using <strong>Syft</strong>.
+      Syft is excellent at reading ecosystem manifests (for example <code>package.json</code>, <code>go.mod</code>, NuGet / Maven metadata)
+      and producing a consistent package inventory.
+    </p>
+
+    <h3>Light mode (Syft only)</h3>
+    <ul>
+      <li>Fastest and fully offline.</li>
+      <li>Best when you want quick visibility and repeatable results with no external lookups.</li>
+    </ul>
+
+    <h3>Deep mode: add ClearlyDefined + ScanCode for residual unknowns</h3>
+    <p>
+      Deep mode is designed to reduce <code>NOASSERTION</code> / unknown licenses by adding two additional steps:
+    </p>
+    <ul>
+      <li><strong>ClearlyDefined</strong> (metadata lookup): helps fill in licenses for packages where manifest/registry metadata is incomplete.
+        This often improves coverage for ecosystems and packages that Syft and basic registry lookups can miss or underspecify — for example
+        <strong>RubyGems</strong>, <strong>NuGet</strong>, <strong>Composer</strong>, and some older or edge-case <strong>Maven</strong>/<strong>Cargo</strong> coordinates.</li>
+      <li><strong>ScanCode Toolkit</strong> (local content scan): for the remaining residual unknowns, ScanCode reads files on disk and detects license text.
+        This is useful for cases where there simply isn't reliable upstream license metadata.</li>
+    </ul>
+
+    <p>
+      Examples of cases ScanCode can help with that metadata approaches typically do not:
+    </p>
+    <ul>
+      <li><strong>Vendored source code</strong> copied into a repo (no registry record; license only present in a <code>LICENSE</code>/<code>COPYING</code> file).</li>
+      <li><strong>Source-only / internal forks</strong> where package coordinates exist but license metadata is missing or incorrect.</li>
+      <li><strong>Dependency subtrees</strong> where license text exists in the installed files but the manifest-level license is absent.</li>
+    </ul>
+
+    <h3>Deep Enrich (network) vs Deep scan</h3>
+    <p>
+      These sound similar, but they're used at different times:
+    </p>
+    <ul>
+      <li><strong>Deep scan</strong> is a scan mode. It runs as part of scanning a local folder and may combine metadata lookups with local on-disk evidence (for example via ScanCode).</li>
+      <li><strong>Deep Enrich (network)…</strong> is a separate button that enriches the <em>currently loaded SBOM</em> after the fact by querying <code>https://api.deps.dev</code> using package coordinates (name + version from PURLs). No source code or file contents are transmitted.</li>
+    </ul>
+    <p>
+      When should you use Deep Enrich?
+    </p>
+    <ul>
+      <li><strong>Most useful when you imported an SBOM</strong> (no filesystem context): enrichment can fill in missing licenses without re-scanning.</li>
+      <li><strong>Sometimes useful after a Deep scan</strong>: if you still have a meaningful number of unknown licenses, Deep Enrich can top up coverage using external metadata.</li>
+      <li><strong>Often unnecessary after a good Deep/Audit run</strong>: if local evidence already resolved licenses, Deep Enrich may not change much.</li>
+    </ul>
+    <p class="muted">
+      Rule of thumb: run Deep Enrich when the SBOM knows "what it is" (coordinates) but not "what it's licensed under".
+    </p>
+
+    <h3>Audit mode: ScanCode on (almost) everything + disagreement reporting</h3>
+    <p>
+      Audit mode is intentionally slow: it runs ScanCode broadly across packages (not just unknowns) so you can spot mismatches.
+      Instead of replacing Syft/ClearlyDefined results, it records when ScanCode <strong>agrees</strong> or <strong>disagrees</strong> and shows an
+      <strong>Audit — License Disagreements</strong> section in the Licenses tab.
+    </p>
+    <p>
+      Why disagreements can happen:
+    </p>
+    <ul>
+      <li><strong>Metadata vs reality</strong>: a registry/manifest license can be wrong, stale, or overly broad, while the shipped files contain different license text.</li>
+      <li><strong>Dual licensing</strong>: a project may be available under multiple licenses; different sources may report different (but still legitimate) options.</li>
+      <li><strong>File-level licensing</strong>: some repos contain mixed licensing across subfolders; ScanCode may detect a license in a subset that metadata doesn't capture.</li>
+      <li><strong>Packaged vs source</strong>: the packaged artifact may include additional notices or bundled components that don't match the top-level declared license.</li>
+    </ul>
+    <p class="muted">
+      Audit is best used for due diligence or release sign-off. For day-to-day scanning, Light or Deep is usually the better tradeoff.
+    </p>
+
+    <h2>Reviewing License Findings</h2>
+    <p>
+      When the scan is complete, go to the <strong>Licenses</strong> tab to review findings.
+      Use the filter box to narrow results (for example by package name, risk, or license).
+    </p>
+
+    <p>
+      If you see <strong>Manual Review</strong> packages, you can quickly focus them by filtering with <code>risk:manual-review</code>.
+    </p>
+
+    <p>
+      The <strong>Resolved by</strong> section shows which source determined each license (Syft, ClearlyDefined, ScanCode, etc.).
+      You can use those source checkboxes to filter the Licenses table by provenance.
+    </p>
+    <p>
+      In the <strong>Licenses</strong> tab, OSSScan hides many <strong>build / CI tools</strong> by default to reduce noise.
+      To include them in the Licenses table (and in what you're reviewing), enable the <strong>Show build / CI tools</strong> checkbox.
+    </p>
+
+    <h3>AI Agent License Review Prompt</h3>
+    <p>
+      In the Licenses table, you can click the <strong>🤖</strong> (robot) action button to copy an
+      <strong>AI Agent License Review Prompt</strong> for the selected component.
+      Paste this prompt into your IDE's AI Coding Agent to instruct it to do a code-level review and
+      analyze potential license risk in the context of how your project uses that dependency.
+    </p>
+
+    <h3>Bulk License Review (Agentic workflows)</h3>
+    <p>
+      Sometimes you don't want one prompt — you want a queue. OSSScan is built to make it easy to hand the repetitive digging to AI,
+      then keep the important part (judgment, policy, and sign-off) firmly human.
+    </p>
+    <ol>
+      <li>
+        Use filters (and source checkboxes) to narrow the Licenses table to what you actually want reviewed.
+        Bulk export is based on the <em>currently visible rows</em>, so filtering is the easiest way to reduce the number of investigations (and tokens).
+        <ul>
+          <li>Example: focus manual review items with <code>risk:manual-review</code>.</li>
+          <li>Example: focus copyleft-flagged items with <code>risk:copyleft</code> (when present).</li>
+          <li>Use the <strong>Resolved by</strong> checkboxes to include/exclude specific data sources.</li>
+        </ul>
+      </li>
+      <li>Click <strong>Bulk License Review</strong>.</li>
+      <li>Choose (or create) an output folder.</li>
+      <li>OSSScan creates a <code>Licenses/</code> folder containing:
+        <ul>
+          <li><code>ossscan.agent_job.json</code> (machine-readable job manifest)</li>
+          <li><code>AgentPrompt.md</code> (deterministic starter prompt for agent runners)</li>
+          <li><code>LicenseInstructions.md</code> (how to process prompts and where to write results)</li>
+          <li><code>Evaluations/</code> (recommended folder for agent-written outputs)</li>
+          <li>One <code>.json</code> prompt file per <em>visible</em> package row (filenames are based on <code>name@version</code>)</li>
+        </ul>
+      </li>
+      <li>
+        Optional (recommended to save tokens): open the exported <code>Licenses/</code> folder and <strong>delete or move aside</strong>
+        any request <code>.json</code> files you want to skip. The agent runner will only process the requests that remain.
+      </li>
+      <li>By default, <strong>Overwrite existing files</strong> is enabled so re-exports stay in sync with your current filters/selection. Turn it off if you want to keep existing files unchanged.</li>
+      <li>Point your agentic coding platform / runner at the exported prompts and have it:
+        <ul>
+          <li>Investigate each component in the context of your repo</li>
+          <li>Write a per-item result file using the prompt's <code>result_output_path</code></li>
+          <li>Optionally write a roll-up summary (outside OSSScan) for humans to review</li>
+        </ul>
+      </li>
+    </ol>
+    <p class="muted">
+      OSSScan does not ship an AI model or store agent results. It generates consistent, evidence-first prompts (plus a tiny manifest) so external agent runners can do the heavy lifting and humans can make the final decisions.
+    </p>
+
+    <h3>Running an exported batch in Claude</h3>
+    <p>
+      Each bulk export writes an <code>AgentPrompt.md</code> entrypoint. The simplest way to run the batch is to tell your agent:
+      <strong>"Open AgentPrompt.md and follow it exactly."</strong>
+    </p>
+    <p class="muted">
+      Tip: OSSScan also shows quickstart steps in-app via <strong>Launch Agent → VS Code (GitHub Copilot)…</strong> or <strong>Launch Agent → Claude Desktop (Code/Local)…</strong>.
+    </p>
+    <ul>
+      <li><strong>VS Code (GitHub Copilot)</strong> (tested): open your codebase as the workspace, open the exported job folder, then open <code>AgentPrompt.md</code> and tell Copilot Chat (Agent mode) to read it and follow it exactly.</li>
+      <li><strong>Claude Desktop (Code tab → Local environment)</strong>: add your codebase as the Project folder, then add the exported job folder (CVE or Licenses) using <code>/add-dir</code>, then open <code>AgentPrompt.md</code>.</li>
+      <li><strong>Claude Code</strong> (tested): use the exported <code>AgentPrompt.md</code> as the starter instruction. Run <code>claude</code> in your terminal and tell it to open AgentPrompt.md and follow it exactly.</li>
+    </ul>
+
+    <h2>Exporting License Outputs</h2>
+    <ul>
+      <li><strong>Export License Report</strong> — creates an HTML license report.</li>
+      <li><strong>Save SBOM…</strong> — exports an SBOM file for archiving or sharing.</li>
+    </ul>
+
+    <p class="muted">
+      Tip: <strong>Save SBOM…</strong> also writes an HTML license report alongside the saved JSON file.
+    </p>
+
+    <h2>CVE Scanning and Investigation</h2>
+    <p>
+      CVE scanning requires an SBOM to be in memory. This happens after you scan a folder, and it can also
+      happen when you load a previously saved SBOM from file.
+    </p>
+    <p>
+      CVE scanning analyzes the current SBOM package inventory. This means build-time and CI tooling dependencies may also appear
+      in the vulnerability results when they're present in the SBOM.
+    </p>
+
+    <h3>How the Grype Database Works</h3>
+    <p>
+      Grype uses a local vulnerability database to match SBOM packages to known CVEs.
+      You can refresh it at any time using the <strong>Refresh DB</strong> action.
+      OSSScan warns when the Grype database is older than a week and will require a refresh before running CVE scans.
+    </p>
+    <ul>
+      <li>Click <strong>Install DB</strong> the first time to download the database.</li>
+      <li>Click <strong>Update DB</strong> when OSSScan indicates the DB is stale.</li>
+      <li>OSSScan may also prompt once to install the DB automatically when Grype is detected but the DB is missing.</li>
+    </ul>
+    <p class="muted">
+      Some findings may show a <strong>KEV</strong> flag, indicating the vulnerability is listed as known-exploited in the upstream data.
+    </p>
+
+    <ol>
+      <li>Go to the <strong>Vulnerabilities</strong> tab.</li>
+      <li>Click <strong>Run CVE Scan</strong> to analyze the current SBOM with <strong>Grype</strong>.</li>
+    </ol>
+
+    <h3>AI Agent CVE Investigation Prompt</h3>
+    <p>
+      In the Vulnerabilities results table, click the <strong>🤖</strong> action button to copy an
+      <strong>AI Agent Investigation Prompt</strong> for a specific CVE finding.
+      Paste that prompt into your IDE's AI Coding Agent to evaluate the CVE in the context of your application's usage.
+      This can greatly simplify and speed up investigation by focusing on practical reachability and evidence in your codebase.
+    </p>
+
+    <h3>Bulk Investigate</h3>
+    <p>
+      If you have many findings, clicking 🤖 one row at a time is… character building.
+      <strong>Bulk Investigate</strong> exports one JSON prompt per CVE finding so an agentic runner can process them in bulk.
+    </p>
+    <ol>
+      <li>Run a CVE scan so findings are available.</li>
+      <li>
+        Use the Vulnerabilities filter box to reduce the queue.
+        Bulk export uses the <em>currently visible findings</em>, so filtering is the easiest way to reduce investigations and token usage.
+        <ul>
+          <li>Example: <code>severity:critical</code> (or <code>sev:critical</code>).</li>
+          <li>Example: <code>severity:critical,high</code> to focus top priorities.</li>
+          <li>You can also filter by CVE ID, package name, version, or package type.</li>
+        </ul>
+      </li>
+      <li>Click <strong>Bulk Investigate</strong>.</li>
+      <li>Choose (or create) an output folder.</li>
+      <li>OSSScan creates a <code>CVE/</code> folder containing:
+        <ul>
+          <li><code>ossscan.agent_job.json</code> (machine-readable job manifest)</li>
+          <li><code>AgentPrompt.md</code> (deterministic starter prompt for agent runners)</li>
+          <li><code>CVEInstructions.md</code> (how to process prompts and where to write results)</li>
+          <li><code>Evaluations/</code> (recommended folder for agent-written outputs)</li>
+          <li>One <code>.json</code> prompt file per finding (filenames are based on the CVE ID)</li>
+        </ul>
+      </li>
+      <li>
+        Optional (recommended to save tokens): delete or move aside any request <code>.json</code> files you don't want investigated right now.
+        The agent runner will only process what remains.
+      </li>
+      <li>By default, <strong>Overwrite existing files</strong> is enabled so re-exports stay in sync with your current filter. Turn it off if you want to keep existing files unchanged.</li>
+      <li>Point your agentic coding platform at that folder and have it write per-finding outputs (and an optional roll-up summary) outside OSSScan.</li>
+    </ol>
+    <p class="muted">
+      Practical goal: let AI do the spelunking (searching, tracing imports, mapping dependency chains), then let humans review the evidence and choose the remediation path.
+      In larger repos, this can shift work from time-consuming investigation to review/decision-making and can significantly reduce end-to-end turnaround.
+    </p>
+
+    <h2>Exporting CVE Reports</h2>
+    <p>
+      After a CVE scan completes, use <strong>Export CVE Report</strong> to export an HTML report of the current vulnerability findings.
+    </p>
+
+    <h2>Copyleft Analysis (Licenses tab)</h2>
+    <p>
+      When copyleft-licensed packages are detected, OSSScan can scan your selected folder for import/reference hints to help you
+      understand whether a dependency appears to be used directly.
+    </p>
+    <p class="muted">
+      Import/reference evidence is strongest when you scanned a local folder (not just loaded an SBOM), because the analysis can use the
+      on-disk project files as context.
+    </p>
+
+    <h2>Advanced: Command Line Interface</h2>
+
+    <h2>Command Line Interface (CLI) and Agentic Automation</h2>
+    <p>
+      OSSScan can be driven from the command line so it can run in automation and be controlled by an agentic framework
+      (for example: an IDE agent runner, Claude Code (the terminal CLI), or a custom internal workflow).
+      This lets you kick off scans, produce outputs into a known folder, and then hand the repetitive investigation work to an agent —
+      while keeping final review and policy decisions human.
+    </p>
+    <p>
+      The ideal end-state for many teams is an AI-native workflow where a project can be analyzed end-to-end and produce a clear,
+      evidence-backed report of <strong>license</strong> and <strong>CVE</strong> risk for human review.
+      In practice, getting there requires reliable package inventory, consistent context, and a repeatable way to route many individual
+      investigations through an agent.
+    </p>
+    <p>
+      OSSScan is a bridge application that makes that practical today: it produces a normalized package inventory (SBOM + enrichments),
+      summarizes findings in the UI, and can <strong>bulk-export structured investigation requests</strong> so an agentic workflow can process them
+      at scale. The outcome is similar to an AI-native analysis pipeline — but with OSSScan providing the high-signal inputs and guardrails.
+    </p>
+    <ul>
+      <li><strong>Headless</strong> (<code>--headless</code>): runs the job and exits automatically when complete.</li>
+      <li><strong>UI automation</strong> (<code>--ui</code>): opens the UI, auto-runs the same job, and keeps the app open so a user can take over for manual investigations.</li>
+    </ul>
+    <p>
+      In both modes, OSSScan does not show "pick a folder" dialogs — the scan directory and output folder come from CLI arguments.
+      These modes also <strong>fail fast</strong> (with no dialogs) if the license is invalid/missing or if the Terms of Use have not been accepted
+      on this machine.
+    </p>
+    <p class="muted">
+      See the CLI guide for exact flags and macOS launch commands.
+    </p>
+
+    <h3>Create Command Line… (menu)</h3>
+    <p>
+      OSSScan includes a built-in command generator so you don't have to remember flags or fight shell quoting.
+      In the app menu, open <strong>Help → Create Command Line…</strong> to open the dialog (macOS menu bar, or the window menu on Windows).
+    </p>
+    <ul>
+      <li>Choose <strong>Headless</strong> vs <strong>UI automation</strong> and select scan/output folders.</li>
+      <li>Select which outputs to produce (SBOM, reports, and/or bulk investigation requests).</li>
+      <li>Optionally set <code>--cve-filter</code> and <code>--license-filter</code> to reduce reports and bulk exports.</li>
+      <li>Copy the generated command for your OS (macOS binary/open, Windows cmd, Windows PowerShell) and paste it into a terminal (or a terminal-capable agent runner such as Claude Code, CI, etc.).</li>
+    </ul>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+  <p style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+    <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+    <a href="refund.html">Refund Policy</a>
+  </p>
+</footer>
+</body>
+</html>
