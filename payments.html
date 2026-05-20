@@ -360,6 +360,25 @@
       return fp.startsWith('ossscan-hwid-v');
     }
 
+    function formatRetryAfterMessage(retryAfter) {
+      const defaultMessage = 'Too many requests. Please retry in 15 minutes.';
+      if (!retryAfter) return defaultMessage;
+
+      const seconds = Number(retryAfter);
+      if (Number.isFinite(seconds) && seconds > 0) {
+        const minutes = Math.max(1, Math.ceil(seconds / 60));
+        return `Too many requests. Please retry in ${minutes} minute${minutes === 1 ? '' : 's'}.`;
+      }
+
+      const retryAt = new Date(retryAfter);
+      if (!Number.isNaN(retryAt.getTime())) {
+        const minutes = Math.max(1, Math.ceil((retryAt.getTime() - Date.now()) / 60000));
+        return `Too many requests. Please retry in ${minutes} minute${minutes === 1 ? '' : 's'}.`;
+      }
+
+      return defaultMessage;
+    }
+
     async function createCheckoutSession(payload) {
       // Some environments want CORS; set your Function to allow your domain.
       const res = await fetch(CREATE_CHECKOUT_URL, {
@@ -378,6 +397,9 @@
       if (res.status === 403) {
         sessionStorage.removeItem('ossscan_beta_code');
         throw new Error('Beta access code is incorrect.');
+      }
+      if (res.status === 429) {
+        throw new Error(formatRetryAfterMessage(res.headers.get('Retry-After')));
       }
       if (!res.ok) {
         throw new Error(`Server error (${res.status}). Please try again.`);
