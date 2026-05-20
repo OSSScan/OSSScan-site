@@ -405,9 +405,11 @@
 
   (async () => {
     try {
-      const resp = await fetch(MANIFEST_URL, {
-        headers: { 'X-Beta-Code': sessionStorage.getItem('ossscan_beta_code') || '' }
-      });
+      const betaCode = (sessionStorage.getItem('ossscan_beta_code') || '').trim();
+      const resp = await fetch(
+        MANIFEST_URL,
+        betaCode ? { headers: { 'X-Beta-Code': betaCode } } : undefined
+      );
       if (resp.status === 403) {
         document.getElementById('loading').hidden  = true;
         document.getElementById('betaGate').hidden = false;
