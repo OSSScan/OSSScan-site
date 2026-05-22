@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://ossscan-functions-prod-bud8fxarbcauhbdq.eastus-01.azurewebsites.net http://localhost:7072; img-src 'self' data:; font-src 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://ossscan-apim.azure-api.net http://localhost:7072; img-src 'self' data:; font-src 'self';" />
   <title>OSSScan: Downloads</title>
   <style>
     /* ── Reset / base ── */
@@ -343,7 +343,7 @@
   const API_BASE_URL =
     location.hostname === 'localhost' || location.hostname === '127.0.0.1'
       ? 'http://localhost:7072'
-      : 'https://ossscan-functions-prod-bud8fxarbcauhbdq.eastus-01.azurewebsites.net';
+      : 'https://ossscan-apim.azure-api.net';
 
   const MANIFEST_URL  = `${API_BASE_URL}/GetDownloads`;
 
