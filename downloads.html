@@ -409,6 +409,15 @@
     return card;
   }
 
+  function showBetaGate(message) {
+    const errorEl = document.getElementById('betaCodeError');
+    document.getElementById('loading').hidden = true;
+    document.getElementById('content').hidden = true;
+    document.getElementById('error').hidden = true;
+    document.getElementById('betaGate').hidden = false;
+    errorEl.textContent = message || '';
+  }
+
   (async () => {
     try {
       const betaCode = (sessionStorage.getItem('ossscan_beta_code') || '').trim();
@@ -417,8 +426,8 @@
         betaCode ? { headers: { 'X-Beta-Code': betaCode } } : undefined
       );
       if (resp.status === 403) {
-        document.getElementById('loading').hidden  = true;
-        document.getElementById('betaGate').hidden = false;
+        sessionStorage.removeItem('ossscan_beta_code');
+        showBetaGate(betaCode ? 'Saved access code was rejected. Please try again.' : '');
         return;
       }
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -427,6 +436,11 @@
 
     } catch (err) {
       console.error('GetDownloads fetch failed:', err);
+      if ((sessionStorage.getItem('ossscan_beta_code') || '').trim()) {
+        sessionStorage.removeItem('ossscan_beta_code');
+        showBetaGate('Access code could not be verified. Please try again.');
+        return;
+      }
       document.getElementById('loading').hidden = true;
       document.getElementById('error').hidden   = false;
     }
@@ -472,31 +486,39 @@
     btn.disabled = true;
     btn.textContent = 'Checking...';
 
-    const resp = await fetch(MANIFEST_URL, {
-      headers: { 'X-Beta-Code': code }
-    });
+    try {
+      const resp = await fetch(MANIFEST_URL, {
+        headers: { 'X-Beta-Code': code }
+      });
 
-    if (resp.status === 403) {
-      errorEl.textContent = 'Incorrect code. Please try again.';
-      input.value = '';
+      if (resp.status === 403) {
+        errorEl.textContent = 'Incorrect code. Please try again.';
+        input.value = '';
+        input.focus();
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+        return;
+      }
+
+      if (!resp.ok) {
+        errorEl.textContent = 'Unable to connect. Please try again later.';
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+        return;
+      }
+
+      // Code accepted — store it and render the page.
+      sessionStorage.setItem('ossscan_beta_code', code);
+      document.getElementById('betaGate').hidden = true;
+      const manifest = await resp.json();
+      renderManifest(manifest);
+    } catch (err) {
+      console.error('GetDownloads beta-code check failed:', err);
+      errorEl.textContent = 'Access code could not be verified. Please try again.';
       input.focus();
       btn.disabled = false;
       btn.textContent = 'Continue';
-      return;
     }
-
-    if (!resp.ok) {
-      errorEl.textContent = 'Unable to connect. Please try again later.';
-      btn.disabled = false;
-      btn.textContent = 'Continue';
-      return;
-    }
-
-    // Code accepted — store it and render the page.
-    sessionStorage.setItem('ossscan_beta_code', code);
-    document.getElementById('betaGate').hidden = true;
-    const manifest = await resp.json();
-    renderManifest(manifest);
   });
 
   document.getElementById('betaCodeInput').addEventListener('keydown', (e) => {
