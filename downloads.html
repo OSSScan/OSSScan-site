@@ -57,6 +57,21 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,179,244,.4);
+      background: rgba(74,179,244,.14);
+      color: #9fdcff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
     .header-nav {
       margin-left: auto;
       display: flex;
@@ -176,6 +191,18 @@
       border-radius: 4px;
       letter-spacing: 0.04em;
     }
+    .beta-banner {
+      background: #e8f1ff;
+      border: 1px solid #b8cff5;
+      border-left: 4px solid #1056b8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #17325c;
+      line-height: 1.6;
+    }
+    .beta-banner strong { color: #0b1a3d; }
 
     /* ── Loading / error states ── */
     .status { font-size: 14px; color: #667; padding: 24px 0; }
@@ -225,9 +252,10 @@
       <div class="site-header-wordmark">
         <span class="brand-name">OSSScan</span>
         <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+        <span class="beta-badge">Public Beta</span>
       </div>
       <nav class="header-nav">
-        <a href="payments.html">Buy License</a>
+        <a href="payments.html">Get Beta License</a>
         <a href="mailto:jim@ossscan.com">Support</a>
       </nav>
     </div>
@@ -236,7 +264,7 @@
   <div class="secondary-nav-inner">
     <a href="index.html">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Buy License</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
     <div class="nav-dropdown">
       <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
       <div class="nav-dropdown-menu">
@@ -255,7 +283,11 @@
   <div class="page-body">
     <div class="wrap">
 
-      <h1>Download OSSScan</h1>
+      <h1>Download OSSScan Beta</h1>
+
+      <div class="beta-banner">
+        <strong>These are beta builds.</strong> OSSScan is currently in active beta testing, so installers, workflows, and output formats may change between releases. Use these builds for evaluation and early production validation.
+      </div>
 
       <div class="auth-banner">
         <strong>Official site notice.</strong> OSSScan is distributed exclusively from
@@ -300,8 +332,8 @@
         <ol>
           <li>Unzip the archive and open <strong>OSSScan</strong>.</li>
           <li>Run a <strong>Compatibility Check</strong>, which generates your machine fingerprint.</li>
-          <li>Copy the fingerprint and go to <a href="payments.html">ossscan.com/payments</a> to purchase a license.</li>
-          <li>Click the download link in your purchase confirmation email to receive your license file.</li>
+          <li>Copy the fingerprint and go to <a href="payments.html">ossscan.com/payments</a> to request your beta license.</li>
+          <li>Click the download link in your beta access email to receive your license file.</li>
         </ol>
 
         <h2>Verify your download</h2>

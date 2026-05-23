@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OSSScan: Purchase License</title>
+  <title>OSSScan: Request Beta License</title>
   <style>
     /* ── Reset / base ── */
     *, *::before, *::after { box-sizing: border-box; }
@@ -56,6 +56,21 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,179,244,.4);
+      background: rgba(74,179,244,.14);
+      color: #9fdcff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
     .header-nav {
       margin-left: auto;
       display: flex;
@@ -80,6 +95,18 @@
     /* ── Page title area ── */
     .page-title { font-size: 22px; margin: 0 0 6px; color: #0b1a3d; }
     p { margin: 0 0 12px; line-height: 1.45; }
+    .beta-page-note {
+      background: #e8f1ff;
+      border: 1px solid #b8cff5;
+      border-left: 4px solid #1056b8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 0 0 20px;
+      font-size: 13px;
+      color: #17325c;
+      line-height: 1.6;
+    }
+    .beta-page-note strong { color: #0b1a3d; }
 
     /* ── Card ── */
     .card {
@@ -193,6 +220,7 @@
       <div class="site-header-wordmark">
         <span class="brand-name">OSSScan</span>
         <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+        <span class="beta-badge">Public Beta</span>
       </div>
       <nav class="header-nav">
         <a href="downloads.html">Downloads</a>
@@ -204,7 +232,7 @@
   <div class="secondary-nav-inner">
     <a href="index.html">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Buy License</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
     <div class="nav-dropdown">
       <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
       <div class="nav-dropdown-menu">
@@ -224,6 +252,7 @@
     <div class="wrap">
       <h1 class="page-title">Request Beta License</h1>
       <p>Enter your machine fingerprint and email address below. Your 7-day beta license will be delivered to your inbox shortly after submitting.</p>
+      <div class="beta-page-note"><strong>Beta program note.</strong> Access is currently controlled by beta code, capacity can change, and license workflows may be adjusted before general availability.</div>
 
       <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
         <strong>Beta is currently at capacity.</strong> We have reached the maximum number of beta participants.
