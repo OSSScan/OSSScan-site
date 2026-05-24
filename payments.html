@@ -24,7 +24,7 @@
       padding: 0 24px;
     }
     .site-header-inner {
-      max-width: 760px;
+      max-width: 1000px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -75,6 +75,7 @@
       margin-left: auto;
       display: flex;
       gap: 18px;
+      align-items: center;
     }
     .header-nav a {
       color: #a8c8ea;
@@ -84,6 +85,14 @@
       transition: color .15s;
     }
     .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav {
+      background: #4ab3f4;
+      color: #0b1a3d;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+    }
 
     /* ── Page body ── */
     .page-body {
@@ -223,8 +232,9 @@
         <span class="beta-badge">Public Beta</span>
       </div>
       <nav class="header-nav">
+        <a href="index.html">Home</a>
         <a href="downloads.html">Downloads</a>
-        <a href="mailto:jim@ossscan.com">Support</a>
+        <a href="payments.html" class="btn-nav">Get Beta License</a>
       </nav>
     </div>
   </header>
