@@ -524,7 +524,7 @@
       }
 
       submitBtn.disabled = true;
-      setStatus('Creating Stripe checkout…');
+      setStatus('Submitting beta license request…');
 
       try {
         const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode });
@@ -543,7 +543,7 @@
           if (result.email && result.email.toLowerCase() !== email.toLowerCase()) {
             mismatch.textContent =
               `Note: you entered ${email} but the license was sent to ${result.email}. ` +
-              `If you used a different email address when purchasing, please check that inbox instead.`;
+              `If you used a different email address when requesting beta access, please check that inbox instead.`;
             mismatch.hidden = false;
           } else {
             mismatch.hidden = true;
@@ -568,10 +568,10 @@
         if (parsed.origin !== 'https://checkout.stripe.com') {
           throw new Error('Unexpected redirect target from server.');
         }
-        setStatus('Redirecting to Stripe…', 'ok');
+        setStatus('Redirecting to secure beta request flow…', 'ok');
         location.assign(url);
       } catch (err) {
-        setStatus(err && err.message ? err.message : 'Failed to start checkout.', 'err');
+        setStatus(err && err.message ? err.message : 'Failed to submit beta license request.', 'err');
         submitBtn.disabled = false;
       }
     });
