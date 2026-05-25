@@ -11,6 +11,9 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color: #111;
       background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* ── Header ── */
@@ -184,6 +187,7 @@
     }
 
     /* ── Section base ── */
+    .page-body { flex: 1; }
     section { padding: 64px 24px; }
     .wrap { max-width: 1000px; margin: 0 auto; }
     .section-label {
@@ -471,6 +475,8 @@
     <a href="privacy.html">Privacy</a>
   </div>
 </nav>
+
+  <div class="page-body">
 
   <!-- ── Hero ── -->
   <section class="hero">
@@ -824,7 +830,9 @@ for your AI agent to work through end to end.</pre>
     </div>
   </section>
 
-  <!-- ── Footer ── */
+  </div>
+
+  <!-- ── Footer ── -->
   <footer class="site-footer">
     <p>
       &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
