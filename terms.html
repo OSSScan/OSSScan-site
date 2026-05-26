@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSScan: Terms of Use</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:760px; margin:0 auto; }
+    .doc-header { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:28px; box-shadow:0 2px 8px rgba(11,26,61,.06); }
+    .doc-header h1 { font-size:24px; font-weight:800; color:#0b1a3d; margin:0 0 8px; }
+    .doc-meta { font-size:13px; color:#667; line-height:1.6; }
+    .doc-meta strong { color:#445; }
+    .doc-section { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.04); }
+    .doc-section h2 { font-size:16px; font-weight:700; color:#0b1a3d; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid #e8eef7; }
+    .doc-section p { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; }
+    .doc-section p:last-child { margin-bottom:0; }
+    .doc-section ul { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; padding-left:20px; }
+    .doc-section li { margin-bottom:6px; }
+    .doc-section strong { color:#0b1a3d; }
+    .doc-section a { color:#1056b8; }
+    .doc-section code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:#f0f4fa; padding:1px 5px; border-radius:4px; }
+    .summary-card { border-color:#1056b8; background:#f0f4fa; }
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Get Beta License</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+
+    <div class="doc-header">
+      <h1>Terms of Use</h1>
+      <div class="doc-meta">
+        <strong>Effective date:</strong> May 4, 2026 &nbsp;&middot;&nbsp;
+        <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
+        <strong>Contact:</strong> <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>
+      </div>
+    </div>
+
+    <div class="doc-section summary-card">
+      <h2>Plain-English Summary</h2>
+      <p>This summary is provided for convenience only and is not part of the agreement. OSSScan is an advisory tool that helps identify open-source licensing and vulnerability risks in code and dependency inventories.</p>
+      <p>OSSScan is not a substitute for legal, security, or compliance review. BigBrainCorp LLC does not guarantee that OSSScan will detect every copyleft obligation, vulnerability, or other issue, and is not liable for consequences arising from your use of or reliance on the Software's output.</p>
+      <p>By installing, launching, or otherwise using OSSScan, you agree to these Terms of Use. If you do not agree, do not install or use the Software, and delete any copies in your possession.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>1. License Grant</h2>
+      <p>Subject to your continuous compliance with these Terms and your payment of any applicable fees, the Vendor grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to install and run the Software on machines you own or control, solely for your internal business purposes and only for the duration permitted by your active license file, <code>license.json</code>, issued by the Vendor.</p>
+      <p>This license terminates automatically upon expiry of your license file, upon any breach of these Terms, or upon revocation by the Vendor.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>2. Restrictions</h2>
+      <p>You shall not, and shall not permit any third party to:</p>
+      <ul>
+        <li>Copy, distribute, sublicense, lease, rent, lend, sell, or otherwise transfer the Software or any license file to any third party.</li>
+        <li>Reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of the Software, except to the extent such activity is expressly permitted by applicable law notwithstanding this restriction.</li>
+        <li>Modify, adapt, translate, or create derivative works of the Software.</li>
+        <li>Remove, alter, or obscure any proprietary notices, license file contents, signatures, watermarks, or attributions in or on the Software or its outputs.</li>
+        <li>Circumvent, disable, or otherwise interfere with any licensing, authentication, expiry, or anti-tampering mechanism of the Software, including by tampering with the license file, the embedded public key, or the system clock.</li>
+        <li>Use the Software to develop a competing product, or to benchmark the Software for the purpose of public comparison, without the Vendor's prior written consent.</li>
+        <li>Use the Software in any way that violates applicable law or third-party rights.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>3. Open-Source Components</h2>
+      <p>The Software bundles or depends on third-party open-source components, including but not limited to <strong>Syft</strong> (Apache-2.0), <strong>Grype</strong> (Apache-2.0), and <strong>Electron</strong> (MIT). Those components are licensed under their own terms; nothing in these Terms modifies your rights or obligations with respect to those components. Applicable notices are described in the <code>THIRD_PARTY_NOTICES.md</code> file shipped with the Software, and the full license texts for redistributed components are shipped with the Software in the files referenced there.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>4. Advisory Tool, No Legal, Security, or Compliance Advice</h2>
+      <p><strong>The Software is an advisory and informational tool only.</strong> The Software's outputs, including any Software Bill of Materials, license report, vulnerability or CVE report, risk classification, copyleft analysis, or other artifact produced by the Software, are provided for informational purposes only and must not be relied upon as legal advice, security advice, license-compliance certification, or a definitive determination of any matter relating to open-source licensing, intellectual property, security, or regulatory compliance.</p>
+      <p>You acknowledge and agree that:</p>
+      <ul>
+        <li>The Software depends on third-party tools and data sources, including Syft, Grype, Grype's vulnerability database service, and the Google deps.dev Open Source Insights API, and the Vendor has no control over their accuracy, completeness, or availability.</li>
+        <li>The Software's classification of a license as permissive, copyleft (weak), copyleft (strong), or unknown is a heuristic, not a legal opinion.</li>
+        <li>The Software may fail to detect dependencies, misidentify licenses, miss obligations, and produce false positives or false negatives.</li>
+        <li>Deep-enrichment features may introduce additional inaccuracies, and any license assertion you accept or enter through the Software is your responsibility.</li>
+        <li>You are solely responsible for your own legal and license compliance and for independently verifying the Software's output before relying on it for any decision.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>5. No Warranty</h2>
+      <p><strong>The Software is provided "AS IS" and "AS AVAILABLE," with all faults and without warranty of any kind.</strong> To the maximum extent permitted by applicable law, the Vendor disclaims all warranties, whether express, implied, statutory, or otherwise, including without limitation the implied warranties of merchantability, fitness for a particular purpose, title, accuracy, completeness, quiet enjoyment, and non-infringement, and any warranties arising from a course of dealing, usage, or trade practice.</p>
+      <p>Without limiting the foregoing, the Vendor does not warrant that the Software will meet your requirements, operate uninterrupted or error-free, be free of harmful components, have all defects corrected, produce accurate or reliable output, detect every applicable open-source or security issue, or retain access to any third-party service the Software depends on.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>6. Limitation of Liability</h2>
+      <p><strong>To the maximum extent permitted by applicable law, in no event shall the Vendor be liable to you or any third party for any indirect, incidental, special, consequential, exemplary, or punitive damages</strong>, including damages for lost profits, lost revenue, lost data, lost goodwill, business interruption, procurement of substitute goods or services, regulatory fines, settlement payments, royalties, license-compliance liabilities, litigation costs, or any other damages, however caused and under any theory of liability, even if the Vendor has been advised of the possibility of such damages.</p>
+      <p><strong>The Vendor's aggregate liability</strong> arising out of or relating to these Terms or the Software, whether in contract, tort, or otherwise, shall not exceed the lesser of the total fees actually paid by you to the Vendor for the Software in the twelve months immediately preceding the event giving rise to the claim, or US $100.</p>
+      <p>These limitations apply notwithstanding the failure of any limited remedy of its essential purpose and to the maximum extent permitted by law.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>7. Indemnification</h2>
+      <p>You shall defend, indemnify, and hold harmless the Vendor and the Vendor's affiliates, officers, employees, and agents from and against any and all claims, demands, actions, liabilities, damages, losses, costs, and expenses, including reasonable attorneys' fees, arising out of or related to your use of the Software, your reliance on any Software output, your failure to comply with applicable open-source license obligations, your breach of these Terms, or your violation of any law or third-party right.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>8. License File and Expiry</h2>
+      <p>The Software requires a valid, unexpired license file, <code>license.json</code>, signed by the Vendor. You acknowledge that license files have an expiry date, features remain available only while a valid license file is installed and unexpired, and tampering with the license file, the embedded public key, the license-state file, or the system clock is a material breach of these Terms and may also violate applicable computer-misuse laws.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>9. Network Features and Data Handling</h2>
+      <p>The Software's deep-scan and deep-enrichment features make outbound network requests to third-party services, including, depending on the ecosystem, <code>proxy.golang.org</code>, <code>registry.npmjs.org</code>, <code>pypi.org</code>, and <code>api.deps.dev</code>. These features transmit only package coordinates, consisting of name, version, and ecosystem identifier; the Software does not transmit your source code or repository contents.</p>
+      <p>The Vendor is not responsible for the policies, availability, or accuracy of those third-party services, and your use of those features is subject to their respective terms. The Vendor does not collect telemetry from the Software. For additional details, see the Privacy Policy shipped with the Software.</p>
+      <p>If you purchase a paid license, support, if any, is provided as described in the Support &amp; Maintenance Policy shipped with the Software. Vulnerability scanning also relies on Grype's vulnerability database, which is downloaded and refreshed from third-party infrastructure operated for the Grype ecosystem.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>10. Term and Termination</h2>
+      <p>These Terms remain in effect until terminated. They terminate automatically without notice upon expiry of your license file or upon your breach of any provision. The Vendor may also terminate these Terms at any time by revoking your license.</p>
+      <p>Upon termination, you shall cease all use of the Software and delete all copies in your possession or control. Sections 2, 4, 5, 6, 7, 11, 12, and any other provisions that by their nature should survive termination, will survive.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>11. Governing Law and Venue</h2>
+      <p>These Terms are governed by, and construed in accordance with, the laws of the State of Arizona, USA, without regard to its conflict-of-laws rules. The parties consent to the exclusive jurisdiction and venue of the state and federal courts located in Maricopa County, Arizona for any dispute arising out of or relating to these Terms or the Software. The United Nations Convention on Contracts for the International Sale of Goods does not apply.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>12. Miscellaneous</h2>
+      <ul>
+        <li><strong>Entire agreement.</strong> These Terms constitute the entire agreement between you and the Vendor regarding the Software and supersede any prior or contemporaneous agreements on the subject.</li>
+        <li><strong>Severability.</strong> If any provision of these Terms is held unenforceable, the remaining provisions remain in full force.</li>
+        <li><strong>No waiver.</strong> No failure or delay by the Vendor in exercising any right shall operate as a waiver.</li>
+        <li><strong>Assignment.</strong> You may not assign or transfer these Terms or any rights hereunder without the Vendor's prior written consent. The Vendor may assign these Terms freely.</li>
+        <li><strong>Updates.</strong> The Vendor may revise these Terms from time to time. Continued use of the Software after revised Terms are made available constitutes your acceptance of the revised Terms.</li>
+        <li><strong>Refunds.</strong> Refunds, if any, are governed by the OSSScan Refund Policy shipped with the Software and available from the Vendor upon request.</li>
+        <li><strong>Contact.</strong> Questions about these Terms should be sent to <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Acknowledgement</h2>
+      <p>By installing or using OSSScan, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+  <p style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+    <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+    <a href="refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+    <a href="terms.html">Terms of Use</a>
+  </p>
+</footer>
+
+</body>
+</html>
