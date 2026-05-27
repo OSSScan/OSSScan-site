@@ -122,11 +122,11 @@
         <li>Use filters to review license findings; optionally export the License Report</li>
         <li>Optionally run Deep Enrich to resolve remaining unknown licenses</li>
         <li>Optionally save the SBOM for later use</li>
-        <li>Optionally run Bulk License Investigation to prepare AI Agent prompts, then use the Launch Agent button</li>
+        <li>Optionally run Bulk License Investigation to prepare AI Agent prompts, then use the Agent Instructions button</li>
         <li>Check and refresh the Grype CVE database</li>
         <li>Run a CVE Scan</li>
         <li>Use filters to review CVE findings; optionally export the CVE Report</li>
-        <li>Optionally run Bulk CVE Investigation to prepare AI Agent prompts, then use the Launch Agent button</li>
+        <li>Optionally run Bulk CVE Investigation to prepare AI Agent prompts, then use the Agent Instructions button</li>
         <li>At any point, click the 🤖 Robot button on any row to copy an individual investigation prompt (license or CVE) for your AI agent</li>
         <li>Perform bulk investigations using your AI agent of choice</li>
       </ol>
@@ -267,9 +267,9 @@
       <li>Click <strong>Browse…</strong> and select a local folder (for example, a folder containing a GitHub repository).</li>
       <li>Select a scan mode:
         <ul>
-          <li><strong>Light</strong> — fast, offline inventory scan.</li>
-          <li><strong>Deep</strong> — slower; uses additional sources to improve license coverage.</li>
-          <li><strong>Audit</strong> — slowest; compares tools and highlights license disagreements.</li>
+          <li><strong>Light</strong> — Syft only; fastest, but may miss packages or leave more licenses unresolved.</li>
+          <li><strong>Deep</strong> — most accurate; combines Syft, ClearlyDefined, and ScanCode for broader license coverage (uses network).</li>
+          <li><strong>Audit</strong> — runs ScanCode on every package and highlights disagreements with Syft for review (slowest).</li>
         </ul>
       </li>
       <li>Click <strong>Scan</strong> and wait for the stages to complete.</li>

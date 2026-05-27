@@ -343,9 +343,9 @@
               <div class="faq-q">What's the difference between Light, Deep, and Audit scans?</div>
               <div class="faq-a">
                 <ul>
-                  <li><strong>Light:</strong> fastest, offline SBOM and license analysis (Syft only).</li>
-                  <li><strong>Deep:</strong> slower; uses additional sources to fill unknown licenses. May use network lookups and can run ScanCode locally for residual unknowns.</li>
-                  <li><strong>Audit:</strong> slowest; runs ScanCode broadly and highlights <strong>disagreements</strong> between tools. Useful for release sign-off and due diligence.</li>
+                  <li><strong>Light:</strong> Syft only; fastest, but may miss packages or leave more licenses unresolved.</li>
+                  <li><strong>Deep:</strong> most accurate; combines Syft, ClearlyDefined, and ScanCode for broader license coverage. Uses network lookups, but sends only package coordinates.</li>
+                  <li><strong>Audit:</strong> runs ScanCode broadly and highlights <strong>disagreements</strong> between tools for review. Useful for release sign-off and due diligence.</li>
                 </ul>
               </div>
             </section>
@@ -616,7 +616,7 @@
                   In most agent environments, the easiest instruction is: <strong>"Open AgentPrompt.md and follow it exactly."</strong>
                 </p>
                 <p class="muted">
-                  OSSScan also displays quickstart steps in-app via <strong>Launch Agent → VS Code (GitHub Copilot)…</strong> or <strong>Launch Agent → Claude Desktop (Code/Local)…</strong>.
+                  OSSScan also displays quickstart steps in-app via <strong>Agent Instructions → VS Code (GitHub Copilot)…</strong> or <strong>Agent Instructions → Claude Desktop (Code/Local)…</strong>.
                 </p>
                 <p class="muted">
                   Tested paths: Claude Code (terminal CLI) and GitHub Copilot (VS Code Agent mode). Cursor and Windsurf use the same approach and should work with any version that supports agentic file operations.
