@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OSSScan: Purchase License</title>
+  <title>OSSScan: Request Beta License</title>
   <style>
     /* ── Reset / base ── */
     *, *::before, *::after { box-sizing: border-box; }
@@ -234,7 +234,7 @@
       <nav class="header-nav">
         <a href="index.html">Home</a>
         <a href="downloads.html">Downloads</a>
-        <a href="payments.html" class="btn-nav">Get Beta License</a>
+        <a href="payments.html" class="btn-nav">Request Beta License</a>
       </nav>
     </div>
   </header>
@@ -242,7 +242,7 @@
   <div class="secondary-nav-inner">
     <a href="index.html">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Purchase License</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
     <div class="nav-dropdown">
       <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
       <div class="nav-dropdown-menu">
@@ -260,8 +260,14 @@
   <!-- ── Page content ── -->
   <div class="page-body">
     <div class="wrap">
-      <h1 class="page-title">Purchase License</h1>
-      <p>Enter your machine fingerprint and email address to purchase an OSSScan license for your machine.</p>
+      <h1 class="page-title">Request Beta License</h1>
+      <p>Enter your machine fingerprint and email address below. Your 7-day beta license will be delivered to your inbox shortly after submitting.</p>
+      <div class="beta-page-note"><strong>Beta program note.</strong> Access is currently controlled by beta code, capacity can change, and license workflows may be adjusted before general availability.</div>
+
+      <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
+        <strong>Beta is currently at capacity.</strong> We have reached the maximum number of beta participants.
+        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> to join the waitlist for the next cohort.
+      </div>
 
       <!-- Shown when the fingerprint already has a pending undownloaded first purchase -->
       <div id="pendingFirstDownloadNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
@@ -312,24 +318,34 @@
             </div>
           </div>
 
+          <!-- Beta: tier is fixed at 7-day free. Restore the tier select for general availability. -->
+          <input id="tier" name="tier" type="hidden" value="7day" />
           <div class="row">
             <div>
-              <label for="tier">License</label>
-              <select id="tier" name="tier">
-                <option value="7day">7-Day License</option>
-                <option value="30day">30-Day License</option>
-              </select>
+              <label>License</label>
+              <div style="padding:10px 12px;border-radius:8px;border:1px solid #d0d9e8;background:#f4f6f9;font-size:14px;color:#334;">
+                7-day Beta License &nbsp;&mdash;&nbsp; <strong>Free</strong>
+              </div>
+              <div class="help">Beta participants receive a complimentary 7-day license. Pricing will apply at general availability.</div>
+            </div>
+          </div>
+
+          <div class="row" id="betaCodeRow">
+            <div>
+              <label for="betaCode">Beta access code</label>
+              <input id="betaCode" name="betaCode" type="password" placeholder="Enter your beta access code" autocomplete="off" />
+              <div class="help">Required during the beta period. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> if you do not have a code.</div>
             </div>
           </div>
 
           <div class="actions">
-            <button id="submitBtn" type="submit">Purchase License</button>
+            <button id="submitBtn" type="submit">Request Beta License</button>
             <button id="clearBtn" type="button" class="secondary">Clear</button>
             <span id="status" class="status"></span>
           </div>
 
           <div class="small">
-            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine.</div>
+            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. No payment information is collected during the beta.</div>
             <div>For details, see the <a href="privacy.html">Privacy Policy</a>.</div>
           </div>
         </form>
@@ -365,15 +381,17 @@
 
     const GET_LICENSE_STATUS_URL = `${API_BASE_URL}/GetLicenseStatus`;
     const CREATE_CHECKOUT_URL    = `${API_BASE_URL}/CreateCheckout`;
+    const BETA_STATUS_URL        = `${API_BASE_URL}/GetBetaStatus`;
     const CHECKOUT_SUCCESS_URL   = 'checkout-success.html';
 
-    const form       = document.getElementById('purchaseForm');
-    const fpInput    = document.getElementById('machineFingerprint');
-    const emailInput = document.getElementById('email');
-    const tierInput  = document.getElementById('tier');
-    const submitBtn  = document.getElementById('submitBtn');
-    const clearBtn   = document.getElementById('clearBtn');
-    const statusEl   = document.getElementById('status');
+    const form          = document.getElementById('purchaseForm');
+    const fpInput       = document.getElementById('machineFingerprint');
+    const emailInput    = document.getElementById('email');
+    const tierInput     = document.getElementById('tier');
+    const betaCodeInput = document.getElementById('betaCode');
+    const submitBtn     = document.getElementById('submitBtn');
+    const clearBtn      = document.getElementById('clearBtn');
+    const statusEl      = document.getElementById('status');
 
     function setStatus(text, kind) {
       statusEl.textContent = text || '';
@@ -469,10 +487,30 @@
     const fpFromQuery = getParam('fp');
     if (fpFromQuery) fpInput.value = fpFromQuery;
 
+    // Check beta license capacity on load — disable the form if the limit has been reached.
+    (async () => {
+      try {
+        const resp = await fetch(BETA_STATUS_URL);
+        if (resp.ok) {
+          const betaStatus = await resp.json();
+          if (!betaStatus.available) {
+            document.getElementById('betaFullNotice').hidden = false;
+            submitBtn.disabled = true;
+            setStatus('Beta is currently at capacity. No further licenses are available at this time.', 'err');
+          }
+        }
+      } catch { /* network error — allow through, server enforces the limit */ }
+    })();
+
+    // Prefill beta code from sessionStorage so testers don't retype it.
+    const savedCode = sessionStorage.getItem('ossscan_beta_code');
+    if (savedCode) betaCodeInput.value = savedCode;
+
     clearBtn.addEventListener('click', () => {
       fpInput.value = '';
       emailInput.value = '';
-      tierInput.value = '7day';
+      betaCodeInput.value = '';
+      sessionStorage.removeItem('ossscan_beta_code');
       hideAllNotices();
       setStatus('');
       fpInput.focus();
@@ -484,8 +522,9 @@
       setStatus('');
 
       const machineFingerprint = (fpInput.value || '').trim();
-      const email = (emailInput.value || '').trim();
-      const tier  = (tierInput.value || '').trim();
+      const email    = (emailInput.value || '').trim();
+      const tier     = (tierInput.value || '').trim();
+      const betaCode = (betaCodeInput.value || '').trim();
 
       if (!validateFingerprint(machineFingerprint)) {
         setStatus('Enter a valid machine fingerprint.', 'err');
@@ -497,14 +536,14 @@
         emailInput.focus();
         return;
       }
-      if (!tier) {
-        setStatus('Select a license tier.', 'err');
-        tierInput.focus();
+      if (!betaCode) {
+        setStatus('Enter your beta access code.', 'err');
+        betaCodeInput.focus();
         return;
       }
 
       submitBtn.disabled = true;
-      setStatus('Checking license status…');
+      setStatus('Submitting beta license request…');
 
       let licenseStatus;
       try {
@@ -551,15 +590,16 @@
 
       // Buy state: newPurchaseAllowed or nearExpiryPurchaseAllowed
       const purchaseMode = status === 'nearExpiryPurchaseAllowed' ? 'nearExpiryPurchase' : 'newPurchase';
+      sessionStorage.setItem('ossscan_beta_code', betaCode);
 
-      setStatus('Redirecting to checkout…');
+      setStatus('Redirecting to secure beta request flow…');
 
       try {
-        const result = await createCheckoutSession({ email, machineFingerprint, tier, purchaseMode });
+        const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode, purchaseMode });
 
         if (result && result.simulated === true) {
           sessionStorage.setItem('ossscan_checkout_notice',
-            'Purchase received. Your license will be delivered to your email address shortly.');
+            'Request received. Your beta license will be delivered to your email address shortly.');
           location.assign(CHECKOUT_SUCCESS_URL);
           return;
         }
@@ -572,7 +612,7 @@
         }
         location.assign(url);
       } catch (err) {
-        setStatus(err && err.message ? err.message : 'Failed to start checkout.', 'err');
+        setStatus(err && err.message ? err.message : 'Failed to submit beta license request.', 'err');
         submitBtn.disabled = false;
       }
     });
