@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OSSScan: Request Beta License</title>
+  <title>OSSScan: Purchase License</title>
   <style>
     /* ── Reset / base ── */
     *, *::before, *::after { box-sizing: border-box; }
@@ -242,7 +242,7 @@
   <div class="secondary-nav-inner">
     <a href="index.html">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="payments.html" class="nav-action">Purchase License</a>
     <div class="nav-dropdown">
       <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
       <div class="nav-dropdown-menu">
@@ -260,22 +260,36 @@
   <!-- ── Page content ── -->
   <div class="page-body">
     <div class="wrap">
-      <h1 class="page-title">Request Beta License</h1>
-      <p>Enter your machine fingerprint and email address below. Your 7-day beta license will be delivered to your inbox shortly after submitting.</p>
-      <div class="beta-page-note"><strong>Beta program note.</strong> Access is currently controlled by beta code, capacity can change, and license workflows may be adjusted before general availability.</div>
+      <h1 class="page-title">Purchase License</h1>
+      <p>Enter your machine fingerprint and email address to purchase an OSSScan license for your machine.</p>
 
-      <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
-        <strong>Beta is currently at capacity.</strong> We have reached the maximum number of beta participants.
-        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> to join the waitlist for the next cohort.
+      <!-- Shown when the fingerprint already has a pending undownloaded first purchase -->
+      <div id="pendingFirstDownloadNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
+        <strong>A license for this machine has already been purchased but not yet downloaded.</strong><br/>
+        Please check your inbox and junk mail folder for the original download link.
+        If you cannot find the email, contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> with your machine fingerprint to have it resent.
       </div>
 
-      <div id="alreadyLicensedNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
-        <strong>A license has already been issued for this machine.</strong>
-        <span id="alreadyLicensedDetail"></span>
-        <br/>Please check your inbox and junk mail folder for the license download link.
-        If you cannot find the email or believe the wrong address was used,
-        contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a>.
-        <div id="alreadyLicensedMismatch" hidden style="margin-top:8px;padding:8px 10px;background:#fce8e6;border:1px solid #d93025;border-radius:6px;color:#7a1a14;font-size:12px;line-height:1.55;"></div>
+      <!-- Shown when a renewal purchase is waiting to be downloaded -->
+      <div id="pendingRenewalNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
+        <strong>An additional license for this machine has already been purchased and is waiting to be downloaded.</strong><br/>
+        Current license expires: <strong id="pendingRenewalExpiry"></strong>.<br/>
+        Please check your inbox for the renewal download link, or contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> to have it resent.
+      </div>
+
+      <!-- Shown when purchase window has not opened yet -->
+      <div id="tooEarlyNotice" hidden style="background:#e8f1ff;border:1px solid #b8cff5;border-left:4px solid #1056b8;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#17325c;line-height:1.6;">
+        <strong>Renewal not available yet.</strong><br/>
+        Current license expires: <strong id="tooEarlyExpiry"></strong>.
+        Renewal purchases are allowed within the last 2 days before expiry.<br/>
+        You can purchase a renewal from <strong id="tooEarlyAvailableOn"></strong>.
+      </div>
+
+      <!-- Shown when a checkout is already in progress for this machine -->
+      <div id="checkoutInProgressNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
+        <strong>A purchase is already in progress for this machine.</strong><br/>
+        Please complete the existing checkout, or wait up to 24 hours for it to expire before trying again.
+        Contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> if you need help.
       </div>
 
       <div class="card">
@@ -298,35 +312,25 @@
             </div>
           </div>
 
-          <!-- Beta: tier is fixed at 7-day free. Restore the tier select for general availability. -->
-          <input id="tier" name="tier" type="hidden" value="7day" />
           <div class="row">
             <div>
-              <label>License</label>
-              <div style="padding:10px 12px;border-radius:8px;border:1px solid #d0d9e8;background:#f4f6f9;font-size:14px;color:#334;">
-                7-day Beta License &nbsp;&mdash;&nbsp; <strong>Free</strong>
-              </div>
-              <div class="help">Beta participants receive a complimentary 7-day license. Pricing will apply at general availability.</div>
-            </div>
-          </div>
-
-          <div class="row" id="betaCodeRow">
-            <div>
-              <label for="betaCode">Beta access code</label>
-              <input id="betaCode" name="betaCode" type="password" placeholder="Enter your beta access code" autocomplete="off" />
-              <div class="help">Required during the beta period. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> if you do not have a code.</div>
+              <label for="tier">License</label>
+              <select id="tier" name="tier">
+                <option value="7day">7-Day License</option>
+                <option value="30day">30-Day License</option>
+              </select>
             </div>
           </div>
 
           <div class="actions">
-            <button id="submitBtn" type="submit">Request Beta License</button>
+            <button id="submitBtn" type="submit">Purchase License</button>
             <button id="clearBtn" type="button" class="secondary">Clear</button>
             <span id="status" class="status"></span>
           </div>
 
           <div class="small">
-            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. No payment information is collected during the beta.</div>
-            <div>For details, see the Privacy Policy shipped with OSSScan.</div>
+            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine.</div>
+            <div>For details, see the <a href="privacy.html">Privacy Policy</a>.</div>
           </div>
         </form>
       </div>
@@ -359,26 +363,34 @@
         ? 'http://localhost:7072'
         : 'https://ossscan-apim.azure-api.net';
 
-    // Expected behavior: POST { email, machineFingerprint, tier }
-    // Response:
-    //   - live/test checkout: { url: "https://checkout.stripe.com/..." } JSON, OR a 303 redirect
-    //   - simulated mode: { simulated: true, message: "..." } JSON
-    const CREATE_CHECKOUT_URL  = `${API_BASE_URL}/CreateCheckout`;
-    const BETA_STATUS_URL      = `${API_BASE_URL}/GetBetaStatus`;
-    const CHECKOUT_SUCCESS_URL = "checkout-success.html";
+    const GET_LICENSE_STATUS_URL = `${API_BASE_URL}/GetLicenseStatus`;
+    const CREATE_CHECKOUT_URL    = `${API_BASE_URL}/CreateCheckout`;
+    const CHECKOUT_SUCCESS_URL   = 'checkout-success.html';
 
-    const form = document.getElementById('purchaseForm');
-    const fpInput = document.getElementById('machineFingerprint');
+    const form       = document.getElementById('purchaseForm');
+    const fpInput    = document.getElementById('machineFingerprint');
     const emailInput = document.getElementById('email');
-    const tierInput = document.getElementById('tier');
-    const betaCodeInput = document.getElementById('betaCode');
-    const submitBtn = document.getElementById('submitBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const statusEl = document.getElementById('status');
+    const tierInput  = document.getElementById('tier');
+    const submitBtn  = document.getElementById('submitBtn');
+    const clearBtn   = document.getElementById('clearBtn');
+    const statusEl   = document.getElementById('status');
 
     function setStatus(text, kind) {
       statusEl.textContent = text || '';
       statusEl.className = 'status' + (kind ? ' ' + kind : '');
+    }
+
+    function hideAllNotices() {
+      ['pendingFirstDownloadNotice', 'pendingRenewalNotice',
+       'tooEarlyNotice', 'checkoutInProgressNotice'].forEach(id => {
+        document.getElementById(id).hidden = true;
+      });
+    }
+
+    function formatDate(isoDate) {
+      if (!isoDate) return '';
+      const d = new Date(isoDate + 'T00:00:00');
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
     }
 
     function getParam(name) {
@@ -394,7 +406,6 @@
     }
 
     function validateFingerprint(fp) {
-      // Keep this intentionally loose; the server must validate strictly.
       if (!fp) return false;
       if (fp.length > 200) return false;
       return fp.startsWith('ossscan-hwid-v');
@@ -403,65 +414,50 @@
     function formatRetryAfterMessage(retryAfter) {
       const defaultMessage = 'Too many requests. Please retry in 15 minutes.';
       if (!retryAfter) return defaultMessage;
-
       const seconds = Number(retryAfter);
       if (Number.isFinite(seconds) && seconds > 0) {
         const minutes = Math.max(1, Math.ceil(seconds / 60));
         return `Too many requests. Please retry in ${minutes} minute${minutes === 1 ? '' : 's'}.`;
       }
-
       const retryAt = new Date(retryAfter);
       if (!Number.isNaN(retryAt.getTime())) {
         const minutes = Math.max(1, Math.ceil((retryAt.getTime() - Date.now()) / 60000));
         return `Too many requests. Please retry in ${minutes} minute${minutes === 1 ? '' : 's'}.`;
       }
-
       return defaultMessage;
     }
 
+    // Step 1: read-only status check — never creates a Stripe session
+    async function getLicenseStatus(machineFingerprint) {
+      const url = `${GET_LICENSE_STATUS_URL}?machineFingerprint=${encodeURIComponent(machineFingerprint)}`;
+      const res = await fetch(url, { method: 'GET' });
+      if (res.status === 429) throw new Error(formatRetryAfterMessage(res.headers.get('Retry-After')));
+      if (!res.ok) throw new Error(`Server error (${res.status}). Please try again.`);
+      return res.json();
+    }
+
+    // Step 2: create Stripe checkout session — only called when status permits
     async function createCheckoutSession(payload) {
-      // Some environments want CORS; set your Function to allow your domain.
       const res = await fetch(CREATE_CHECKOUT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        redirect: 'manual'
+        redirect: 'manual',
       });
 
-      // If the function responds with a redirect, use it.
       if (res.status >= 300 && res.status < 400) {
         const loc = res.headers.get('Location');
         if (loc) return { url: loc };
       }
+      if (res.status === 403) throw new Error('Purchase not authorised. Please contact jim@ossscan.com.');
+      if (res.status === 429) throw new Error(formatRetryAfterMessage(res.headers.get('Retry-After')));
+      if (!res.ok) throw new Error(`Server error (${res.status}). Please try again.`);
 
-      if (res.status === 403) {
-        sessionStorage.removeItem('ossscan_beta_code');
-        throw new Error('Beta access code is incorrect.');
-      }
-      if (res.status === 429) {
-        throw new Error(formatRetryAfterMessage(res.headers.get('Retry-After')));
-      }
-      if (!res.ok) {
-        throw new Error(`Server error (${res.status}). Please try again.`);
-      }
-
-      // All success responses are JSON. Possible shapes:
-      //   { alreadyLicensed: true, email, tier, issuedAt } - duplicate fingerprint
-      //   { simulated: true, message }                      - STRIPE_SKIP mode
-      //   { url: "https://checkout.stripe.com/..." }        - live/test checkout
       const text = await res.text();
       let data;
-      try {
-        data = JSON.parse(text);
-      } catch {
-        throw new Error('Unexpected response from server.');
-      }
-      if (data && data.alreadyLicensed) {
-        return data;
-      }
-      if (data && data.simulated) {
-        return data;
-      }
+      try { data = JSON.parse(text); } catch { throw new Error('Unexpected response from server.'); }
+
+      if (data && data.simulated) return data;
       if (!data || typeof data.url !== 'string') {
         console.error('Unexpected server response:', text);
         throw new Error('Server did not return a checkout URL.');
@@ -471,47 +467,25 @@
 
     // Prefill fingerprint from ?fp=...
     const fpFromQuery = getParam('fp');
-    if (fpFromQuery) {
-      fpInput.value = fpFromQuery;
-    }
-
-    // Check beta license capacity on load — disable the form if the limit has been reached.
-    (async () => {
-      try {
-        const resp = await fetch(BETA_STATUS_URL);
-        if (resp.ok) {
-          const status = await resp.json();
-          if (!status.available) {
-            document.getElementById('betaFullNotice').hidden = false;
-            submitBtn.disabled = true;
-            setStatus('Beta is currently at capacity. No further licenses are available at this time.', 'err');
-          }
-        }
-      } catch { /* network error — allow through, server enforces the limit */ }
-    })();
-
-    // Prefill beta code from sessionStorage so testers don't retype it.
-    const savedCode = sessionStorage.getItem('ossscan_beta_code');
-    if (savedCode) betaCodeInput.value = savedCode;
+    if (fpFromQuery) fpInput.value = fpFromQuery;
 
     clearBtn.addEventListener('click', () => {
       fpInput.value = '';
       emailInput.value = '';
       tierInput.value = '7day';
-      betaCodeInput.value = '';
-      sessionStorage.removeItem('ossscan_beta_code');
+      hideAllNotices();
       setStatus('');
       fpInput.focus();
     });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      hideAllNotices();
       setStatus('');
 
       const machineFingerprint = (fpInput.value || '').trim();
       const email = (emailInput.value || '').trim();
-      const tier = (tierInput.value || '').trim();
-      const betaCode = (betaCodeInput.value || '').trim();
+      const tier  = (tierInput.value || '').trim();
 
       if (!validateFingerprint(machineFingerprint)) {
         setStatus('Enter a valid machine fingerprint.', 'err');
@@ -524,65 +498,81 @@
         return;
       }
       if (!tier) {
-        setStatus('Select a tier.', 'err');
+        setStatus('Select a license tier.', 'err');
         tierInput.focus();
-        return;
-      }
-      if (!betaCode) {
-        setStatus('Enter your beta access code.', 'err');
-        betaCodeInput.focus();
         return;
       }
 
       submitBtn.disabled = true;
-      setStatus('Submitting beta license request…');
+      setStatus('Checking license status…');
+
+      let licenseStatus;
+      try {
+        licenseStatus = await getLicenseStatus(machineFingerprint);
+      } catch (err) {
+        setStatus(err && err.message ? err.message : 'Unable to check license status.', 'err');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // Map backend status to two UI states: buy or already-has-license
+      const status = licenseStatus.status;
+
+      if (status === 'pendingFirstDownload') {
+        document.getElementById('pendingFirstDownloadNotice').hidden = false;
+        submitBtn.disabled = false;
+        setStatus('');
+        return;
+      }
+      if (status === 'activeWithPendingExtraPurchase') {
+        document.getElementById('pendingRenewalExpiry').textContent =
+          formatDate(licenseStatus.currentExpiry);
+        document.getElementById('pendingRenewalNotice').hidden = false;
+        submitBtn.disabled = false;
+        setStatus('');
+        return;
+      }
+      if (status === 'nearExpiryPurchaseTooEarly') {
+        document.getElementById('tooEarlyExpiry').textContent =
+          formatDate(licenseStatus.currentExpiry);
+        document.getElementById('tooEarlyAvailableOn').textContent =
+          formatDate(licenseStatus.purchaseAvailableOn);
+        document.getElementById('tooEarlyNotice').hidden = false;
+        submitBtn.disabled = false;
+        setStatus('');
+        return;
+      }
+      if (status === 'checkoutReservationInProgress') {
+        document.getElementById('checkoutInProgressNotice').hidden = false;
+        submitBtn.disabled = false;
+        setStatus('');
+        return;
+      }
+
+      // Buy state: newPurchaseAllowed or nearExpiryPurchaseAllowed
+      const purchaseMode = status === 'nearExpiryPurchaseAllowed' ? 'nearExpiryPurchase' : 'newPurchase';
+
+      setStatus('Redirecting to checkout…');
 
       try {
-        const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode });
-        sessionStorage.setItem('ossscan_beta_code', betaCode);
+        const result = await createCheckoutSession({ email, machineFingerprint, tier, purchaseMode });
 
-        if (result && result.alreadyLicensed) {
-          const parts = [];
-          if (result.tier && result.issuedAt)
-            parts.push(`A ${result.tier} license was issued on ${new Date(result.issuedAt).toLocaleDateString()}`);
-          if (result.email)
-            parts.push(`to ${result.email}`);
-          const detail = document.getElementById('alreadyLicensedDetail');
-          detail.textContent = parts.length ? ' ' + parts.join(' ') + '.' : '';
-
-          const mismatch = document.getElementById('alreadyLicensedMismatch');
-          if (result.email && result.email.toLowerCase() !== email.toLowerCase()) {
-            mismatch.textContent =
-              `Note: you entered ${email} but the license was sent to ${result.email}. ` +
-              `If you used a different email address when requesting beta access, please check that inbox instead.`;
-            mismatch.hidden = false;
-          } else {
-            mismatch.hidden = true;
-          }
-
-          document.getElementById('alreadyLicensedNotice').hidden = false;
-          submitBtn.disabled = false;
-          setStatus('');
-          return;
-        }
         if (result && result.simulated === true) {
           sessionStorage.setItem('ossscan_checkout_notice',
-            'Request received. Your beta license will be delivered to your email address shortly.');
+            'Purchase received. Your license will be delivered to your email address shortly.');
           location.assign(CHECKOUT_SUCCESS_URL);
           return;
         }
 
         const { url } = result;
-        // Validate the redirect target before following it (open-redirect defence-in-depth).
         let parsed;
         try { parsed = new URL(url); } catch { throw new Error('Server returned an invalid URL.'); }
         if (parsed.origin !== 'https://checkout.stripe.com') {
           throw new Error('Unexpected redirect target from server.');
         }
-        setStatus('Redirecting to secure beta request flow…', 'ok');
         location.assign(url);
       } catch (err) {
-        setStatus(err && err.message ? err.message : 'Failed to submit beta license request.', 'err');
+        setStatus(err && err.message ? err.message : 'Failed to start checkout.', 'err');
         submitBtn.disabled = false;
       }
     });
