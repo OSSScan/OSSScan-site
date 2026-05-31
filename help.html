@@ -397,6 +397,7 @@
         </ul>
       </li>
       <li>Click <strong>Bulk License Review</strong>.</li>
+      <li>In the app UI, read the yellow AI/legal disclaimer and check <strong>I agree</strong> to enable the export button. For CLI/headless exports, there is no interactive prompt; include <code>--ack-license-ai-not-legal-advice</code> alongside <code>--bulk-license</code> instead.</li>
       <li>Choose (or create) an output folder.</li>
       <li>OSSScan creates a <code>Licenses/</code> folder containing:
         <ul>
@@ -581,6 +582,7 @@
     <ul>
       <li>Choose <strong>Headless</strong> vs <strong>UI automation</strong> and select scan/output folders.</li>
       <li>Select which outputs to produce (SBOM, reports, and/or bulk investigation requests).</li>
+      <li>If you want <strong>Bulk License Review</strong> in the generated command, you must also enable the acknowledgement checkbox so OSSScan includes <code>--ack-license-ai-not-legal-advice</code>. If you manually type <code>--bulk-license</code> without that flag, the CLI fails instead of exporting.</li>
       <li>Optionally set <code>--cve-filter</code> and <code>--license-filter</code> to reduce reports and bulk exports.</li>
       <li>Copy the generated command for your OS (macOS binary/open, Windows cmd, Windows PowerShell) and paste it into a terminal (or a terminal-capable agent runner such as Claude Code, CI, etc.).</li>
     </ul>

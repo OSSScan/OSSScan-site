@@ -568,6 +568,9 @@
                   <li><strong>Bulk Investigate</strong> exports prompts for the currently visible findings in the Vulnerabilities table (after the CVE filter).</li>
                 </ul>
                 <p class="muted">
+                  In the app UI, Bulk License Review shows a disclaimer and requires you to check <strong>I agree</strong> before the export button enables. In CLI/headless mode, use <code>--ack-license-ai-not-legal-advice</code> with <code>--bulk-license</code> instead.
+                </p>
+                <p class="muted">
                   Tip: because bulk exports are based on what's visible, filtering is the fastest way to reduce the number of investigations (and token usage).
                 </p>
                 <p>
@@ -660,6 +663,9 @@
                 <p>
                   In both modes, the scan directory and output folder come from CLI arguments, so OSSScan does not need "Browse…" / export dialogs.
                   These modes also <strong>fail fast</strong> (no dialogs) if the license is invalid/missing or if the Terms of Use have not been accepted.
+                </p>
+                <p class="muted">
+                  Bulk license prompt export requires <code>--ack-license-ai-not-legal-advice</code>. The Create Command Line dialog adds it for you when you enable the acknowledgement checkbox; if you type an explicit <code>--bulk-license</code> command without it, the CLI fails instead of exporting.
                 </p>
               </div>
             </section>
