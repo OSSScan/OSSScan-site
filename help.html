@@ -354,6 +354,45 @@
       Audit is best used for due diligence or release sign-off. For day-to-day scanning, Light or Deep is usually the better tradeoff.
     </p>
 
+    <h2>Understanding source scans vs artifact scans</h2>
+    <p>
+      OSSScan analyzes the directory you select and generates an SBOM and license report from the files present in that directory.
+      OSSScan does not clean, rewrite, or reinterpret your project before scanning; it evaluates the scan target as provided.
+    </p>
+
+    <h3>Source scan (development view)</h3>
+    <p>
+      A source scan is for understanding your project's source files and declared dependencies during development.
+      Use this when you want to review dependency-level license signals, source-tree composition, or what your project appears to depend on before packaging.
+    </p>
+    <ul>
+      <li>Use it to review which licenses appear in your source tree.</li>
+      <li>Use it to inspect third-party components referenced from the project itself.</li>
+    </ul>
+    <p>
+      For the clearest source-level picture, scan a directory that does not also contain generated build outputs such as <code>dist/</code>, <code>build/</code>, <code>out/</code>, or <code>target/</code>.
+      Those outputs can add bundled or generated components that do not reflect the source dependency graph by itself.
+    </p>
+
+    <h3>Artifact scan (distribution view)</h3>
+    <p>
+      An artifact scan is for understanding the files you actually ship: the built application, package, installer, container image contents, or other distribution output.
+      Use this when you want to review what is bundled, embedded, or otherwise present in the delivered product.
+    </p>
+    <ul>
+      <li>Use it to understand what is included in the final package or distribution.</li>
+      <li>Use it to review bundled third-party code and shipped license terms or notices.</li>
+      <li>Use it when the question is about the final deliverable rather than the source checkout.</li>
+    </ul>
+
+    <h3>Recommendation</h3>
+    <p>
+      For dependency analysis or development review, scan a clean source tree. For distribution review — understanding what is actually included in the package or release — scan the built artifact you intend to ship. Many teams run both.
+    </p>
+    <p class="muted">
+      This is an informational observation about scan coverage, not legal advice. What matters for your specific situation depends on the licenses involved, how your product is distributed, and your jurisdiction. Consult qualified counsel for compliance decisions.
+    </p>
+
     <h2>Reviewing License Findings</h2>
     <p>
       When the scan is complete, go to the <strong>Licenses</strong> tab to review findings.

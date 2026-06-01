@@ -539,6 +539,56 @@
               </div>
             </section>
       <section class="faq-card">
+              <div class="faq-q">What happens if my project contains build outputs?</div>
+              <div class="faq-a">
+                <p>
+                  If the selected directory includes build outputs such as <code>dist/</code>, <code>build/</code>, <code>out/</code>, or <code>target/</code>, OSSScan will scan those files too.
+                  That can introduce bundled libraries, generated assets, minified code, or other produced artifacts into the SBOM.
+                </p>
+                <p>
+                  That is often desirable for distribution or IP review, because those files may be part of what you actually ship. But it can add noise if your goal is a source-only or dependency-only review.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Should I clean my project before scanning?</div>
+              <div class="faq-a">
+                <p>
+                  Clean first if you want a source-level view of the project without prior build outputs mixed in.
+                  If your goal is to review the shipped application or package, do not clean away the distribution target you actually want to inspect.
+                </p>
+                <p class="muted">
+                  In practice, many teams do both: a clean source scan for development review and a separate artifact scan for release review.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Does OSSScan automatically ignore build directories?</div>
+              <div class="faq-a">
+                <p>
+                  No. OSSScan scans the directory you choose as provided.
+                  This avoids hiding files that may matter for IP, license, or distribution review.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Can I scan both source and build outputs?</div>
+              <div class="faq-a">
+                <p>
+                  Yes. A source scan helps you understand the development dependency picture; an artifact scan shows what is bundled or distributed in the final product.
+                  Together they provide a more complete compliance and review picture.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">What if my build process bundles or minifies dependencies?</div>
+              <div class="faq-a">
+                <p>
+                  Then an artifact scan is especially important. Bundled or minified outputs can contain third-party code and license terms or notices that are only visible in the final build, not in the top-level source tree alone.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
               <div class="faq-q">What does the 🤖 (robot) button do?</div>
               <div class="faq-a">
                 <p>
