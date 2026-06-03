@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSScan: Video Tutorials</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:150px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:860px; margin:0 auto; }
+    .page-title { font-size:28px; font-weight:800; color:#0b1a3d; margin:0 0 6px; }
+    .page-subtitle { font-size:15px; color:#556; margin:0 0 32px; }
+    h2 { font-size:18px; font-weight:700; color:#0b1a3d; margin:32px 0 12px; padding-bottom:8px; border-bottom:2px solid #e8eef7; }
+    p { font-size:14px; color:#334; line-height:1.7; margin:0 0 10px; }
+    a { color:#1056b8; }
+    a:hover { color:#0b1a3d; }
+    .tutorial-card { background:#fff; border:1px solid #d0d9e8; border-radius:10px; padding:18px 20px; margin-bottom:14px; box-shadow:0 2px 6px rgba(11,26,61,.05); }
+    .tutorial-card h3 { font-size:16px; font-weight:700; color:#0b1a3d; margin:0 0 8px; }
+    .tutorial-card p { margin:0 0 8px; }
+    .tutorial-meta { color:#667; font-style:italic; font-size:13px; }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="OSSScan.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Get Beta License</a>
+    </nav>
+  </div>
+</header>
+<nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="tutorials.html">Video Tutorials</a>
+        <a href="help.html">Help</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+    <h1 class="page-title">OSSScan Video Tutorials</h1>
+    <p class="page-subtitle">Start with guided workflows, then move into automation when you are ready</p>
+
+    <p>
+      These videos are ordered to match how most people learn OSSScan: start with the main license workflow, move to CVE analysis, and then use the CLI once you want repeatable automation.
+    </p>
+
+    <h2>Getting Started</h2>
+
+    <section class="tutorial-card">
+      <h3><a href="https://www.youtube.com/watch?v=w4U0tnr2J9k" target="_blank" rel="noreferrer">OSSScan License Analysis with Claude</a></h3>
+      <p>Learn how to use OSSScan and Claude together to review open source license findings and analyze the results.</p>
+      <p class="tutorial-meta">Recommended first tutorial.</p>
+    </section>
+
+    <section class="tutorial-card">
+      <h3><a href="https://www.youtube.com/watch?v=hMPfcErrniE&amp;pp=0gcJCSgLAYcqIYzv" target="_blank" rel="noreferrer">OSSScan CVE Analysis with Claude</a></h3>
+      <p>Walk through an OSSScan CVE workflow with Claude, from generating scan output to reviewing vulnerability findings.</p>
+      <p class="tutorial-meta">Recommended second tutorial.</p>
+    </section>
+
+    <h2>Automation and Advanced Workflows</h2>
+
+    <section class="tutorial-card">
+      <h3><a href="https://www.youtube.com/watch?v=lgKUmK-m2dc" target="_blank" rel="noreferrer">OSSScan CLI and Headless Automation</a></h3>
+      <p>See how to use the OSSScan command line interface to build commands, automate scans, and run workflows headlessly.</p>
+      <p class="tutorial-meta">Recommended after the license and CVE walkthroughs.</p>
+    </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+  <p style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+    <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+    <a href="refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+    <a href="terms.html">Terms of Use</a>
+  </p>
+</footer>
+</body>
+</html>
