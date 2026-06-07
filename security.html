@@ -107,7 +107,7 @@
       <h1>Security Policy</h1>
       <div class="doc-meta">
         <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
-        <strong>Contact:</strong> <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>
+        <strong>Contact:</strong> <a href="mailto:info@ossscan.com">info@ossscan.com</a>
       </div>
     </div>
 
@@ -165,7 +165,7 @@
       <h3>macOS</h3>
       <p>The OSSScan macOS application is <strong>code-signed with an Apple Developer ID</strong> and <strong>notarized by Apple</strong>. Gatekeeper verifies the app automatically on first launch. If macOS accepted it without a warning, the OS has already confirmed the binary came from BigBrainCorp LLC and has not been tampered with since it was signed. You can also verify manually in Terminal:</p>
       <p><code>spctl --assess --type exec --verbose /Applications/OSSScan.app</code></p>
-      <p>A genuine build returns: <code>accepted source=Notarized Developer ID</code>. If you see a "developer cannot be verified" warning instead, do not open the app and contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.</p>
+      <p>A genuine build returns: <code>accepted source=Notarized Developer ID</code>. If you see a "developer cannot be verified" warning instead, do not open the app and contact <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</p>
       <h3>Windows</h3>
       <p>Windows Authenticode signing is in progress. Until it is available, unsigned installers will trigger a SmartScreen warning. This is expected, and is itself a signal that something may be wrong if the warning does not appear for a build that claims to be signed. A <strong>SHA-256 checksum</strong> for each release is published on the <a href="downloads.html">Downloads</a> page. Verify using PowerShell before running the installer:</p>
       <p><code>Get-FileHash OSSScan-Setup.exe -Algorithm SHA256</code></p>
@@ -218,7 +218,7 @@
         <li>The downloaded binary passes <strong>code-signature verification</strong> (see <em>How to Verify the App Is Genuine</em> above). A binary served from a spoofed site cannot carry our Apple Developer ID or Authenticode signature.</li>
         <li>If in doubt, cross-check the SHA-256 checksum against the value published on our <a href="https://github.com/bigbraincorp/ossscan/releases" rel="noopener noreferrer">GitHub Releases page</a>, which is an independent channel an attacker would also need to compromise.</li>
       </ol>
-      <p>To report a suspected spoofed site or phishing campaign impersonating OSSScan, contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.</p>
+      <p>To report a suspected spoofed site or phishing campaign impersonating OSSScan, contact <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</p>
     </div>
 
     <div class="doc-section">
@@ -297,7 +297,7 @@
 <footer class="site-footer">
   <p>
     &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
-    <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
     <a href="https://ossscan.com">ossscan.com</a>
   </p>
   <p style="margin-top:6px;">
