@@ -113,8 +113,10 @@
     <h2>How OSSScan Works</h2>
     <div class="workflow-checklist">
       <ol>
-        <li>Pass compatibility check ensuring all components are installed and up to date</li>
-        <li>Install license file</li>
+        <li>Run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan's tools are installed and to generate your machine fingerprint</li>
+        <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to test your project folder — see whether OSSScan will produce Strong, Partial, or Limited coverage for it <em>before</em> purchasing a license</li>
+        <li>If coverage looks good, copy your machine fingerprint and click <strong>Buy a License…</strong></li>
+        <li>Install the license file you receive</li>
         <li>Accept the Terms of Use (EULA)</li>
         <li>Select network isolation settings</li>
         <li>Select the project directory to scan</li>
@@ -149,7 +151,24 @@
 
     <h2>Compatibility Check and Required Tools</h2>
     <p>
-      Before requesting a beta license, run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan can run on this machine and to generate your machine fingerprint.
+      Before purchasing a license, run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan's tools are installed and to generate your machine fingerprint.
+    </p>
+
+    <h3>Check Project Coverage — verify before you buy</h3>
+    <p>
+      The Compatibility Check dialog includes a <strong>Check Project Coverage…</strong> button — no license required.
+      Use it to test a specific project folder and see whether OSSScan will produce Strong, Partial, or Limited coverage for it before you commit to a purchase.
+    </p>
+    <ul>
+      <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected. OSSScan found a lock file or equivalent that pins dependency versions.</li>
+      <li><strong>Partial</strong> — useful results but known gaps. Often improvable by committing a lock file or running a package manager step.</li>
+      <li><strong>Limited</strong> — little or no package-level coverage. Typically a structural ceiling: the ecosystem has no lock file standard or no Syft cataloger yet.</li>
+    </ul>
+    <p>
+      Think of it as two separate questions: <em>Compatibility Check</em> asks "are the tools installed on this machine?" and <em>Check Project Coverage</em> asks "will those tools give good results for this specific project?"
+    </p>
+    <p class="muted">
+      After a license is installed, Check Project Coverage is also available any time from <strong>Help → Check Project Coverage…</strong> in the main app menu.
     </p>
 
     <h3>Required and Optional Tools</h3>
@@ -243,8 +262,9 @@
     <ol>
       <li>Install and launch OSSScan.</li>
       <li>Run <strong>Compatibility Check</strong> to confirm OSSScan can run on this machine.</li>
+      <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to verify OSSScan will give good results for the project you want to scan.</li>
       <li>Copy the <strong>Machine fingerprint</strong> shown in the report.</li>
-      <li>Click <strong>Request Beta License…</strong> to open the beta license page (it uses your machine fingerprint).</li>
+      <li>Click <strong>Buy a License…</strong> to purchase (it uses your machine fingerprint).</li>
       <li>When you receive <code>license.json</code>, install it using the startup dialog (<strong>Install License…</strong>) or copy it into the userData folder shown by <strong>Show Folder</strong>.</li>
     </ol>
     <p class="muted">

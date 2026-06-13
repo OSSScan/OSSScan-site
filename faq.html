@@ -104,7 +104,7 @@
 <div class="page-body">
   <div class="wrap">
     <h1 class="page-title">OSSScan FAQ</h1>
-    <p class="page-subtitle">Common questions about licensing, CVE database refresh, and scan modes</p>
+    <p class="page-subtitle">Common questions about verifying project coverage, licensing, CVE database refresh, and scan modes</p>
 
             <section class="faq-card">
               <div class="faq-q">Does OSSScan have video tutorials?</div>
@@ -119,6 +119,32 @@
                 </ol>
                 <p class="muted">
                   Start with license analysis, then CVE analysis, and save the CLI tutorial for automation and power-user workflows.
+                </p>
+              </div>
+            </section>
+
+            <section class="faq-card">
+              <div class="faq-q">How do I verify OSSScan will give good results for my project before buying?</div>
+              <div class="faq-a">
+                <p>
+                  Use <strong>Check Project Coverage…</strong> — no license required. The button is in the Compatibility Check dialog, which is available from the startup screen before any purchase.
+                </p>
+                <ol>
+                  <li>Launch OSSScan and run <strong>Compatibility Check</strong> from the startup dialog.</li>
+                  <li>Click <strong>Check Project Coverage…</strong> and select your project folder.</li>
+                  <li>OSSScan reports a coverage grade: <strong>Strong</strong>, <strong>Partial</strong>, or <strong>Limited</strong>.</li>
+                </ol>
+                <ul>
+                  <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected.</li>
+                  <li><strong>Partial</strong> — useful results but known gaps; often improvable with a lock file or package manager step.</li>
+                  <li><strong>Limited</strong> — little or no package-level coverage; a structural ceiling for that ecosystem.</li>
+                </ul>
+                <p>
+                  If the grade is Partial or Limited, OSSScan explains why and suggests improvement steps where they exist.
+                  Check coverage on your actual projects before purchasing — there is no obligation to buy if coverage doesn't meet your needs.
+                </p>
+                <p class="muted">
+                  After a license is installed, Check Project Coverage is also available any time from <strong>Help → Check Project Coverage…</strong> in the main app menu.
                 </p>
               </div>
             </section>
