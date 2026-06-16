@@ -796,6 +796,22 @@
                 </p>
               </div>
             </section>
+      <section class="faq-card">
+              <div class="faq-q">Why do I see duplicated packages or results after scanning a folder?</div>
+              <div class="faq-a">
+                <p>
+                  AI coding tools such as <strong>Claude Code</strong>, <strong>GitHub Copilot</strong>, and <strong>Cursor</strong> create a hidden working directory inside your project folder (for example <code>.claude/</code>, <code>.copilot/</code>).
+                  When you scan that folder, OSSScan picks up those directories alongside your real source files, which can cause components to appear more than once in the results.
+                </p>
+                <p>
+                  <strong>Fix:</strong> Before scanning, delete or move any AI tool working directories out of the folder you intend to scan.
+                  For Claude Code specifically, remove the <code>.claude/</code> folder (or any branch worktree it created inside your project) and then re-run the scan.
+                </p>
+                <p class="muted">
+                  The same applies to other generated or vendor directories (<code>node_modules/</code>, <code>dist/</code>, <code>.git/</code> submodules, etc.) that are present inside the scan root but should not be treated as first-party source.
+                </p>
+              </div>
+            </section>
     
 
   </div>
