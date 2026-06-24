@@ -649,6 +649,11 @@
       These modes also <strong>fail fast</strong> (with no dialogs) if the license is invalid/missing or if the Terms of Use have not been accepted
       on this machine.
     </p>
+    <p>
+      Use <code>--scan &lt;dir&gt;</code> to scan a source directory, or <code>--load-sbom &lt;file&gt;</code> to skip scanning and load an existing SBOM file instead (SPDX JSON or CycloneDX JSON).
+      These two flags are mutually exclusive — specifying both is an error.
+      When using <code>--load-sbom</code>, Syft is not required or invoked; Grype is still required for CVE scanning.
+    </p>
     <p class="muted">
       See the CLI guide for exact flags and macOS launch commands.
     </p>
@@ -659,7 +664,14 @@
       In the app menu, open <strong>Help → Create Command Line…</strong> to open the dialog (macOS menu bar, or the window menu on Windows).
     </p>
     <ul>
-      <li>Choose <strong>Headless</strong> vs <strong>UI automation</strong> and select scan/output folders.</li>
+      <li>The <strong>OSSScan binary</strong> field is auto-populated from the running app — no need to browse for it.</li>
+      <li>Choose <strong>Headless</strong> vs <strong>UI automation</strong> and set the output folder.</li>
+      <li>Under <strong>License data</strong>, choose one of two mutually exclusive input sources:
+        <ul>
+          <li><strong>Generate from directory scan</strong> — browse to your project folder; OSSScan runs Syft and its enrichment pipeline and generates a fresh SBOM. Use <code>--mode deep</code> for best license coverage (matches what the UI's Deep scan produces).</li>
+          <li><strong>Load from SBOM</strong> — browse to an existing SPDX JSON or CycloneDX JSON file; OSSScan loads it and runs license and CVE analysis without invoking Syft.</li>
+        </ul>
+      </li>
       <li>Select which outputs to produce (SBOM, reports, and/or bulk investigation requests).</li>
       <li>If you want <strong>Bulk License Review</strong> in the generated command, you must also enable the acknowledgement checkbox so OSSScan includes <code>--ack-license-ai-not-legal-advice</code>. If you manually type <code>--bulk-license</code> without that flag, the CLI fails instead of exporting.</li>
       <li>Optionally set <code>--cve-filter</code> and <code>--license-filter</code> to reduce reports and bulk exports.</li>

@@ -758,6 +758,21 @@
                   In both modes, the scan directory and output folder come from CLI arguments, so OSSScan does not need "Browse…" / export dialogs.
                   These modes also <strong>fail fast</strong> (no dialogs) if the license is invalid/missing or if the Terms of Use have not been accepted.
                 </p>
+                <p>
+                  Use <code>--scan &lt;dir&gt;</code> to scan a source directory, or <code>--load-sbom &lt;file&gt;</code> to load an existing SBOM file instead of scanning.
+                  These two flags are mutually exclusive — specifying both is an error (exit code 2).
+                  Syft is not required when using <code>--load-sbom</code>; Grype is still needed for CVE scanning.
+                </p>
+                <p>
+                  For a directory scan, add <code>--mode deep</code> to get the same license coverage as the UI's Deep scan —
+                  this tells Syft to fetch license data from package registries and enables ClearlyDefined enrichment,
+                  producing results that match what you see when you scan the same project in the app.
+                </p>
+                <p>
+                  The <strong>Create Command Line…</strong> dialog (Help menu) builds the correct command for you — including
+                  auto-detecting the OSSScan binary path — with a <strong>License data</strong> section where you choose between
+                  scanning a directory or loading an SBOM file.
+                </p>
                 <p class="muted">
                   Bulk license prompt export requires <code>--ack-license-ai-not-legal-advice</code>. The Create Command Line dialog adds it for you when you enable the acknowledgement checkbox; if you type an explicit <code>--bulk-license</code> command without it, the CLI fails instead of exporting.
                 </p>
