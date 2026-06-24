@@ -375,14 +375,15 @@
   </footer>
 
   <script>
-    const API_BASE_URL =
-      location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+    const IS_LOCALHOST = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    const API_BASE_URL = IS_LOCALHOST
         ? 'http://localhost:7072'
-        : 'https://ossscan-apim.azure-api.net';
+        : 'https://bbossscan-apim.azure-api.net';
+    const API_PATH_PREFIX = IS_LOCALHOST ? '' : '/bbossscan-functions-prod';
 
-    const GET_LICENSE_STATUS_URL = `${API_BASE_URL}/GetLicenseStatus`;
-    const CREATE_CHECKOUT_URL    = `${API_BASE_URL}/CreateCheckout`;
-    const BETA_STATUS_URL        = `${API_BASE_URL}/GetBetaStatus`;
+    const GET_LICENSE_STATUS_URL = `${API_BASE_URL}${API_PATH_PREFIX}/GetLicenseStatus`;
+    const CREATE_CHECKOUT_URL    = `${API_BASE_URL}${API_PATH_PREFIX}/CreateCheckout`;
+    const BETA_STATUS_URL        = `${API_BASE_URL}${API_PATH_PREFIX}/GetBetaStatus`;
     const CHECKOUT_SUCCESS_URL   = 'checkout-success.html';
 
     const form          = document.getElementById('purchaseForm');
