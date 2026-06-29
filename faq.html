@@ -177,6 +177,51 @@
               </div>
             </section>
       <section class="faq-card">
+              <div class="faq-q">Can a team investigate findings at the same time?</div>
+              <div class="faq-a">
+                <p>
+                  Yes. Use <strong>Bulk Investigate</strong> (CVEs) and <strong>Bulk License Review</strong> (licenses) to export the
+                  investigation folders to a <strong>network share</strong>, then have several reviewers work out of the same folder.
+                </p>
+                <p>
+                  The export is laid out as <strong>one file per finding</strong>, so concurrent reviewers can work on
+                  <strong>different findings</strong> at the same time and their results aggregate in the shared folder.
+                  Each reviewer’s evaluation and their accept/dispute annotation are saved as separate per-finding files.
+                </p>
+                <ul>
+                  <li>In the <strong>Review</strong> tab, use <strong>Refresh</strong> to pull in colleagues’ latest evaluations without re-selecting the folder.</li>
+                  <li>Divide the work so two people don’t edit the <strong>same finding</strong> at once — there is no live multi-user locking, so if they do, the last save wins.</li>
+                  <li>Each person’s computer still needs its own OSSScan license (see the VM question below).</li>
+                </ul>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Can we run OSSScan in a VM, or share one license across several people?</div>
+              <div class="faq-a">
+                <p>
+                  Yes, OSSScan runs in a virtual machine. Because licensing is <strong>machine-bound</strong> (see above),
+                  what matters is how many <strong>distinct machines</strong> you create — not how many people use them.
+                </p>
+                <ul>
+                  <li>
+                    <strong>One shared VM that everyone logs into</strong> is a single machine: it has one fingerprint, so
+                    <strong>one license covers everyone</strong> who uses that VM — just like a shared physical workstation.
+                    (OSSScan is a desktop app, so genuine concurrent use needs a multi-session host such as a Windows Server / Remote Desktop setup.)
+                  </li>
+                  <li>
+                    <strong>Giving each user their own VM</strong> — even cloned from one template — creates a <strong>separate machine</strong> each.
+                    Virtualization assigns every VM its own identity, so each gets a <strong>different fingerprint</strong> and needs its own license.
+                    This is intended: one license cannot cover a fleet of separate VMs.
+                  </li>
+                </ul>
+                <p class="muted">
+                  Avoid <strong>non-persistent / pooled VDI</strong> (where each session is a fresh throwaway VM): the fingerprint changes on
+                  every login and OSSScan will report the license is for a different machine. Use a <strong>persistent</strong> VM, or contact
+                  <strong>Jim@OSSScan.com</strong> if your environment requires pooled desktops.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
               <div class="faq-q">Where does my license file go?</div>
               <div class="faq-a">
                 <p>
@@ -331,6 +376,28 @@
                 </div>
               </section>
       <section class="faq-card">
+                <div class="faq-q">Scanning a folder is slow on Windows. Can I speed it up?</div>
+                <div class="faq-a">
+                  <p>
+                    Windows Defender's real-time protection inspects every file OSSScan reads while it
+                    builds the package inventory, which can noticeably slow folder scans on large
+                    projects. (Loading an existing SBOM is unaffected — it reads a single file and does
+                    no folder walk.)
+                  </p>
+                  <p>
+                    After you pick a folder to scan, OSSScan shows a reminder with the exact command to
+                    exclude that folder from Defender. To add the exclusion yourself, open
+                    <strong>PowerShell as Administrator</strong> and run (using your project's path):
+                  </p>
+                  <p><code>Add-MpPreference -ExclusionPath 'C:\path\to\your\project'</code></p>
+                  <p class="muted">
+                    The exclusion changes scan speed only, not scan results. Exclude a folder only if you
+                    trust its contents. This is a Windows-only consideration; macOS is unaffected. The
+                    in-app reminder can be dismissed, or silenced permanently with "Don't show again".
+                  </p>
+                </div>
+              </section>
+      <section class="faq-card">
               <div class="faq-q">How do I update Syft/Grype to the latest version?</div>
               <div class="faq-a">
                 <ul>
@@ -391,6 +458,31 @@
                   <li><strong>Deep:</strong> most accurate; combines Syft, ClearlyDefined, and ScanCode for broader license coverage. Uses network lookups, but sends only package coordinates.</li>
                   <li><strong>Audit:</strong> runs ScanCode broadly and highlights <strong>disagreements</strong> between tools for review. Useful for release sign-off and due diligence.</li>
                 </ul>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Does OSSScan capture deeply nested or transitive dependencies?</div>
+              <div class="faq-a">
+                <p>
+                  Usually yes, when those dependencies are exposed through manifests, lockfiles, or other package-manager metadata that <strong>Syft</strong> understands. OSSScan's dependency inventory starts with Syft, so <strong>Light</strong> scan is not limited to top-level packages.
+                </p>
+                <p>
+                  <strong>Deep</strong> scan usually improves <strong>license resolution</strong>, not raw dependency depth. It starts from the same Syft inventory, then adds registry lookups, ClearlyDefined, and local ScanCode analysis to reduce unknown or incomplete license results.
+                </p>
+                <p class="muted">
+                  Limits still apply: if a dependency is hidden inside generated output, vendored source, or a compiled binary rather than normal package metadata, OSSScan may not be able to inventory it as a standard package.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">Why did a Deep scan find copyleft in bundled tools or artifacts that Light missed?</div>
+              <div class="faq-a">
+                <p>
+                  Because this is often an <strong>evidence-source</strong> difference, not just a dependency-depth difference. <strong>Light</strong> relies mostly on Syft's package inventory and declared metadata. <strong>Deep</strong> adds registry lookups and local ScanCode analysis, which can surface license text or bundled components that manifest metadata did not make obvious.
+                </p>
+                <p>
+                  In practice, that means Deep can sometimes flag copyleft found inside <strong>bundled tool payloads</strong>, vendored source trees, packaged artifacts, or local license files even when Light did not. In those cases, Deep did not necessarily discover more transitive levels; it found <strong>better local evidence</strong> for what was already present on disk.
+                </p>
               </div>
             </section>
       <section class="faq-card">
@@ -811,6 +903,118 @@
                 </p>
               </div>
             </section>
+      <section class="faq-card">
+              <div class="faq-q">Can I load a SBOM created by Syft, Trivy, or another tool instead of scanning source code?</div>
+              <div class="faq-a">
+                <p>
+                  Yes. If you already have an SBOM from a CI/CD pipeline, a vendor, or another scanning tool, click <strong>Load SBOM…</strong>
+                  and select the file. OSSScan accepts SPDX JSON and CycloneDX JSON from any source.
+                </p>
+                <p>
+                  After loading you can run a full CVE scan (Grype), review and filter licenses, export the License and CVE reports,
+                  and prepare AI agent investigation prompts — without needing the original source code at all.
+                  Deep Enrich (network) can also fill in missing licenses using just the package coordinates (name + version) in the SBOM.
+                </p>
+                <p class="muted">
+                  The main thing that won't work without source files is copyleft import/reference analysis and ScanCode-based enrichment,
+                  both of which need files on disk to read. Everything else — CVE scanning, license review, bulk AI investigations — works normally from an imported SBOM.
+                </p>
+              </div>
+            </section>
+
+      <section class="faq-card">
+        <div class="faq-q">How do I get an SBOM without giving OSSScan access to my source code?</div>
+        <div class="faq-a">
+          <p>
+            Generate the SBOM yourself using one of these tools, then load the file into OSSScan.
+            Your source code stays on your machine.
+          </p>
+          <p><strong>GitHub (easiest — no tooling needed):</strong></p>
+          <ol>
+            <li>Open your repository on GitHub → click the <strong>Insights</strong> tab.</li>
+            <li>Click <strong>Dependency graph</strong> in the left sidebar.</li>
+            <li>For private repos with an empty tab: go to <strong>Settings → Code security</strong> and enable <strong>Dependency graph</strong>.</li>
+            <li>Click <strong>Export SBOM</strong> (top-right of the Dependencies tab).</li>
+            <li>Load the downloaded file into OSSScan using <strong>Load SBOM…</strong></li>
+          </ol>
+          <p><strong>cdxgen (any project, any platform):</strong></p>
+          <p>Open a terminal in your project folder and run:</p>
+          <pre><code>npx @cyclonedx/cdxgen . -o sbom.json</code></pre>
+          <p>Then load <code>sbom.json</code> into OSSScan. Requires Node.js; no separate install needed.</p>
+          <p class="muted">
+            Both tools consistently produce &gt;99% license coverage for npm, Go, Java, and Rust projects.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq-card">
+        <div class="faq-q">Which SBOM generator gives the best license coverage?</div>
+        <div class="faq-a">
+          <p>Based on testing across multiple projects:</p>
+          <ul>
+            <li><strong>GitHub dependency graph export</strong> — ~99% license coverage. Best choice if your project is on GitHub. No local tools required.</li>
+            <li><strong>cdxgen</strong> — ~99% license coverage. Best choice for any other platform. Run with <code>npx @cyclonedx/cdxgen</code>.</li>
+            <li><strong>Syft (CycloneDX)</strong> — 5–40% coverage. Syft is excellent for generating SBOMs in CI pipelines but does not read license metadata from package manifests by default.</li>
+            <li><strong>Syft (SPDX)</strong> — typically &lt;5% coverage. Not recommended when license analysis is the goal.</li>
+          </ul>
+          <p class="muted">
+            If your loaded SBOM shows mostly unknown licenses, try re-generating it with cdxgen or downloading it from GitHub instead.
+            You can also run <strong>Deep Enrich (network)…</strong> after loading to fill in gaps using package registry metadata.
+          </p>
+          <p class="muted">
+            <strong style="color:#e6edf3;">Why does a GitHub SBOM show more packages than an OSSScan source scan?</strong>
+            GitHub includes everything in your lockfile — runtime dependencies <em>and</em> packages that
+            never ship with your app, such as build tools (webpack, Babel, electron-forge), test runners
+            (Jest, Playwright), admin or data-export scripts, release packaging utilities, and linters.
+            OSSScan scanning the same source directly separates these out into a "Build / CI Tools"
+            category and focuses its main count on what is actually resolvable and shipping.
+            Neither number is wrong; they are answering slightly different questions.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq-card">
+        <div class="faq-q">Can I get an SBOM from GitLab, Bitbucket, or Azure DevOps?</div>
+        <div class="faq-a">
+          <p>
+            Unlike GitHub, these platforms do not have a built-in one-click SBOM export.
+            The recommended approach is to generate the SBOM in your CI/CD pipeline using cdxgen and download the artifact:
+          </p>
+          <ul>
+            <li><strong>GitLab CI</strong> — add a job that runs <code>npx @cyclonedx/cdxgen . -o sbom.json</code> and saves it as a pipeline artifact.</li>
+            <li><strong>Bitbucket Pipelines</strong> — same: add a step running cdxgen and export the file as an artifact.</li>
+            <li><strong>Azure DevOps</strong> — use Microsoft's open-source <code>sbom-tool</code>, which integrates directly into Azure pipelines and produces SPDX SBOMs.</li>
+          </ul>
+          <p>Once you have the SBOM file, load it into OSSScan using <strong>Load SBOM…</strong> — no source code access needed.</p>
+          <p class="muted">
+            Alternatively, run <code>npx @cyclonedx/cdxgen . -o sbom.json</code> locally in your project folder — this works with any source control system and requires only Node.js.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq-card">
+        <div class="faq-q">My loaded SBOM shows mostly unknown licenses — what can I do?</div>
+        <div class="faq-a">
+          <p>
+            This means the SBOM generator did not include license metadata for most packages.
+            You have three options, in order of effort:
+          </p>
+          <ol>
+            <li>
+              <strong>Run Deep Enrich (network)…</strong> — OSSScan will query ClearlyDefined and other registries
+              using just the package name and version from your SBOM. This can resolve many unknowns without any source code.
+            </li>
+            <li>
+              <strong>Re-generate with a better tool</strong> — use cdxgen (<code>npx @cyclonedx/cdxgen . -o sbom.json</code>)
+              or download the SBOM from GitHub's dependency graph. Both include license data from package manifests.
+            </li>
+            <li>
+              <strong>Scan the source directly</strong> — if you have access to the source code, a native OSSScan
+              Deep scan will produce the most complete license picture using ScanCode enrichment.
+            </li>
+          </ol>
+        </div>
+      </section>
       <section class="faq-card">
               <div class="faq-q">Why do I see duplicated packages or results after scanning a folder?</div>
               <div class="faq-a">
