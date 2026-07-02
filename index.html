@@ -223,7 +223,7 @@
     }
     @media (min-width: 700px) {
       .flow-steps {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         gap: 0;
       }
     }
@@ -591,13 +591,18 @@
         </div>
         <div class="flow-step">
           <div class="flow-num">3</div>
-          <h3>You evaluate, and save a baseline</h3>
-          <p>Review the findings, add or correct annotations by hand where you already know the answer, and save your evaluations as a baseline. Future scans inherit everything you've already investigated, so you never repeat the same work.</p>
+          <h3>Build the investigation prompt</h3>
+          <p>Run a bulk export to generate the AI agent prompt, optionally carrying forward a prior baseline first. OSSScan screens out findings you've already investigated, so your agent only works through what's new.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">4</div>
           <h3>Hand off to your AI agent</h3>
           <p>OSSScan bundles what's left, findings, risk rankings, source-file references, CVE context, into a ready-to-use <strong>AgentPrompt.md</strong>. Tell Claude Code or Copilot Chat to follow it, and your agent delivers a focused briefing: exploitable CVEs, license obligations, files to change, actions to take.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <h3>Review, then save the baseline</h3>
+          <p>Check the agent's findings in the Review tab, correct anything by hand, and save your evaluations. That becomes the baseline your next scan inherits from.</p>
         </div>
       </div>
     </div>
