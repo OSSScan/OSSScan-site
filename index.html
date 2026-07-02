@@ -860,7 +860,7 @@ for your AI agent to work through end to end.</pre>
       <div class="security-grid">
         <div class="security-item">
           <h3>No source code transmitted</h3>
-          <p>Enrichment calls send only package name, ecosystem, and version. No file contents, no directory structure, no SBOM payload. If that's still more than you want to risk, load your own SBOM into OSSScan instead and it never processes your source code at all.</p>
+          <p>OSSScan never sends source code. Enrichment calls include only the package name, ecosystem, and version. They do not include file contents, directory structure, or SBOM payloads. For environments that require strict isolation, you can provide your own SBOM so OSSScan performs analysis without interacting with source code.</p>
         </div>
         <div class="security-item">
           <h3>Zero telemetry</h3>
