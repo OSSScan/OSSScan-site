@@ -131,8 +131,8 @@
                 </p>
                 <ol>
                   <li>Launch OSSScan and run <strong>Compatibility Check</strong> from the startup dialog.</li>
-                  <li>Click <strong>Check Project Coverage…</strong> and select your project folder.</li>
-                  <li>OSSScan reports a coverage grade: <strong>Strong</strong>, <strong>Partial</strong>, or <strong>Limited</strong>.</li>
+                  <li>Click <strong>Check Project Coverage…</strong>, then select a project folder, an existing SBOM (SPDX or CycloneDX), or both.</li>
+                  <li>OSSScan reports a coverage grade for each source you selected: <strong>Strong</strong>, <strong>Partial</strong>, or <strong>Limited</strong>.</li>
                 </ol>
                 <ul>
                   <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected.</li>
@@ -140,6 +140,7 @@
                   <li><strong>Limited</strong> — little or no package-level coverage; a structural ceiling for that ecosystem.</li>
                 </ul>
                 <p>
+                  If you have both a project folder and an SBOM for it, checking both shows you the grade for each side by side, useful if you're deciding whether to scan the source directly or bring your own SBOM instead.
                   If the grade is Partial or Limited, OSSScan explains why and suggests improvement steps where they exist.
                   Check coverage on your actual projects before purchasing — there is no obligation to buy if coverage doesn't meet your needs.
                 </p>

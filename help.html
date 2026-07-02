@@ -114,7 +114,7 @@
     <div class="workflow-checklist">
       <ol>
         <li>Run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan's tools are installed and to generate your machine fingerprint</li>
-        <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to test your project folder — see whether OSSScan will produce Strong, Partial, or Limited coverage for it <em>before</em> purchasing a license</li>
+        <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both — see whether OSSScan will produce Strong, Partial, or Limited coverage for it <em>before</em> purchasing a license</li>
         <li>If coverage looks good, copy your machine fingerprint and click <strong>Buy a License…</strong></li>
         <li>Install the license file you receive</li>
         <li>Accept the Terms of Use (EULA)</li>
@@ -157,13 +157,16 @@
     <h3>Check Project Coverage — verify before you buy</h3>
     <p>
       The Compatibility Check dialog includes a <strong>Check Project Coverage…</strong> button — no license required.
-      Use it to test a specific project folder and see whether OSSScan will produce Strong, Partial, or Limited coverage for it before you commit to a purchase.
+      Use it to test a project folder, an existing SBOM (SPDX or CycloneDX), or both, and see whether OSSScan will produce Strong, Partial, or Limited coverage before you commit to a purchase.
     </p>
     <ul>
       <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected. OSSScan found a lock file or equivalent that pins dependency versions.</li>
       <li><strong>Partial</strong> — useful results but known gaps. Often improvable by committing a lock file or running a package manager step.</li>
       <li><strong>Limited</strong> — little or no package-level coverage. Typically a structural ceiling: the ecosystem has no lock file standard or no Syft cataloger yet.</li>
     </ul>
+    <p>
+      If you check both a folder and an SBOM for the same project, OSSScan grades each independently so you can compare them side by side, useful for deciding whether to scan the source directly or bring your own SBOM instead.
+    </p>
     <p>
       Think of it as two separate questions: <em>Compatibility Check</em> asks "are the tools installed on this machine?" and <em>Check Project Coverage</em> asks "will those tools give good results for this specific project?"
     </p>
