@@ -864,7 +864,7 @@ for your AI agent to work through end to end.</pre>
         </div>
         <div class="security-item">
           <h3>Zero telemetry</h3>
-          <p>No analytics, no crash reporting, no background services. OSSScan does not phone home. Ever.</p>
+          <p>No analytics, no crash reporting, no background services, no usage or scan data sent anywhere. The only outbound calls OSSScan makes on its own are version checks for Syft, Grype, and ScanCode, confirming you're running the latest release of each tool.</p>
         </div>
         <div class="security-item">
           <h3>Network isolation for tools</h3>
@@ -876,7 +876,7 @@ for your AI agent to work through end to end.</pre>
         </div>
         <div class="security-item">
           <h3>Local license verification</h3>
-          <p>License files are verified on-device using Ed25519 cryptography. No network call is needed on launch.</p>
+          <p>License verification happens entirely on your machine: no login, no account, no identifying yourself. OSSScan just checks that the license file installed on this computer matches this computer's hardware fingerprint, a SHA-256 hash of a platform identifier (IOPlatformUUID on macOS, the system UUID on Windows, or the machine ID on Linux). No network call is needed on launch.</p>
         </div>
       </div>
     </div>
