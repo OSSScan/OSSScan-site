@@ -860,7 +860,7 @@ for your AI agent to work through end to end.</pre>
       <div class="security-grid">
         <div class="security-item">
           <h3>No source code transmitted</h3>
-          <p>Enrichment calls send only package name, ecosystem, and version. No file contents, no directory structure, no SBOM payload.</p>
+          <p>Enrichment calls send only package name, ecosystem, and version. No file contents, no directory structure, no SBOM payload. If that's still more than you want to risk, load your own SBOM into OSSScan instead and it never processes your source code at all.</p>
         </div>
         <div class="security-item">
           <h3>Zero telemetry</h3>
@@ -875,8 +875,8 @@ for your AI agent to work through end to end.</pre>
           <p>Zero outbound calls in Light mode, suitable for air-gapped environments and the most sensitive codebases.</p>
         </div>
         <div class="security-item">
-          <h3>macOS signed &amp; notarized</h3>
-          <p>Code-signed with an Apple Developer ID and notarized by Apple. Gatekeeper verifies the binary is genuine before it runs.</p>
+          <h3>macOS &amp; Windows signed</h3>
+          <p>macOS builds are code-signed with an Apple Developer ID and notarized by Apple, so Gatekeeper verifies the binary before it runs. Windows builds are Authenticode-signed by BigBrainCorp LLC, so Windows can verify the installer instead of flagging it as an unknown publisher.</p>
         </div>
         <div class="security-item">
           <h3>Local license verification</h3>
