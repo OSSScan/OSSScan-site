@@ -502,6 +502,20 @@
     </div>
   </section>
 
+  <!-- ── Why this matters now ── -->
+  <section style="padding:64px 24px; background:#fff;">
+    <div class="wrap" style="max-width:1000px; margin:0 auto;">
+      <div class="section-label">Why this matters now</div>
+      <h2>Vibe coding shipped fast.<br>Nobody audited what came with it.</h2>
+      <div style="display:grid; grid-template-columns:1fr; gap:20px; margin-top:8px;">
+        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">GenAI coding assistants and vibe coding have made it dramatically faster to build and ship software, but speed came with a side effect: most teams generating code this way have no clear picture of the open source they pulled in along the way. Dependencies get added by an agent mid-task, not chosen deliberately by a developer, and the license and vulnerability exposure that comes with them often goes unreviewed.</p>
+        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">OSSScan closes that gap without slowing anyone down. It gives you one simple view of what's actually in your codebase, and lets the same kind of AI agent that helped write the code give you a first-level read on what in that exposure is worth worrying about.</p>
+        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">The risk is trending in the wrong direction, too. As more capable AI models become available to attackers as well as defenders, expect both an increase in critical open source vulnerabilities and more multi-step attacks that chain several CVEs together instead of relying on just one. Point-in-time reviews aren't enough for that world; continuous insight into what actually touches your codebase is what matters.</p>
+        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">Most scanners respond to that by producing more output: longer lists, more CVEs, more license flags. OSSScan takes the opposite approach. Its AI agent integration is built to narrow, not flood, turning a long list of theoretical concerns into a short list of what actually affects your application.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Top reasons ── -->
   <section style="background:#f4f6f9;">
     <div class="wrap">
@@ -513,6 +527,11 @@
           <span class="icon">🎯</span>
           <h3>Your AI agent does the triage</h3>
           <p>OSSScan coordinates with the AI coding agent you already use, Claude Code, GitHub Copilot, or any other, to review every finding for you. You spend your engineering bandwidth on what actually matters, not sifting through minutiae.</p>
+        </div>
+        <div class="gen-card">
+          <span class="icon">🧩</span>
+          <h3>One tool, not two</h3>
+          <p>License compliance and CVE exposure are usually tracked in separate tools with separate reports. OSSScan puts both in a single scan, a single view, and a single AI-agent workflow, so you're not stitching together findings from two different products to understand your risk.</p>
         </div>
         <div class="gen-card">
           <span class="icon">💾</span>
