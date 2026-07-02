@@ -581,23 +581,23 @@
       <div class="flow-steps">
         <div class="flow-step">
           <div class="flow-num">1</div>
-          <h3>OSSScan scans</h3>
-          <p>Points at your source folder and runs a full SBOM analysis, detecting every dependency, its license, CVE exposure, and risk classification across all ecosystems. Or skip source access entirely and load an SBOM you already have; OSSScan builds one for you, or you bring your own.</p>
+          <h3>Scan, or supply an SBOM</h3>
+          <p>Point OSSScan at your source folder and it runs a full SBOM analysis across all ecosystems. Or skip source access entirely and load an SBOM you already have. Either way, OSSScan now has the package list it needs to analyze.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">2</div>
-          <h3>OSSScan writes the prompt</h3>
-          <p>OSSScan bundles all the investigation facts (findings, risk rankings, source-file references, CVE context) into a ready-to-use <strong>AgentPrompt.md</strong> file. No prompt engineering required.</p>
+          <h3>OSSScan analyzes</h3>
+          <p>Every package is checked for both license obligations and known CVEs in a single pass, enriched with data from deps.dev, ClearlyDefined, and ScanCode so nothing is left as an unknown.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">3</div>
-          <h3>One sentence to your agent</h3>
-          <p>Tell Claude Code: <em>"Open AgentPrompt.md and follow it exactly."</em> Or in Copilot Chat (Agent mode): <em>"Read the AgentPrompt.md file and follow it exactly."</em> Both have been tested. The same instruction works in Cursor, Windsurf, and any other AI coding agent that can read files and take actions.</p>
+          <h3>You evaluate, and save a baseline</h3>
+          <p>Review the findings, add or correct annotations by hand where you already know the answer, and save your evaluations as a baseline. Future scans inherit everything you've already investigated, so you never repeat the same work.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">4</div>
-          <h3>You review the briefing</h3>
-          <p>Your agent delivers a focused investigation report: exploitable CVEs, license obligations, files to change, actions to take. You decide, not triage.</p>
+          <h3>Hand off to your AI agent</h3>
+          <p>OSSScan bundles what's left, findings, risk rankings, source-file references, CVE context, into a ready-to-use <strong>AgentPrompt.md</strong>. Tell Claude Code or Copilot Chat to follow it, and your agent delivers a focused briefing: exploitable CVEs, license obligations, files to change, actions to take.</p>
         </div>
       </div>
     </div>
