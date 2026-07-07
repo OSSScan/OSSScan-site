@@ -120,7 +120,7 @@
         <li><strong>No licensing server.</strong> License validation happens entirely on your device using a signed license file tied to your hardware. There is no backend licensing server and no call home on launch.</li>
         <li><strong>Designed for anonymous use.</strong> You can purchase and use OSSScan without associating it with your company or product. Any email address works for license delivery; it does not have to be a corporate address or linked to the codebase you are scanning.</li>
         <li><strong>Outbound network requests are minimal and purposeful.</strong> In normal operation, requests go only to well-known package registries and metadata services (deps.dev, ClearlyDefined, npm, PyPI, etc.) to look up license and vulnerability data for the packages you scan.</li>
-        <li><strong>Light mode makes zero outbound calls.</strong> When you use OSSScan in Light mode, all analysis is performed offline.</li>
+        <li><strong>Light mode makes no enrichment calls of OSSScan's own.</strong> Syft, Grype, and ScanCode run as separate processes and can independently attempt outbound calls for certain ecosystems regardless of scan mode; network isolation (on by default) is what restricts that tool-process traffic. See the <a href="security.html">Security page</a> for details.</li>
         <li><strong>Payment data is handled by Stripe.</strong> OSSScan never stores your credit card number; payment processing is handled entirely by Stripe.</li>
         <li><strong>GDPR-friendly by design.</strong> Because personal data processed is limited and purposeful, the compliance surface is small. You retain rights of access, correction, and deletion for any personal data we hold.</li>
       </ul>

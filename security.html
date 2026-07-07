@@ -125,7 +125,7 @@
 
     <div class="doc-section">
       <h2>What Leaves Your Machine</h2>
-      <p>In normal (non-Light) mode, OSSScan makes a small number of outbound HTTPS requests. The table below documents every category of outbound call. <strong>Light mode makes zero outbound calls.</strong> All analysis is performed offline using locally cached data.</p>
+      <p>In normal (non-Light) mode, OSSScan makes a small number of outbound HTTPS requests. The table below documents every category of outbound call. <strong>Light mode makes no enrichment calls of OSSScan's own.</strong> This table covers OSSScan's own traffic only &mdash; Syft, Grype, and ScanCode run as separate processes and can independently attempt outbound calls for certain ecosystems regardless of scan mode. <strong>Network isolation</strong> (on by default, see below) is what actually restricts that tool-process traffic, not the Light/Deep/Audit choice.</p>
       <table>
         <thead>
           <tr>
