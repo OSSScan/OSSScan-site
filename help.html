@@ -446,8 +446,9 @@
 
     <h3>Light mode (Syft only)</h3>
     <ul>
-      <li>Fastest and fully offline.</li>
+      <li>Fastest, and makes no enrichment calls of OSSScan's own (no deps.dev, registry, or ClearlyDefined lookups).</li>
       <li>Best when you want quick visibility and repeatable results with no external lookups.</li>
+      <li>Syft itself can still attempt outbound calls for certain ecosystems (e.g. Go module resolution) regardless of mode; <strong>network isolation</strong> (on by default) is what blocks that tool-process traffic, not the mode choice.</li>
     </ul>
 
     <h3>Deep mode: add ClearlyDefined + ScanCode for residual unknowns</h3>

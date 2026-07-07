@@ -493,7 +493,9 @@
                   <strong>No.</strong> OSSScan does not upload your source code, file contents, or repository structure anywhere.
                 </p>
                 <p>
-                  <strong>Light</strong> scans are fully offline with zero outbound calls.
+                  <strong>Light</strong> scans make no enrichment calls of OSSScan's own &mdash; no lookups to deps.dev, package registries, or ClearlyDefined, regardless of scan mode.
+                  Syft itself can still attempt outbound calls for certain ecosystems (for example, resolving Go modules), independent of the Light/Deep/Audit choice.
+                  <strong>Network isolation</strong> (on by default) is what actually blocks that tool-process traffic; see the Security page for details.
                 </p>
                 <p>
                   <strong>Deep</strong> and <strong>Audit</strong> scans (and <strong>Deep Enrich</strong>) make outbound HTTPS requests to public metadata services to look up license information. These requests send only <strong>package coordinates</strong> (name and version), not your repository contents.
