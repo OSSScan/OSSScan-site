@@ -565,6 +565,7 @@
                   <li><strong>Export License Report:</strong> available after a scan or SBOM load; exports an HTML license report.</li>
                   <li><strong>Save SBOM…:</strong> available after a scan or SBOM load; saves the current SBOM to disk.</li>
                   <li><strong>Export CVE Report:</strong> enabled after you run a CVE scan; exports an HTML vulnerability report.</li>
+                  <li><strong>Export Annotated License Report&hellip; / Export Annotated CVE Report&hellip;:</strong> available in the <strong>Review</strong> tab once an Evaluations folder is loaded; exports an HTML report combining the AI agent's evaluation with your team's accepted annotations for each finding.</li>
                 </ul>
                 <p class="muted">
                   Tip: When you use <strong>Save SBOM…</strong>, OSSScan also writes an HTML license report next to the saved SBOM JSON.
@@ -781,6 +782,24 @@
               </div>
             </section>
       <section class="faq-card">
+              <div class="faq-q">Can I carry forward previous bulk investigation results instead of starting over?</div>
+              <div class="faq-a">
+                <p>
+                  Yes. When you click <strong>Bulk License Review</strong> or <strong>Bulk Investigate</strong>, choose an export mode:
+                </p>
+                <ul>
+                  <li><strong>Delta Investigation</strong> (default) — browse to the output folder from a prior bulk export as the <strong>baseline</strong>. OSSScan validates it, then carries forward previously cleared items with their evaluation; only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline for future delta runs.</li>
+                  <li><strong>Clean Baseline</strong> — starts from scratch with no carry-overs. Every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
+                </ul>
+                <p class="muted">
+                  The same choice is available from the CLI via <code>--baseline &lt;dir&gt;</code> alongside <code>--bulk-cve</code> or <code>--bulk-license</code>.
+                </p>
+                <p class="muted">
+                  This is a different baseline from the one you can load in the <strong>Review</strong> tab, which pre-fills annotation forms from a prior evaluations folder rather than changing what gets exported.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
               <div class="faq-q">How do I use bulk prompts with an agentic coding platform?</div>
               <div class="faq-a">
                 <ol>
@@ -896,8 +915,8 @@
               <div class="faq-q">What SBOM formats can I load?</div>
               <div class="faq-a">
                 <p>
-                  <strong>Load SBOM…</strong> currently expects an <strong>SPDX JSON</strong> SBOM file.
-                  When you scan a folder, OSSScan generates an SPDX JSON SBOM automatically.
+                  <strong>Load SBOM…</strong> accepts <strong>SPDX JSON</strong> or <strong>CycloneDX JSON</strong>, auto-detected.
+                  When you scan a folder, OSSScan generates an SPDX JSON SBOM automatically; CycloneDX files are converted to the internal SPDX representation on load.
                 </p>
                 <p class="muted">
                   When an SBOM is loaded, OSSScan may normalize license fields for consistency.

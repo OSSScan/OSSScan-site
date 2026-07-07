@@ -669,6 +669,13 @@
         </ul>
       </li>
       <li>Click <strong>Bulk License Review</strong>.</li>
+      <li>Choose an export mode:
+        <ul>
+          <li><strong>Delta Investigation</strong> (default) — continue from a prior baseline. Browse to the output folder from an earlier bulk export; OSSScan validates it, then previously cleared items carry forward with their evaluation so only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline, so future delta runs treat it as the new starting point.</li>
+          <li><strong>Clean Baseline</strong> — start from scratch with no carry-overs; every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
+        </ul>
+        See <a href="#cli-delta-screening-rules">delta screening rules</a> below for exactly which items get skipped, re-assessed, or evaluated in Delta Investigation mode — the same rules apply whether you triggered it from the UI or from the CLI's <code>--baseline</code> flag.
+      </li>
       <li>In the app UI, read the yellow AI/legal disclaimer and check <strong>I agree</strong> to enable the export button. For CLI/headless exports, there is no interactive prompt; include <code>--ack-license-ai-not-legal-advice</code> alongside <code>--bulk-license</code> instead.</li>
       <li>Choose (or create) an output folder.</li>
       <li>OSSScan creates a <code>Licenses/</code> folder containing:
@@ -776,6 +783,7 @@
         </ul>
       </li>
       <li>Click <strong>Bulk Investigate</strong>.</li>
+      <li>Choose an export mode: <strong>Delta Investigation</strong> (default, continue from a prior baseline folder so only new or re-assessable findings need fresh evaluation) or <strong>Clean Baseline</strong> (start fresh with no carry-overs). See <a href="#cli-delta-screening-rules">delta screening rules</a> below.</li>
       <li>Choose (or create) an output folder.</li>
       <li>OSSScan creates a <code>CVE/</code> folder containing:
         <ul>
@@ -929,8 +937,8 @@
       <li>Copy the generated command for your OS (macOS binary/open, Windows cmd, Windows PowerShell) and paste it into a terminal (or a terminal-capable agent runner such as Claude Code, CI, etc.).</li>
     </ul>
 
-      <h3>CLI delta screening rules (<code>--baseline</code>)</h3>
-      <p>When <code>--baseline &lt;dir&gt;</code> is provided alongside <code>--bulk-cve</code> or <code>--bulk-license</code>, OSSScan applies the following rules before writing any request files:</p>
+      <h3 id="cli-delta-screening-rules">Delta screening rules (<code>--baseline</code> / Delta Investigation)</h3>
+      <p>These rules apply whenever a baseline is used — the GUI's <strong>Delta Investigation</strong> mode for Bulk License Review / Bulk Investigate, or the CLI's <code>--baseline &lt;dir&gt;</code> flag alongside <code>--bulk-cve</code> or <code>--bulk-license</code>. OSSScan applies the following rules before writing any request files:</p>
       <p><strong>CVE findings:</strong></p>
       <ul>
         <li><strong>Skip</strong> — prior result was <em>Not exploitable</em>.</li>

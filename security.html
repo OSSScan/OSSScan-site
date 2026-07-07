@@ -167,9 +167,12 @@
       <p><code>spctl --assess --type exec --verbose /Applications/OSSScan.app</code></p>
       <p>A genuine build returns: <code>accepted source=Notarized Developer ID</code>. If you see a "developer cannot be verified" warning instead, do not open the app and contact <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</p>
       <h3>Windows</h3>
-      <p>Windows Authenticode signing is in progress. Until it is available, unsigned installers will trigger a SmartScreen warning. This is expected, and is itself a signal that something may be wrong if the warning does not appear for a build that claims to be signed. A <strong>SHA-256 checksum</strong> for each release is published on the <a href="downloads.html">Downloads</a> page. Verify using PowerShell before running the installer:</p>
+      <p>The OSSScan Windows installer is <strong>Authenticode-signed</strong> using a code-signing certificate issued to <strong>BigBrainCorp LLC</strong> through SSL.com. Because this is a newly-signed, lower-volume release, Windows SmartScreen may still show a <strong>&ldquo;Windows protected your PC&rdquo;</strong> prompt the first few times it is downloaded. That prompt is driven by download-volume reputation, not by whether the signature itself is valid, and it is expected to stop appearing as more people install the app. Click <strong>More info</strong> on that prompt and confirm the publisher reads <strong>BigBrainCorp LLC</strong> before choosing <strong>Run anyway</strong>. If the publisher instead reads <strong>Unknown publisher</strong> or any name other than BigBrainCorp LLC, do not run the installer and contact <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</p>
+      <p>You can also verify the signature directly. Right-click the installer, choose <strong>Properties &rarr; Digital Signatures</strong>, and confirm the signer name reads BigBrainCorp LLC, or verify from the command line with the Windows SDK's <code>signtool</code>:</p>
+      <p><code>signtool verify /pa /v OSSScanSetup.exe</code></p>
+      <p>A genuine build reports the signature as valid and lists BigBrainCorp LLC as the signer. A <strong>SHA-256 checksum</strong> for each release is also published on the <a href="downloads.html">Downloads</a> page as a secondary integrity check. Verify using PowerShell before running the installer:</p>
       <p><code>Get-FileHash OSSScan-Setup.exe -Algorithm SHA256</code></p>
-      <p>Compare the output against the published hash. As a secondary cross-check, the same hash is published on our GitHub Releases page, which is an independent channel an attacker would also need to compromise.</p>
+      <p>Compare the output against the published hash. As a further cross-check, the same hash is published on our GitHub Releases page, which is an independent channel an attacker would also need to compromise.</p>
     </div>
 
     <div class="doc-section">
@@ -205,7 +208,6 @@
       <ul>
         <li><strong>Non-HTTP exfiltration is not monitored.</strong> The proxy-based network monitor intercepts HTTP/HTTPS traffic only. DNS-based exfiltration, raw TCP/UDP connections, or other non-HTTP channels made by third-party tools would not be detected.</li>
         <li><strong>Disk staging is not monitored.</strong> OSSScan does not audit whether third-party tools write temporary files to unexpected locations on disk. Users with strict data-residency requirements should run scans in an isolated environment.</li>
-        <li><strong>The Windows installer is currently unsigned.</strong> Until Windows code signing is complete, the installer will trigger a SmartScreen warning. Verify the published SHA-256 checksum before running it. We consider this a known gap and are actively working to close it.</li>
       </ul>
     </div>
 
@@ -257,6 +259,10 @@
             <td>Implemented</td>
           </tr>
           <tr>
+            <td>Windows code signing (Authenticode, BigBrainCorp LLC via SSL.com)</td>
+            <td>Implemented</td>
+          </tr>
+          <tr>
             <td>SHA-256 checksum for Windows installer</td>
             <td>Implemented</td>
           </tr>
@@ -271,21 +277,6 @@
           <tr>
             <td>Downloads page: Content Security Policy</td>
             <td>Implemented</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table style="margin-top:16px;">
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Windows code signing (Authenticode)</td>
-            <td>Planned</td>
           </tr>
         </tbody>
       </table>

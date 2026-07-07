@@ -340,13 +340,20 @@
 
         <h2>After downloading</h2>
         <ol>
-          <li>Unzip the archive and open <strong>OSSScan</strong>.</li>
-          <li>Run a <strong>Compatibility Check</strong>, which generates your machine fingerprint.</li>
-          <li>Copy the fingerprint and go to <a href="payments.html">ossscan.com/payments</a> to request your beta license.</li>
-          <li>Click the download link in your beta access email to receive your license file.</li>
+          <li>Verify the SHA-256 checksum matches before unzipping (see below).</li>
+          <li>Unzip the archive.</li>
+          <li>Launch <strong>OSSScan</strong> and run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan&rsquo;s required tools are installed on your machine and to generate your machine fingerprint.</li>
+          <li>Click <strong>Check Project Coverage&hellip;</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both &mdash; no license required &mdash; and see whether OSSScan will produce Strong, Partial, or Limited coverage for it before procuring a license.</li>
         </ol>
 
         <h2>Verify your download</h2>
+        <p class="note">
+          If you&rsquo;ve downloaded OSSScan before, your browser may have saved the new file
+          under a different name (e.g. <code>OSSScan-win32-x64 (1).zip</code>) instead of
+          overwriting the old one. If your checksum doesn&rsquo;t match, check your downloads
+          folder and make sure the command below points at the file you just downloaded,
+          not an older copy.
+        </p>
         <p class="note">Compare the SHA-256 checksum shown on your platform card against the output of:</p>
         <div class="verify-cmd" id="verify-cmd"></div>
         <p class="note" id="macos-checksum-note" style="margin-top:10px; display:none;">
@@ -355,6 +362,15 @@
           before verifying it:
         </p>
         <div class="verify-cmd" id="macos-move-cmd" style="display:none;"></div>
+        <p class="note" id="windows-smartscreen-note" style="margin-top:10px; display:none;">
+          <strong>Windows note:</strong> The installer is Authenticode-signed as <strong>BigBrainCorp LLC</strong>, but
+          Windows SmartScreen may still show a &ldquo;Windows protected your PC&rdquo; prompt the first few times it is
+          downloaded. This is based on download-volume reputation, not on whether the signature is valid, and should
+          stop appearing as more people install it. Click <strong>More info</strong> and confirm the publisher reads
+          <strong>BigBrainCorp LLC</strong> before choosing <strong>Run anyway</strong>. If it reads &ldquo;Unknown
+          publisher&rdquo; or any other name, do not run it and contact
+          <a href="mailto:info@ossscan.com">info@ossscan.com</a>.
+        </p>
         <p class="note" style="margin-top:10px;">
           A matching checksum confirms the file was not corrupted in transit.
           For stronger authenticity assurance, verify the <strong>code signature</strong> using the
@@ -527,6 +543,9 @@
         const macMoveCmd = document.getElementById('macos-move-cmd');
         macMoveCmd.style.display = 'block';
         macMoveCmd.textContent = macMoveCommand(match.filename);
+      }
+      if (OS === 'win') {
+        document.getElementById('windows-smartscreen-note').style.display = 'block';
       }
     }
 
