@@ -172,7 +172,7 @@
       <p><code>signtool verify /pa /v OSSScanSetup.exe</code></p>
       <p>A genuine build reports the signature as valid and lists BigBrainCorp LLC as the signer. A <strong>SHA-256 checksum</strong> for each release is also published on the <a href="downloads.html">Downloads</a> page as a secondary integrity check. Verify using PowerShell before running the installer:</p>
       <p><code>Get-FileHash OSSScan-Setup.exe -Algorithm SHA256</code></p>
-      <p>Compare the output against the published hash. As a further cross-check, the same hash is published on our GitHub Releases page, which is an independent channel an attacker would also need to compromise.</p>
+      <p>Compare the output against the hash published on the <a href="downloads.html">Downloads</a> page.</p>
     </div>
 
     <div class="doc-section">
@@ -218,68 +218,9 @@
       <ol>
         <li>Your browser&rsquo;s address bar shows <code>https://ossscan.com</code> with a valid padlock.</li>
         <li>The downloaded binary passes <strong>code-signature verification</strong> (see <em>How to Verify the App Is Genuine</em> above). A binary served from a spoofed site cannot carry our Apple Developer ID or Authenticode signature.</li>
-        <li>If in doubt, cross-check the SHA-256 checksum against the value published on our <a href="https://github.com/bigbraincorp/ossscan/releases" rel="noopener noreferrer">GitHub Releases page</a>, which is an independent channel an attacker would also need to compromise.</li>
+        <li>If in doubt, email <a href="mailto:info@ossscan.com">info@ossscan.com</a> and ask us to confirm the current release's SHA-256 checksum out-of-band, as an independent check in case the website itself were compromised.</li>
       </ol>
       <p>To report a suspected spoofed site or phishing campaign impersonating OSSScan, contact <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</p>
-    </div>
-
-    <div class="doc-section">
-      <h2>Implementation Status</h2>
-      <p>The following table summarizes the current state of security features:</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>macOS code signing + notarization</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>HTTPS-only outbound calls</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Proxy-based network monitor (Strict / Balanced modes)</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Blocked-call audit log</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Light mode (zero outbound calls)</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Machine fingerprint (license enforcement only)</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Windows code signing (Authenticode, BigBrainCorp LLC via SSL.com)</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>SHA-256 checksum for Windows installer</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Downloads page: official domain banner (osscan.com warning)</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Downloads page: download URL origin validation</td>
-            <td>Implemented</td>
-          </tr>
-          <tr>
-            <td>Downloads page: Content Security Policy</td>
-            <td>Implemented</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
   </div>
