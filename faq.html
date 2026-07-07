@@ -968,32 +968,6 @@
       </section>
 
       <section class="faq-card">
-        <div class="faq-q">Which SBOM generator gives the best license coverage?</div>
-        <div class="faq-a">
-          <p>Based on testing across multiple projects:</p>
-          <ul>
-            <li><strong>GitHub dependency graph export</strong> — high license coverage. Best choice if your project is on GitHub. No local tools required.</li>
-            <li><strong>cdxgen</strong> — high license coverage. Best choice for any other platform. Run with <code>npx @cyclonedx/cdxgen</code>.</li>
-            <li><strong>Syft (CycloneDX)</strong> — 5–40% coverage. Syft is excellent for generating SBOMs in CI pipelines but does not read license metadata from package manifests by default.</li>
-            <li><strong>Syft (SPDX)</strong> — typically &lt;5% coverage. Not recommended when license analysis is the goal.</li>
-          </ul>
-          <p class="muted">
-            If your loaded SBOM shows mostly unknown licenses, try re-generating it with cdxgen or downloading it from GitHub instead.
-            You can also run <strong>Deep Enrich (network)…</strong> after loading to fill in gaps using package registry metadata.
-          </p>
-          <p class="muted">
-            <strong style="color:#e6edf3;">Why does a GitHub SBOM show more packages than an OSSScan source scan?</strong>
-            GitHub includes everything in your lockfile — runtime dependencies <em>and</em> packages that
-            never ship with your app, such as build tools (webpack, Babel, electron-forge), test runners
-            (Jest, Playwright), admin or data-export scripts, release packaging utilities, and linters.
-            OSSScan scanning the same source directly separates these out into a "Build / CI Tools"
-            category and focuses its main count on what is actually resolvable and shipping.
-            Neither number is wrong; they are answering slightly different questions.
-          </p>
-        </div>
-      </section>
-
-      <section class="faq-card">
         <div class="faq-q">Can I get an SBOM from GitLab, Bitbucket, or Azure DevOps?</div>
         <div class="faq-a">
           <p>

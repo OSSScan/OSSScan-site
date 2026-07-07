@@ -422,56 +422,6 @@
         Tip: Once you have the SBOM file from your pipeline, download it and load it into OSSScan — no source code access needed.
       </p>
 
-      <h4>Which generator should I use?</h4>
-      <table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-bottom:1rem;">
-        <thead>
-          <tr style="border-bottom:1px solid #30363d;">
-            <th style="text-align:left; padding:4px 8px;">Generator</th>
-            <th style="text-align:left; padding:4px 8px;">Best for</th>
-            <th style="text-align:left; padding:4px 8px;">License coverage</th>
-            <th style="text-align:left; padding:4px 8px;">Requires</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #21262d;">
-            <td style="padding:4px 8px;"><strong>GitHub export</strong></td>
-            <td style="padding:4px 8px;">Public or private GitHub repos</td>
-            <td style="padding:4px 8px;">High</td>
-            <td style="padding:4px 8px;">GitHub account, dependency graph enabled</td>
-          </tr>
-          <tr style="border-bottom:1px solid #21262d;">
-            <td style="padding:4px 8px;"><strong>cdxgen</strong></td>
-            <td style="padding:4px 8px;">Any project, any platform</td>
-            <td style="padding:4px 8px;">High</td>
-            <td style="padding:4px 8px;">Node.js (npx), dependencies installed</td>
-          </tr>
-          <tr style="border-bottom:1px solid #21262d;">
-            <td style="padding:4px 8px;">Syft (CycloneDX)</td>
-            <td style="padding:4px 8px;">CI pipelines, artifact scanning</td>
-            <td style="padding:4px 8px;">5–40%</td>
-            <td style="padding:4px 8px;">syft installed, built artifacts present</td>
-          </tr>
-          <tr>
-            <td style="padding:4px 8px;">Syft (SPDX)</td>
-            <td style="padding:4px 8px;">Interoperability with other tools</td>
-            <td style="padding:4px 8px;">&lt;5%</td>
-            <td style="padding:4px 8px;">syft installed</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p style="color:#8b949e; font-size:0.85rem; margin-bottom:1rem;">
-        <strong style="color:#e6edf3;">Note on package counts:</strong>
-        GitHub's dependency graph includes <em>all</em> dependencies from your lockfile — both the
-        packages that ship with your app and the ones that do not, such as build tools (webpack, Babel,
-        electron-forge), test runners (Jest, Playwright), admin or data-export scripts, release packaging
-        utilities, and linters. All of these appear in your lockfile but none of them are distributed to
-        end users. OSSScan scanning the same source directly focuses on what is actually installed and
-        resolvable on disk and separates out build/CI tools into their own category, so its count of
-        "shipping" packages will often be smaller. Neither number is wrong — they are answering slightly
-        different questions.
-      </p>
-
       <h3>Loading an SBOM from the CLI</h3>
       <p>
         Use <code>--load-sbom &lt;file&gt;</code> instead of <code>--scan &lt;dir&gt;</code>.
