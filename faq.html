@@ -962,7 +962,7 @@
           <pre><code>npx @cyclonedx/cdxgen . -o sbom.json</code></pre>
           <p>Then load <code>sbom.json</code> into OSSScan. Requires Node.js; no separate install needed.</p>
           <p class="muted">
-            Both tools consistently produce &gt;99% license coverage for npm, Go, Java, and Rust projects.
+            Both tools consistently produce high license coverage for npm, Go, Java, and Rust projects.
           </p>
         </div>
       </section>
@@ -972,8 +972,8 @@
         <div class="faq-a">
           <p>Based on testing across multiple projects:</p>
           <ul>
-            <li><strong>GitHub dependency graph export</strong> — ~99% license coverage. Best choice if your project is on GitHub. No local tools required.</li>
-            <li><strong>cdxgen</strong> — ~99% license coverage. Best choice for any other platform. Run with <code>npx @cyclonedx/cdxgen</code>.</li>
+            <li><strong>GitHub dependency graph export</strong> — high license coverage. Best choice if your project is on GitHub. No local tools required.</li>
+            <li><strong>cdxgen</strong> — high license coverage. Best choice for any other platform. Run with <code>npx @cyclonedx/cdxgen</code>.</li>
             <li><strong>Syft (CycloneDX)</strong> — 5–40% coverage. Syft is excellent for generating SBOMs in CI pipelines but does not read license metadata from package manifests by default.</li>
             <li><strong>Syft (SPDX)</strong> — typically &lt;5% coverage. Not recommended when license analysis is the goal.</li>
           </ul>
