@@ -802,6 +802,122 @@
               </div>
             </section>
       <section class="faq-card">
+              <div class="faq-q">What is the Review tab for?</div>
+              <div class="faq-a">
+                <p>
+                  The <strong>Review</strong> tab lets you read AI agent evaluation results and record your team's final disposition on each finding.
+                  After an AI agent has processed a bulk CVE or license export and written <code>.result.json</code> files into the <code>Evaluations/</code> folder,
+                  open that folder in the Review tab to annotate findings.
+                </p>
+                <p>
+                  Each annotation you save is written as a <code>.annotation.json</code> file alongside the agent result.
+                  These annotations drive future <strong>delta scans</strong> &mdash; findings your team has accepted are automatically skipped in the next bulk export,
+                  so the AI agent only re-examines what is genuinely new or changed.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">How do I annotate a finding in the Review tab?</div>
+              <div class="faq-a">
+                <ol>
+                  <li>Click the <strong>Review</strong> tab and click <strong>Open&hellip;</strong> to select your evaluations folder (the folder containing <code>CVE/</code> or <code>Licenses/</code> subfolders, or one of those directly).</li>
+                  <li>Find the row you want to accept and click <strong>Accept</strong>.</li>
+                  <li>The annotation panel opens showing the AI evaluation summary and a form.</li>
+                  <li>Fill in <strong>Accepted by</strong> and a required <strong>Reason</strong>. Optionally set a <strong>Re-review after</strong> date.</li>
+                  <li>Click <strong>Accept Finding</strong> to write the annotation file to disk.</li>
+                </ol>
+                <p class="muted">
+                  Annotations are saved directly into the <code>Evaluations/</code> folder inside your export directory and do not modify the AI's result file.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">What does the Baseline field in the Review tab do?</div>
+              <div class="faq-a">
+                <p>
+                  If you have a prior evaluations folder from an earlier scan, you can load it as a <strong>Baseline</strong>.
+                  OSSScan checks each current finding against the baseline and pre-fills the annotation form for items that already have an accepted annotation.
+                </p>
+                <ul>
+                  <li>Items with a matching baseline annotation show an <strong>&#8629; Carried</strong> badge.</li>
+                  <li>Click <strong>Edit</strong> on a carried row to review the prior annotation and confirm it still applies.</li>
+                  <li>Annotations are only carried if the package version is unchanged. A version change means no carry-over.</li>
+                </ul>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">What does the &ldquo;Re-review after&rdquo; date on an annotation do?</div>
+              <div class="faq-a">
+                <p>
+                  Setting a <strong>Re-review after</strong> date marks the annotation as expiring on that date.
+                  Once expired, the annotation shows an <strong>Expired</strong> badge and is not carried over in future delta scans &mdash;
+                  the finding will be re-assessed by the AI agent on the next run.
+                </p>
+                <p class="muted">
+                  This is useful for findings where your acceptance is conditional or time-limited, for example:
+                  &ldquo;acceptable until we upgrade this dependency&rdquo; or &ldquo;review again in 12 months.&rdquo;
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">What is the Annotated CVE / License Report?</div>
+              <div class="faq-a">
+                <p>
+                  The <strong>Annotated CVE Report</strong> and <strong>Annotated License Report</strong> are standalone HTML reports
+                  generated from the <strong>Review</strong> tab. Unlike the standard CVE and License reports (which come from the raw scan),
+                  annotated reports are built from the AI agent's evaluation results combined with your team's human annotations.
+                </p>
+                <p>Each finding in the report shows:</p>
+                <ul>
+                  <li>The AI agent's determination or classification (e.g., &ldquo;Not exploitable&rdquo;, &ldquo;Review required&rdquo;).</li>
+                  <li>The AI's key reasoning &mdash; reachability assessment, obligations, facts.</li>
+                  <li>Your team's disposition: <strong>Accepted</strong> (with who accepted it, when, and why), <strong>Pending</strong> (not yet reviewed), or <strong>Expired</strong> (accepted but past the re-review date).</li>
+                </ul>
+                <p>
+                  This makes the annotated report useful for communicating with stakeholders &mdash; it shows not just what was found,
+                  but what was investigated, what was concluded, and what your team has formally accepted as a known or non-applicable risk.
+                </p>
+                <p class="muted">
+                  Click <strong>Export Annotated CVE Report&hellip;</strong> or <strong>Export Annotated License Report&hellip;</strong>
+                  in the relevant section header of the Review tab once an evaluations folder is loaded.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
+              <div class="faq-q">What is a delta scan and how do I run one?</div>
+              <div class="faq-a">
+                <p>
+                  A delta scan is a bulk export that compares new scan findings against a prior evaluations folder (the <strong>baseline</strong>)
+                  and only exports request files for findings that genuinely need fresh investigation.
+                  Findings your team has already cleared &mdash; either because the AI marked them not exploitable / no concern, or because you accepted them
+                  with an annotation in the Review tab &mdash; are skipped automatically.
+                </p>
+                <p><strong>How to run a delta scan (UI):</strong></p>
+                <ol>
+                  <li>Run a new scan on your project.</li>
+                  <li>Click <strong>Bulk Investigate</strong> (CVE) or <strong>Bulk License Review</strong> (licenses).</li>
+                  <li>In the export dialog, select <strong>Delta Investigation</strong>.</li>
+                  <li>Click <strong>Browse&hellip;</strong> next to &ldquo;Prior baseline folder&rdquo; and select the export folder from your previous run (the folder that contains the <code>CVE/</code> or <code>Licenses/</code> subfolders).</li>
+                  <li>OSSScan validates the baseline and shows how many evaluations and annotations it contains. Click <strong>&#8505;</strong> to review the screening rules inline.</li>
+                  <li>Choose a <em>different</em> output folder for this run, then export.</li>
+                </ol>
+                <p><strong>How to run a delta scan (CLI):</strong></p>
+                <p>Add <code>--baseline &lt;prior-export-dir&gt;</code> alongside <code>--bulk-cve</code> or <code>--bulk-license</code>. The baseline is validated before the scan starts (exit code 8 if invalid or if output and baseline are the same folder).</p>
+                <p><strong>Screening rules:</strong></p>
+                <ul>
+                  <li><strong>CVE &mdash; Skip:</strong> prior result was <em>Not exploitable</em>, or a human annotation is active (carry_over, not expired).</li>
+                  <li><strong>CVE &mdash; Re-assess:</strong> prior result was <em>Exploitable</em> or <em>Needs further investigation</em> with no accepted annotation.</li>
+                  <li><strong>License &mdash; Skip:</strong> same package version, prior result was <em>No material copyleft concern</em>, or a human annotation is active.</li>
+                  <li><strong>License &mdash; Re-assess:</strong> same version but prior result was <em>Review required</em> or <em>Likely compliance issue</em> with no accepted annotation.</li>
+                  <li><strong>Any kind &mdash; Evaluate fresh:</strong> new finding with no prior result, or same package with a different version (annotations never carry across version changes).</li>
+                </ul>
+                <p class="muted">
+                  Skipped items have their prior result and annotation copied into the new <code>Evaluations/</code> folder so the export remains a complete record.
+                  Delta stats (new, re-assessed, screened) appear in the post-export summary and in the <code>ossscan.agent_job.json</code> manifest.
+                </p>
+              </div>
+            </section>
+      <section class="faq-card">
               <div class="faq-q">How do I use bulk prompts with an agentic coding platform?</div>
               <div class="faq-a">
                 <ol>
