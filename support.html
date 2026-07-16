@@ -77,6 +77,16 @@
     .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
     .site-footer a { color:#4ab3f4; text-decoration:none; }
     .site-footer a:hover { text-decoration:underline; }
+
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. Must stay last so it wins on source order. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
   </style>
 </head>
 <body>
