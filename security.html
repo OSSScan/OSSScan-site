@@ -85,6 +85,10 @@
       .header-nav a:not(.btn-nav) { display: none; }
       .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
       .site-header-wordmark .brand-tagline { display: none; }
+      /* The columns' minimum content width exceeds a phone. Let the table
+         scroll in its own box rather than widen the page; shrinking the
+         text enough to fit breaks words mid-syllable. */
+      .doc-section table { display: block; overflow-x: auto; max-width: 100%; }
     }
   </style>
 </head>
