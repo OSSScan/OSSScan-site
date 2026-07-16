@@ -104,6 +104,19 @@
          text enough to fit breaks words mid-syllable. */
       .doc-section table { display: block; overflow-x: auto; max-width: 100%; }
     }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      /* payments.html's CTA reads "Request Beta License", 30px wider than the
+         "Get Beta License" everywhere else, and clipped without this. */
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      /* long unbreakable URLs in body copy (e.g. the Grype install link) */
+      li a, p a { overflow-wrap: anywhere; }
+    }
   </style>
 </head>
 <body>
