@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Transactional confirmation page — no value in search results.
+Disallow: /checkout-success.html
+
+Sitemap: https://ossscan.com/sitemap.xml

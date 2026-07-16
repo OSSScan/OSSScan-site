@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog | OSSScan</title>
+  <meta name="description" content="We're not lawyers, but we've read enough licenses to know when your dependencies are about to ruin your week. Writing on OSS licensing and CVE triage." />
+  <link rel="canonical" href="https://ossscan.com/blog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OSSScan Blog" />
+  <meta property="og:description" content="We're not lawyers, but we've read enough licenses to know when your dependencies are about to ruin your week." />
+  <meta property="og:url" content="https://ossscan.com/blog/" />
+  <meta property="og:image" content="https://ossscan.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="OSSScan Blog" />
+  <meta name="twitter:description" content="We're not lawyers, but we've read enough licenses to know when your dependencies are about to ruin your week." />
+  <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+    .nav-dropdown { position:relative; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; }
+    .nav-dropdown-toggle { color:#6e8db5; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; gap:4px; cursor:default; white-space:nowrap; user-select:none; }
+    .nav-dropdown-toggle::after { content:'\25be'; font-size:9px; margin-top:1px; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-dropdown-menu { position:absolute; top:34px; left:0; background:#0d1f48; border:1px solid #1a3360; border-radius:0 0 6px 6px; min-width:120px; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+    .nav-dropdown:hover .nav-dropdown-menu { display:block; }
+    .nav-dropdown-menu a { display:block; padding:8px 14px; border:none !important; border-bottom:1px solid #1a3360 !important; color:#6e8db5; font-size:12px; font-weight:500; white-space:nowrap; }
+    .nav-dropdown-menu a:last-child { border-bottom:none !important; }
+    .nav-dropdown-menu a:hover { color:#fff; background:rgba(255,255,255,.08); }
+
+    /* ── Hero ── */
+    .page-body { flex: 1; }
+    .hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: #c5dcf5;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Post list ── */
+    .posts { padding: 56px 24px 72px; }
+    .posts-wrap { max-width: 800px; margin: 0 auto; }
+    .post-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #d0d9e8;
+      border-radius: 14px;
+      padding: 28px 26px;
+      background: #fff;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .15s, background .15s, transform .15s;
+    }
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: #1056b8;
+    }
+    .post-card:hover {
+      background: #fbfcfe;
+      box-shadow: 0 4px 16px rgba(11,26,61,.10);
+      transform: translateY(-1px);
+    }
+    .post-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1056b8;
+      margin-bottom: 10px;
+    }
+    .post-card h2 {
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 0 0 12px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .post-card p.excerpt {
+      font-size: 15px;
+      color: #556;
+      line-height: 1.7;
+      margin: 0 0 16px;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #8494a8;
+    }
+    .post-meta .dot { color: #4ab3f4; }
+    .post-meta .read-more { margin-left: auto; color: #1056b8; font-weight: 700; }
+
+    /* Engagement callout */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 28px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../OSSScan.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Help &amp; FAQ</span>
+      <div class="nav-dropdown-menu">
+        <a href="../tutorials.html">Video Tutorials</a>
+        <a href="../help.html">Help</a>
+        <a href="../faq.html">FAQ</a>
+      </div>
+    </div>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <h1>OSSScan Blog</h1>
+      <p class="hero-sub">We're not lawyers, but we've read enough licenses to know when your dependencies are about to ruin your week.</p>
+    </section>
+
+    <!-- ── Posts ── -->
+    <section class="posts">
+      <div class="posts-wrap">
+
+        <a class="post-card" href="why-open-source-software-matters.html">
+          <span class="post-tag">Licensing &amp; Security</span>
+          <h2>Why Open Source Software (OSS) Matters</h2>
+          <p class="excerpt">OK, even though we are not lawyers, we have watched small dependencies create big licensing surprises and even bigger security headaches. Modern software is built with open source code, and AI is finally giving us clarity about the impact that code brings.</p>
+          <div class="post-meta">
+            <time datetime="2026-07-16">16 July 2026</time>
+            <span class="dot">&middot;</span>
+            <span>8 min read</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </a>
+
+        <div class="engage">
+          <h2>What should we write about next?</h2>
+          <p class="engage-body">More is on the way on SBOMs, reachability analysis, and getting AI agents to do your triage. But we would rather write what you actually want to read. If there is a topic you want covered, or you have hit a licensing or CVE question that is ruining your week, tell us and we will take a run at it.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Question%20about%20licensing%20or%20CVEs">Ask a question</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+
+</body>
+</html>
