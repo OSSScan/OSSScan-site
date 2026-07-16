@@ -80,19 +80,10 @@
     .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
     .header-nav .btn-nav:hover { background: #6cc6f8; }
 
-    /* Mobile: the header's text links duplicate the secondary nav directly
-       below, and the tagline has no room left once the CTA is nowrapped.
-       Without this the header is wider than the viewport and the whole page
-       scrolls sideways. */
-    @media (max-width: 640px) {
-      .header-nav a:not(.btn-nav) { display: none; }
-      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
-      .site-header-wordmark .brand-tagline { display: none; }
-    }
 
     /* Secondary nav */
     .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
-    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; height:34px; flex-wrap:wrap; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
     .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
     .secondary-nav a:first-child { border-left:1px solid #1a3360; }
     .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
@@ -378,6 +369,29 @@
     .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
     .site-footer a { color: #4ab3f4; text-decoration: none; }
     .site-footer a:hover { text-decoration: underline; }
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+      /* The Help & FAQ dropdown opens on :hover, which does not exist on a
+         touch device, so Video Tutorials / Help / FAQ were unreachable on a
+         phone. Flatten it into the nav, which already wraps. */
+      .nav-dropdown { display: contents; }
+      .nav-dropdown-toggle { display: none; }
+      .nav-dropdown-menu {
+        position: static; display: flex; background: none; border: none;
+        box-shadow: none; min-width: 0; border-radius: 0;
+      }
+      .nav-dropdown-menu a {
+        border-bottom: none !important;
+        border-right: 1px solid #1a3360 !important;
+        padding: 0 14px; height: 34px; display: flex; align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
