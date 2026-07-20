@@ -388,6 +388,26 @@
         They will have limited or no evidence when you load an SBOM without the source tree. Deep Enrich can still improve license coverage using package coordinates alone.
       </p>
 
+      <h3 id="cyclonedx-xml">Got a CycloneDX XML SBOM?</h3>
+      <p>
+        OSSScan loads CycloneDX <strong>JSON</strong> only — CycloneDX <strong>XML</strong> (recognizable by a
+        <code>&lt;bom&gt;</code> root element instead of a <code>bomFormat</code> field) is not currently supported.
+        Convert it to JSON first using the official, free
+        <a href="https://github.com/CycloneDX/cyclonedx-cli">CycloneDX CLI</a> tool (Apache-2.0, native binaries for macOS/Windows/Linux):
+      </p>
+      <ol>
+        <li>
+          Install it — macOS with Homebrew: <code>brew install cyclonedx-cli</code>.
+          On Windows, download the <code>cyclonedx-cli</code> binary for your platform from the
+          <a href="https://github.com/CycloneDX/cyclonedx-cli/releases">GitHub releases page</a> and put it on your <code>PATH</code>.
+        </li>
+        <li>Run: <code>cyclonedx convert --input-file bom.xml --output-file bom.json --output-format json</code></li>
+        <li>Load the resulting <code>bom.json</code> into OSSScan using <strong>Load SBOM…</strong>.</li>
+      </ol>
+      <p class="muted">
+        This runs entirely on your machine — no data leaves it. To convert several files at once, repeat the command for each <code>.xml</code> file (or loop over them in your shell).
+      </p>
+
       <h3 id="get-an-sbom">How to get an SBOM for your project</h3>
       <p>
         The license quality in OSSScan depends entirely on what the SBOM generator included.
@@ -849,6 +869,56 @@
         Setting a <strong>Re-review after</strong> date on an annotation marks it as expired after that date.
         Expired annotations show an <strong>Expired</strong> badge and are not carried over in delta scans,
         ensuring time-sensitive acceptances get re-examined on schedule.
+      </p>
+
+      <h2 id="update-dependabot">Update Dependabot — pushing your verdicts to GitHub</h2>
+      <p>
+        If your project uses <strong>GitHub Dependabot</strong>, OSSScan can act as a companion to it.
+        Dependabot watches continuously but is noisy &mdash; it keeps re-raising the same CVE alerts with no idea which ones
+        you have already investigated. <strong>Update Dependabot</strong> (a button on the <strong>Review</strong> tab)
+        pushes the conclusions from your evaluation back to GitHub: it <strong>dismisses the Dependabot alerts for the
+        CVEs you cleared</strong>, each with a comment explaining why. Between OSSScan runs Dependabot keeps working, but the
+        noise for findings you have already cleared is gone.
+      </p>
+      <p class="muted">
+        This is strictly one-way and touches only <em>Dependabot alerts</em> (the Security tab). It never changes your code,
+        your <code>.github/dependabot.yml</code>, or anything OSSScan hasn't evaluated.
+      </p>
+
+      <h3>What you need: a short-lived token</h3>
+      <p>
+        You paste a GitHub token once per push. OSSScan never stores it &mdash; it is used for that single update and dropped
+        when the dialog closes. Create a <strong>fine-grained personal access token</strong> scoped to just
+        <strong>Dependabot alerts: Read and write</strong> on the repositories you choose, then revoke it when you are done.
+        The dialog's <strong>How to enable</strong> link walks you through creating and revoking it step by step.
+      </p>
+
+      <h3>How a push works</h3>
+      <ol>
+        <li>Evaluate your CVE findings in the Review tab until the scan is clean &mdash; accept the AI's calls, or set your own verdict with <strong>Override</strong>.</li>
+        <li>Click <strong>Update Dependabot</strong>, confirm the repository, and paste your token.</li>
+        <li>Click <strong>Preview changes</strong>. OSSScan reads your open and dismissed alerts and shows exactly what it will do &mdash; <em>nothing is written yet</em>.</li>
+        <li>Review the plan and click <strong>Apply</strong>. Only then are any alerts changed.</li>
+      </ol>
+
+      <h3>What the preview shows</h3>
+      <ul>
+        <li><strong>Will be dismissed</strong> &mdash; alerts for findings you cleared (not exploitable).</li>
+        <li><strong>Will be reopened</strong> &mdash; an alert OSSScan dismissed on an earlier run, where you have since changed the verdict to a concern. Re-export makes the vulnerability visible again.</li>
+        <li><strong>Held &mdash; no unanimous verdict</strong> &mdash; when a package resolves to several copies and you cleared some but not all, OSSScan cannot tell which alert is the risky copy, so it dismisses none of them. Give every copy the same verdict to release them.</li>
+        <li><strong>You dismissed by hand</strong> &mdash; an alert you dismissed yourself in Dependabot that OSSScan now considers a concern. OSSScan will not override your manual decision, but offers a <strong>reopen</strong> checkbox so you can choose to act on its finding.</li>
+        <li><strong>Not dismissed (no cleared finding)</strong> &mdash; open alerts OSSScan either evaluated as a concern (correctly left open) or has no finding for (for example, newer than your Grype database).</li>
+      </ul>
+
+      <h3>Re-running is safe</h3>
+      <p>
+        Run Update Dependabot as often as you like. It is <strong>authoritative</strong> for the alerts OSSScan has a verdict for:
+        clear a finding and its alert is dismissed; change your mind and mark it a concern and its alert is reopened on the next push.
+        Each alert is shown with its <code>#number</code> so multiple copies of one advisory are easy to tell apart.
+      </p>
+      <p class="muted">
+        Scope: <strong>Update Dependabot</strong> acts on the cleared findings matching your current Review filter/search. If a filter is
+        active, the preview says how many cleared findings it is hiding &mdash; clear the filter to push everything you have cleared.
       </p>
 
     <h2>Copyleft Analysis (Licenses tab)</h2>

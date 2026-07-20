@@ -1150,6 +1150,27 @@
       </section>
 
       <section class="faq-card">
+        <div class="faq-q">What is an &ldquo;Unclassified Binary&rdquo; (LicenseRef-OSSScan-Unclassified-Binary) entry?</div>
+        <div class="faq-a">
+          <p>
+            Syft identifies most packages by reading manifest files (<code>package.json</code>, <code>Podfile.lock</code>, and similar) — that works the same on every platform.
+            For compiled binaries with no such manifest, Syft instead relies on a curated list of signatures for roughly 86 well-known open-source projects, matched by filename pattern and file content.
+            Anything outside that list produces no package at all from Syft on its own.
+          </p>
+          <p>
+            When OSSScan's scan finds an executable file that Syft could not match to any known project, it creates a placeholder entry for it rather than letting it disappear silently.
+            These entries are labeled <code>LicenseRef-OSSScan-Unclassified-Binary</code> and grouped under <strong>Manual License Review</strong> in your report — distinct from the general &ldquo;Unknown / No Assertion&rdquo; bucket, since the true license genuinely could not be determined rather than merely being missing metadata.
+          </p>
+          <p>
+            This shows up more often on macOS build/artifact scans. Windows binaries carry an embedded version-info resource block that Syft can read to get at least a name (even when the license is still unresolved); macOS binaries have no equivalent, so a bundled native library — for example, FFmpeg or a graphics library bundled inside an Electron app's <code>.framework</code> — can be entirely invisible on macOS while still showing up (with an unresolved license) on Windows.
+          </p>
+          <p>
+            <strong>What to do:</strong> run <strong>Bulk License Review</strong> (see <em>&ldquo;What are &lsquo;Bulk License Review&rsquo; and &lsquo;Bulk Investigate&rsquo;?&rdquo;</em> above) — these entries are included automatically and get investigated the same way as any other unresolved license, since they carry a real (non-permissive) license value rather than being filtered out. You can also check whether the vendor of the bundling framework ships its own notices file alongside the binary (for example, Electron ships <code>LICENSES.chromium.html</code> documenting FFmpeg and its other bundled third-party components) as a fast manual cross-check.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq-card">
         <div class="faq-q">My loaded SBOM shows mostly unknown licenses — what can I do?</div>
         <div class="faq-a">
           <p>
