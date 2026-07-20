@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <title>Blog | OSSScan</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -17,11 +18,52 @@
   <meta property="og:image" content="https://ossscan.com/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The OSSScan blog: writing on open-source licensing, CVE triage, and AI-assisted software composition analysis." />
   <meta property="og:site_name" content="OSSScan" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="OSSScan Blog" />
   <meta name="twitter:description" content="We're not lawyers, but we've read enough licenses to know when your dependencies are about to ruin your week." />
   <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "OSSScan Blog",
+    "description": "Writing on open-source licensing, CVE triage, and AI-assisted software composition analysis.",
+    "url": "https://ossscan.com/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "Don't Other Open Source Scanners Use AI Too?",
+        "url": "https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html",
+        "datePublished": "2026-07-20"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Dependabot and OSSScan: Better Together",
+        "url": "https://ossscan.com/blog/dependabot-and-ossscan-better-together.html",
+        "datePublished": "2026-07-19"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "The Eight Open Source Questions Every Technical Due Diligence Asks",
+        "url": "https://ossscan.com/blog/technical-due-diligence-open-source-questions.html",
+        "datePublished": "2026-07-17"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Why Open Source Software (OSS) Matters",
+        "url": "https://ossscan.com/blog/why-open-source-software-matters.html",
+        "datePublished": "2026-07-16"
+      }
+    ]
+  }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -293,6 +335,30 @@
     <!-- ── Posts ── -->
     <section class="posts">
       <div class="posts-wrap">
+
+        <a class="post-card" href="dependabot-and-ossscan-better-together.html">
+          <span class="post-tag">Integrations</span>
+          <h2>Dependabot and OSSScan: Better Together</h2>
+          <p class="excerpt">OSSScan gives you real insight into your open-source license and CVE risk; Dependabot, free on GitHub, raises the alarm on new CVEs, but as a laundry list, not a verdict. Together they let you treat OSS as a test pass, with managed real-time monitoring in between.</p>
+          <div class="post-meta">
+            <time datetime="2026-07-19">19 July 2026</time>
+            <span class="dot">&middot;</span>
+            <span>5 min read</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </a>
+
+        <a class="post-card" href="do-other-open-source-scanners-use-ai.html">
+          <span class="post-tag">AI &amp; Triage</span>
+          <h2>Don't Other Open Source Scanners Use AI Too?</h2>
+          <p class="excerpt">Yes, nearly all of them do now. So the real question isn't whether a scanner uses AI, it's whose AI, running where, and who owns the final call. Most bundle their own model and run it in their cloud over your code; OSSScan is a bridge that hands the investigation to the agent you already trust.</p>
+          <div class="post-meta">
+            <time datetime="2026-07-20">20 July 2026</time>
+            <span class="dot">&middot;</span>
+            <span>8 min read</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </a>
 
         <a class="post-card" href="technical-due-diligence-open-source-questions.html">
           <span class="post-tag">Due Diligence</span>

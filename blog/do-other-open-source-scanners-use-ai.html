@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>Don't Other Open Source Scanners Use AI Too? | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="Most open-source scanners now advertise AI. The real question isn't whether there's AI, but whose AI, and where it runs. OSSScan supplies none of its own: it hands the investigation to the agent you already trust to write your code." />
+  <link rel="canonical" href="https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Don't Other Open Source Scanners Use AI Too?" />
+  <meta property="og:description" content="Yes, they do. But most bundle a model of their own and run it in their cloud over your code. OSSScan is a bridge instead: it makes zero AI calls and hands the investigation to the agent you already trust." />
+  <meta property="og:url" content="https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html" />
+  <meta property="og:image" content="https://ossscan.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="OSSScan: the bridge that lets your own trusted AI agent do open-source security and license triage on your machine." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-20" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Don't Other Open Source Scanners Use AI Too?" />
+  <meta name="twitter:description" content="The question isn't whether a scanner uses AI. It's whose AI, running where, and who owns the final call. OSSScan is the bridge, not the model." />
+  <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Don't Other Open Source Scanners Use AI Too?",
+    "description": "Most open-source scanners now advertise AI, but they supply the model and run it in their cloud over your code. OSSScan makes zero AI calls of its own: it turns a scan into a structured investigation job and hands it to the agent you already trust to write your code, on your machine.",
+    "image": "https://ossscan.com/og-image.png",
+    "datePublished": "2026-07-20",
+    "dateModified": "2026-07-20",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Finding card — the dismissed-alert example */
+    .finding {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 0 28px;
+    }
+    .finding-row { padding: 18px 20px; }
+    .finding-row + .finding-row { border-top: 1px solid #d0d9e8; }
+    .finding-headline { background: #fdf0e8; }
+    .finding-context { background: #eef6ee; }
+    .finding-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .finding-headline .finding-label { color: #c2410c; }
+    .finding-context .finding-label { color: #1f7a34; }
+    .finding p { font-size: 15px; color: #445; line-height: 1.65; margin: 0; }
+    .finding p + p { margin-top: 8px; }
+    .finding ul { font-size: 15px; color: #445; line-height: 1.6; margin: 6px 0 0; padding-left: 20px; }
+    .finding ul li { margin-bottom: 5px; }
+    .finding ul li:last-child { margin-bottom: 0; }
+    .finding .verdict-ok { color: #1f7a34; font-weight: 700; }
+    .finding code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Two layers cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path.permissive::before { background: #4ab3f4; }
+    .path.copyleft::before { background: #f07c20; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path.permissive .path-sub { color: #1056b8; }
+    .path.copyleft .path-sub { color: #c2410c; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path ul { margin: 10px 0 0; padding-left: 18px; }
+    .path li { font-size: 14px; color: #556; line-height: 1.6; margin-bottom: 4px; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <!-- ── Article hero ── -->
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">← OSSScan Blog</a></div>
+        <h1>Don't Other Open Source Scanners Use AI Too?</h1>
+        <p class="article-standfirst">Yes. Nearly all of them do now. So the interesting question isn't whether a scanner uses AI, it's whose AI, running where, and who owns the final call. On that question, OSSScan is built the opposite way from almost everyone else.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-20">20 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>8 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Body ── -->
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">Look at open-source scanning tools today and you'll see the same word stamped on every one of them: AI. AI-native reachability, AI exploitability, AI-assisted triage. If OSSScan also leans on AI to cut through the noise, it's fair to ask what actually makes it different. The honest answer is not that OSSScan has AI and the others don't. It's the reverse: everyone else <em>supplies</em> the AI, and OSSScan supplies none of its own.</p>
+
+        <p class="article-q">If they all use AI, what does &ldquo;whose AI&rdquo; even change?</p>
+
+        <p>Quite a lot, as it turns out. Where the model lives decides who sees your code, who you're locked into, and who is accountable when a verdict is wrong. Those are not small things, and they split cleanly into two very different designs.</p>
+
+        <h2>Two ways to put AI in a scanner</h2>
+
+        <p>The common design is a <strong>closed system</strong>. The tool bundles a model of its own and runs the analysis in its own cloud. To do that, it has to ingest the very thing you might be most careful about: your source code and your full dependency graph, uploaded to a vendor so their model can reason over it. That makes the vendor a standing intermediary. Its value depends on you continuing to route your code and your findings through its service, using the model it chose for you, at the pace and price it sets.</p>
+
+        <p>OSSScan is the other design: a <strong>bridge</strong>. It makes zero AI calls of its own. Instead, it turns a scan into a structured investigation job, one clear request per finding with the dependency chain, where the package is actually imported, the severity, the real-world exploitation probability, and the version that fixes it, and hands that job to the AI coding agent you already run. Your agent, whether that's Claude Code, GitHub Copilot, or a local model, reads your repo on your machine, under its own trust boundary, and answers the question that matters. OSSScan orchestrates and governs the process. The intelligence is yours.</p>
+
+        <div class="paths">
+          <div class="path copyleft">
+            <h3>The closed system</h3>
+            <p class="path-sub">Their model, their cloud</p>
+            <p>Bundles its own AI and runs it in the vendor's cloud, which means uploading your code and dependency graph. You use the model they picked, and your data leaves your machine to do it.</p>
+          </div>
+          <div class="path permissive">
+            <h3>OSSScan: a bridge</h3>
+            <p class="path-sub">Your AI, your machine</p>
+            <p>Makes zero AI calls. It packages each finding into an investigation job and hands it to the agent you already trust to write your code. The reasoning happens where your code already lives.</p>
+          </div>
+        </div>
+
+        <h2>Why a bridge is a feature, not a shortcut</h2>
+
+        <p>Handing the reasoning to your own agent isn't OSSScan doing less work. It's a deliberate bet, and three things fall out of it.</p>
+
+        <p><strong>No lock-in, and no bet against your agent.</strong> A closed system's moat is its model, so it's quietly betting that its model stays ahead of the frontier agents you already pay for. That's a hard bet, and it gets harder every year. OSSScan makes the opposite bet. As the best agents get more capable, OSSScan simply inherits it, because the agent doing the reading is the one you brought. You're never stuck with a vendor's model that has fallen behind the one on your own desk.</p>
+
+        <p><strong>Your data boundary stays yours.</strong> With a closed system there's a vendor cloud in the loop that has to be trusted with a precise map of where your software is weakest. With OSSScan there isn't. If the agent you bring runs locally, nothing leaves your machine at all; if it's a cloud agent like Claude Code or Copilot, your code context goes to the AI provider you already chose, on the terms you already accepted, never to a scanning vendor. For teams whose source code is the entire business, that's the difference between a conversation with the security team and a non-starter.</p>
+
+        <p><strong>A human still owns the final call.</strong> The durable part of OSSScan isn't a clever prompt, it's the scaffolding around the agent: deterministic Syft and Grype scanning plus license detection as the evidence base, and a governed sign-off on top, who cleared a finding, when, and why, recorded as an audit trail. An agent's &ldquo;not exploitable&rdquo; always needs a human of record to accept or override it, and that layer only matters more as agents get more autonomous. Someone accountable still has to own each risk decision for auditors, regulators, and customers.</p>
+
+        <h2>The key to a trustworthy AI scanner: show all the evidence</h2>
+
+        <p>A verdict on its own is worth very little. A tool that prints a confident &ldquo;not exploitable&rdquo; with a percentage next to it, and no way to check whether it's right, is asking to be trusted rather than reviewed. And a human sign-off on top of that is only as good as what the reviewer can actually see. The key to an AI scanner you can rely on is that it puts the full evidence on the table: every fact behind the verdict, the reasoning that connects them, and the steps to re-check both. Oversight only means something when the reviewer can inspect the work.</p>
+
+        <p>That's why every OSSScan evaluation is built to be <em>inspected, not trusted</em>. Each finding comes back as a structured report that keeps what is <strong>known</strong> separate from what is <strong>concluded</strong>, and shows you how to verify both. A single verdict typically includes:</p>
+
+        <ol class="article-list">
+          <li><p><span class="li-title">What it is.</span> A plain description of the actual flaw, not just an advisory ID.</p></li>
+          <li><p><span class="li-title">Reachability.</span> Whether the vulnerable code is reachable in <em>your</em> deployed application, with the reasoning spelled out: is the function called, does it run at build time or in shipped code, is it exposed to end users.</p></li>
+          <li><p><span class="li-title">Key facts.</span> The evidence, stated as facts and made reproducible: for example &ldquo;present only as a transitive dependency,&rdquo; &ldquo;imported in 0 of 177 source files,&rdquo; each with the exact command you can re-run to confirm it, like <code>npm why path-to-regexp</code>.</p></li>
+          <li><p><span class="li-title">Inferences.</span> The conclusions drawn from those facts, <em>labeled as inferences</em> and kept separate from them, so you can see exactly where evidence ends and judgment begins.</p></li>
+          <li><p><span class="li-title">Suggested next checks.</span> Concrete steps to confirm the call yourself, plus the remediation path, such as bumping the transitive version through an override.</p></li>
+          <li><p><span class="li-title">A verdict and a reviewer of record.</span> Exploitable, not exploitable, or needs a closer look, which a human then accepts or overrides, with who decided and why recorded as an audit trail.</p></li>
+        </ol>
+
+        <p>None of that is abstract. Here is one real evaluation, exactly as it comes out of a scan of a React application, for a <code>path-to-regexp</code> advisory that a plain scanner would leave sitting on your board as an unqualified High:</p>
+
+        <div class="finding">
+          <div class="finding-row finding-headline">
+            <p class="finding-label">The raw alert</p>
+            <p><code>path-to-regexp 0.1.12</code>, flagged High. A regular-expression denial-of-service (ReDoS) advisory. On a plain list, a red row demanding a response.</p>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">AI &mdash; What it is</p>
+            <p>path-to-regexp generates a regex vulnerable to ReDoS on crafted route strings.</p>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">AI &mdash; Reachability</p>
+            <p>Not reachable in production. path-to-regexp is a dependency of express inside <code>webpack-dev-server</code>, used for dev-server route matching only. The vulnerable code executes only on a developer's machine on localhost during development; it is not deployed and end users never reach it. Residual risk is limited to a developer running the dev server while exposed to a malicious origin or network.</p>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">AI &mdash; Key facts</p>
+            <ul>
+              <li>Present only as a transitive dependency (<code>is_direct_dependency=false</code>, <code>imported_in_total=0</code>).</li>
+              <li>A dependency of express inside webpack-dev-server, used for dev-server route matching only (<code>npm why path-to-regexp</code>).</li>
+              <li>A grep for path-to-regexp across <code>src/</code> (177 source files) returns zero import or require statements.</li>
+              <li>package.json declares react-scripts 5.0.1; the deployed artifact is a static browser bundle from <code>react-scripts build</code>, and webpack-dev-server is excluded from that output.</li>
+            </ul>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">AI &mdash; Inferences</p>
+            <ul>
+              <li>The deployed application does not ship this component, so production users cannot trigger the vulnerability.</li>
+              <li>A residual, low-likelihood dev-time risk exists if a developer runs the dev server and visits a malicious website, or exposes localhost to a hostile network.</li>
+            </ul>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">AI &mdash; Suggested next checks</p>
+            <ul>
+              <li>Confirm the dev server binds to localhost only and is not exposed to untrusted networks.</li>
+              <li>Optionally override path-to-regexp to 0.1.13 to clear the advisory.</li>
+            </ul>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">Verdict</p>
+            <p><span class="verdict-ok">Not exploitable</span>, then handed to a human to accept or override, with who decided and why recorded.</p>
+          </div>
+        </div>
+
+        <p>Look at what that buys a reviewer. Every factual claim is re-runnable on their own machine, so they can confirm rather than believe. The facts are kept apart from the inferences drawn from them, so they can see exactly where evidence ends and judgment begins. And the tool didn't simply stamp &ldquo;safe&rdquo; and move on: it flagged the one residual condition under which the flaw could still bite (a dev running the server against a hostile network) and told the reviewer what to check. That honesty is the tell of a real evaluation rather than a reassuring guess.</p>
+
+        <p>That structure is the whole point, and it's why this is a strength worth demanding rather than a nicety. You cannot accountably accept a conclusion you can't inspect, and an auditor, a regulator, or a customer will eventually ask a human <em>why</em> a given risk was cleared. &ldquo;The tool said so&rdquo; is not an answer; &ldquo;here are the facts, here's the inference, and here's how to reproduce it&rdquo; is. And notice the quiet irony: a cloud platform that reasons over your uploaded code hands you its <em>conclusion</em>, while OSSScan hands you a re-runnable trail on your own machine. On the actual test of &ldquo;is this a black box,&rdquo; the local, bring-your-own-agent tool is the transparent one.</p>
+
+        <h2>OSSScan isn't trying to replace an enterprise scanner</h2>
+
+        <p>It's worth saying plainly, because pretending otherwise would be the same overselling this article pushes back on. Purpose-built commercial platforms carry things a general-purpose agent doesn't guarantee: an always-on engine that inspects every pull request, validated deep dataflow and taint reachability, org-scale dashboards, and one-click remediation. If your organization needs that, those tools earn their place.</p>
+
+        <p>But standing up an always-on, check-every-PR platform is a real commitment in both directions. There's the cost of an enterprise subscription, and there's the effort: wiring it into every pipeline, tuning the noise, and staffing a program around it. Plenty of teams can't make that commitment, or simply don't want to, and they shouldn't have to in order to take their open-source risk seriously.</p>
+
+        <p>OSSScan was written for them. Instead of an always-on program, it offers an <strong>OSS test pass</strong>: a deep, AI-assisted review you run deliberately, at a cadence you choose, to get the most out of the engineering bandwidth you actually have. And it isn't either/or with real-time coverage. Between passes, a free tool like GitHub's Dependabot handles the continuous scanning and alerting, and OSSScan can quiet the alerts it has already investigated so that stream stays manageable. We wrote a companion piece on pairing the two: <a href="dependabot-and-ossscan-better-together.html">Dependabot and OSSScan: Better Together</a>.</p>
+
+        <p>So OSSScan's play is not to out-engineer a vendor's platform or match its scale. It's to be the neutral, non-lock-in bridge that pairs the agent you already trust with deterministic scanning and governed, auditable evidence, at a commitment level a leaner team can actually say yes to, and without your code ever leaving your control.</p>
+
+        <h2>Whose AI, running where?</h2>
+
+        <p>So yes: other open-source scanners use AI. Almost all of them. The box is ticked everywhere, which is exactly why ticking it settles nothing. The questions that actually matter are the next three: whose model is reading your code, whose cloud is it running in, and who signs off on the final call?</p>
+
+        <p>A closed system answers all three with &ldquo;ours.&rdquo; OSSScan answers them with &ldquo;yours.&rdquo; A model-supplying scanner keeps your code flowing through its cloud; OSSScan hands the investigation to the AI you already trust, on your machine, and stays the human control point that owns the final call, with the full working laid out so that sign-off is real rather than a rubber stamp. That's the whole difference.</p>
+
+        <a class="back-link" href="index.html">← Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <!-- ── CTA ── -->
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>Bring your own AI</h2>
+        <p>Run OSSScan as a deep pass over your project and let the AI coding agent you already trust do the investigation, on your machine, with your code never leaving your control. Check your project's coverage first, with no license required.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions? Or a topic you want covered?</h2>
+          <p class="engage-body">If this raised a question about how OSSScan works with your own AI agent, or how it keeps your code local, ask. And if there is a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20Don%27t%20Other%20Open%20Source%20Scanners%20Use%20AI%20Too%3F">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+
+</body>
+</html>

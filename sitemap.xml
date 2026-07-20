@@ -24,11 +24,23 @@
 
   <url>
     <loc>https://ossscan.com/blog/</loc>
-    <lastmod>2026-07-16</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ossscan.com/blog/dependabot-and-ossscan-better-together.html</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://ossscan.com/blog/technical-due-diligence-open-source-questions.html</loc>
     <lastmod>2026-07-17</lastmod>
