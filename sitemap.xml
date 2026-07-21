@@ -24,11 +24,17 @@
 
   <url>
     <loc>https://ossscan.com/blog/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://ossscan.com/blog/should-you-always-install-latest-versions.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://ossscan.com/blog/do-other-open-source-scanners-use-ai.html</loc>
     <lastmod>2026-07-20</lastmod>

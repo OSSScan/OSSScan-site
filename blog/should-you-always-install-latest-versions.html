@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>Should You Always Install the Latest Versions of Your Open Source Packages? | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="Upgrading a dependency feels like basic hygiene, but doing it reflexively can import a restrictive license, a brand-new CVE, or a week of refactoring. A context-driven upgrade strategy across licensing, security, and technical debt." />
+  <link rel="canonical" href="https://ossscan.com/blog/should-you-always-install-latest-versions.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Should You Always Install the Latest Versions of Your Open Source Packages?" />
+  <meta property="og:description" content="Upgrading is not automatically hygiene. Weigh every dependency bump across three pillars, licensing, security, and technical debt, and upgrade because the context calls for it, not because a higher version number exists." />
+  <meta property="og:url" content="https://ossscan.com/blog/should-you-always-install-latest-versions.html" />
+  <meta property="og:image" content="https://ossscan.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Deciding whether to upgrade an open-source dependency, weighed across licensing, security, and technical debt." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-21" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Should You Always Install the Latest Versions of Your Open Source Packages?" />
+  <meta name="twitter:description" content="Upgrade right away is a reflex, not a strategy. Here is how to decide, across licensing, security, and technical debt." />
+  <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Should You Always Install the Latest Versions of Your Open Source Packages?",
+    "description": "Upgrading without a strategy can introduce licensing surprises, brand-new vulnerabilities, and significant engineering overhead. A context-driven upgrade policy built on three pillars: licensing, security, and technical debt.",
+    "image": "https://ossscan.com/og-image.png",
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-07-21",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/should-you-always-install-latest-versions.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Finding card — the dismissed-alert example */
+    .finding {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 0 28px;
+    }
+    .finding-row { padding: 18px 20px; }
+    .finding-row + .finding-row { border-top: 1px solid #d0d9e8; }
+    .finding-headline { background: #fdf0e8; }
+    .finding-context { background: #eef6ee; }
+    .finding-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .finding-headline .finding-label { color: #c2410c; }
+    .finding-context .finding-label { color: #1f7a34; }
+    .finding p { font-size: 15px; color: #445; line-height: 1.65; margin: 0; }
+    .finding code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Two layers cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path.permissive::before { background: #4ab3f4; }
+    .path.copyleft::before { background: #f07c20; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path.permissive .path-sub { color: #1056b8; }
+    .path.copyleft .path-sub { color: #c2410c; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path ul { margin: 10px 0 0; padding-left: 18px; }
+    .path li { font-size: 14px; color: #556; line-height: 1.6; margin-bottom: 4px; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <!-- ── Article hero ── -->
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">← OSSScan Blog</a></div>
+        <h1>Should You Always Install the Latest Versions of Your Open Source Packages?</h1>
+        <p class="article-standfirst">&ldquo;Upgrade right away&rdquo; is the reflex for most teams when a new release drops. It feels like baseline hygiene. But upgrading without a strategy can import a restrictive license, a brand-new vulnerability, or a week of refactoring you did not plan for. Here is how to decide.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-21">21 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>6 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Body ── -->
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">Upgrading feels like something responsible developers just do, automatically, the moment a new version appears. But dependency management isn't about blindly staying &ldquo;current.&rdquo; It's a strategic balance of safety, compliance, and maintainability. To decide whether any given upgrade makes sense, you need to weigh it across three distinct pillars: <strong>licensing</strong>, <strong>security</strong>, and <strong>technical debt</strong>.</p>
+
+        <h2>1. Licensing: upgrades rarely buy you anything</h2>
+
+        <p>Licensing is the most straightforward pillar. Suppose you run an open-source audit, with OSSScan or anything else, and confirm that your current package versions carry zero intellectual-property or license-compliance risk. What do you gain, from a licensing perspective, by upgrading?</p>
+
+        <p class="article-q">Usually nothing. And you may be taking on new risk.</p>
+
+        <p>Upgrading can introduce <strong>license drift</strong>. Maintainers occasionally change license terms between major releases. A library previously released under a permissive license like MIT or Apache 2.0 might shift to something restrictive or copyleft, such as AGPL, in a newer version. Upgrades do occasionally clarify ambiguous license metadata or fix an incorrect SPDX identifier, but those edge cases are rare.</p>
+
+        <div class="aside-note">
+          <p><strong>The takeaway.</strong> From a pure licensing perspective, upgrading an already compliant package rarely improves your position. Worse, without re-scanning after the update, you risk inadvertently adopting a restrictive license that puts your application at risk, and never noticing.</p>
+        </div>
+
+        <h2>2. Security: real risks vs. ghost vulnerabilities</h2>
+
+        <p>Security is the usual justification for constant updates. If you are on an older version, conventional wisdom says you are in danger. But security is contextual, and blindly updating can backfire.</p>
+
+        <p>The question that matters is not &ldquo;does this version have CVEs against it?&rdquo; but <strong>is the vulnerability actually exploitable in your environment?</strong> That is, can the vulnerable code path actually be reached and executed in your specific application. Two situations, two very different answers:</p>
+
+        <div class="paths">
+          <div class="path permissive">
+            <h3>No reachable CVEs</h3>
+            <p class="path-sub">Older version, clean in context</p>
+            <p>Upgrading now means fixing a problem that doesn't exist. Worse, you might break into jail: the newer version can introduce a brand-new, unpatched vulnerability that <em>is</em> exploitable in your setup. You just traded a secure posture for a vulnerable one.</p>
+          </div>
+          <div class="path copyleft">
+            <h3>An active, exploitable CVE</h3>
+            <p class="path-sub">Verified reachable in your app</p>
+            <p>A component contains a verified vulnerability that actively exposes your application. Your software is at real risk right now. Upgrading to a patched release is a high-priority imperative, not a judgment call.</p>
+          </div>
+        </div>
+
+        <div class="aside-note">
+          <p><strong>The takeaway.</strong> If an active CVE is exploitable in your app, upgrade immediately to a patched version. If your current version is clear of reachable exploits, updating simply to chase a higher version number does not improve your security posture, and can introduce new flaws.</p>
+        </div>
+
+        <h2>3. Technical debt: the hidden cost of postponement</h2>
+
+        <p>If licensing and current security both point to holding off, why not freeze every dependency indefinitely? This is where the third pillar enters, and why staying on old versions forever is equally dangerous.</p>
+
+        <p>Technical debt is deferred work that systematically degrades team velocity and system reliability over time. Missing unit tests, absent automation, and poor documentation are the classic examples. But one of the heaviest forms of technical debt is <strong>running outdated software versions</strong>, especially those nearing or past End-of-Life. Delaying updates creates two cascading problems.</p>
+
+        <h2>Cascading dependency explosions</h2>
+
+        <p>Upgrading a single library rarely happens in isolation. Packages rely on other packages. One version bump can trigger a chain reaction: upgrading Package A requires upgrading Package B, which breaks compatibility with Package C. What started as a quick one-line change cascades into a substantial refactoring effort and a full regression pass.</p>
+
+        <h2>Breaking changes across major versions</h2>
+
+        <p>Major version bumps frequently bring API deprecations, architectural shifts, and outright breaking changes. This is precisely why teams delay updates in the first place: reworking application code takes time.</p>
+
+        <p>Kicking the can down the road keeps short-term velocity high, but it sets a trap.</p>
+
+        <div class="finding">
+          <div class="finding-row finding-headline">
+            <p class="finding-label">The trap</p>
+            <p>A critical zero-day CVE lands in a library you haven't updated in three years. It is exploitable, and it is in production.</p>
+          </div>
+          <div class="finding-row finding-context">
+            <p class="finding-label">What it should have cost</p>
+            <p>A clean, single-version patch applied in minutes. Instead you are in an urgent, middle-of-the-night code-red upgrade, wrestling three years of breaking changes and dependency conflicts in the middle of a live security incident.</p>
+          </div>
+        </div>
+
+        <h2>Conclusion: a context-driven upgrade strategy</h2>
+
+        <p>Upgrading open-source dependencies should never be an automatic knee-jerk reaction, and never an all-or-nothing rule. It requires deliberate judgment and planning. To keep your system secure, compliant, and maintainable, build your upgrade policy on three actionable rules:</p>
+
+        <ul class="article-list">
+          <li>
+            <p><span class="li-title">Re-verify licensing after every upgrade.</span> Always re-scan your application after a dependency update, to confirm the new versions haven't shifted to restrictive or copyleft terms.</p>
+          </li>
+          <li>
+            <p><span class="li-title">Evaluate security contextually.</span> Upgrade immediately to fix active, reachable CVEs. For everything else, weigh the real risk before updating.</p>
+          </li>
+          <li>
+            <p><span class="li-title">Pay down technical debt in branches.</span> Don't wait for a crisis. Schedule periodic, deliberate dependency maintenance in dedicated feature branches, so major version upgrades and breaking changes get handled on your terms, not during a fire drill.</p>
+          </li>
+        </ul>
+
+        <p>The common thread is that every one of these rules needs the same input: an accurate, current picture of what your dependencies actually license and actually expose. That is the work OSSScan is built to do, so the decision to upgrade, or not to, is one you make with the facts in hand.</p>
+
+        <a class="back-link" href="index.html">← Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <!-- ── CTA ── -->
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>Know what an upgrade would actually cost you</h2>
+        <p>Run OSSScan over your project to see which licenses you have really taken on and which CVEs are genuinely reachable in your code, before and after you upgrade. Check your project's coverage first, with no license required.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions? Or a topic you want covered?</h2>
+          <p class="engage-body">If this raised a question about setting an upgrade policy for your own project, ask. And if there is a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20Should%20You%20Always%20Install%20the%20Latest%20Versions">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+
+</body>
+</html>
