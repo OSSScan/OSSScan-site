@@ -577,7 +577,7 @@
 
         <ul class="bullets">
           <li><strong>Commercial dual-license vendors:</strong> companies that offer the same software under both a copyleft license and a paid commercial one, a model used by projects such as iText, Neo4j, and Qt. Enforcement is structural here rather than incidental: the copyleft license is what makes the commercial one worth buying, so unlicensed commercial use tends to be identified and pursued. Notices in this category typically arrive from a legal team and may seek licensing fees covering the period of unlicensed use.</li>
-          <li><strong>Rights organizations</strong> (Software Freedom Conservancy, FSF): driven by open-source advocacy. They prioritize compliance over financial settlements, usually starting with informal outreach before issuing formal requests.</li>
+          <li><strong>Rights organizations</strong> (the Software Freedom Conservancy, the Free Software Foundation): driven by open-source advocacy. They prioritize compliance over financial settlements, usually starting with informal outreach before issuing formal requests.</li>
           <li><strong>Individual maintainers:</strong> driven by recognition or project integrity. Outreach ranges from friendly GitHub issues to legal demand letters if ignored.</li>
           <li><strong>Enterprise customers:</strong> driven by corporate risk management. Issues surface during procurement scans or Software Composition Analysis (SCA) audits of vendor installers.</li>
           <li><strong>Automated compliance firms:</strong> specialized agencies hired by copyright holders to scan public repositories, client-side assets, and app stores for unauthorized usage.</li>
@@ -590,7 +590,7 @@
 
         <p>Enter the AGPL (Affero General Public License), specifically designed to close that gap. Under AGPL, simply letting users interact with the software over a network counts as a trigger.</p>
 
-        <p><strong>The example: iText / iTextSharp.</strong> A classic trap involves PDF generation. iTextSharp moved from a weak-copyleft MPL/LGPL dual license to the strong-copyleft AGPL at version 5. A SaaS team integrates iText to generate invoices, reports, or contracts, completely unaware of the license shift.</p>
+        <p><strong>The example: iText / iTextSharp.</strong> A classic trap involves PDF generation. iTextSharp moved from a weak-copyleft dual license, the Mozilla Public License paired with the GNU Lesser General Public License (LGPL), to the strong-copyleft AGPL at version 5. A SaaS team integrates iText to generate invoices, reports, or contracts, completely unaware of the license shift.</p>
 
         <div class="diagram">[ Your Closed-Source SaaS ] ---> (Calls via API / Reflection) ---> [ iText (AGPL) ]
                                                                        │
@@ -600,7 +600,7 @@
 
         <p><strong>Who notifies you &amp; how?</strong> With dual-licensed libraries like iText, compliance enforcement is part of the vendor's core business model. You will receive a formal cease and desist letter or audit inquiry from the vendor's legal team. They track usage via client-side PDF metadata, which often embeds the engine name, along with public repositories and automated web scrapers.</p>
 
-        <p><strong>Real-world precedents.</strong> In <em>Neo4j, Inc. v. PureThink, LLC</em>, Neo4j enforced its AGPLv3-plus-Commons-Clause terms in federal court; the Ninth Circuit affirmed that downstream parties could not strip the added commercial restriction and continue redistributing. Separately, companies like Elastic relicensed to the SSPL, an AGPL-derived license, in response to cloud providers offering their software as a managed service. Vendors actively treat AGPL non-compliance as actionable copyright infringement once rights terminate.</p>
+        <p><strong>Real-world precedents.</strong> In <em>Neo4j, Inc. v. PureThink, LLC</em>, Neo4j enforced its AGPLv3-plus-Commons-Clause terms in federal court; the Ninth Circuit affirmed that downstream parties could not strip the added commercial restriction and continue redistributing. Separately, companies like Elastic relicensed to the Server Side Public License (SSPL), an AGPL-derived license, in response to cloud providers offering their software as a managed service. Vendors actively treat AGPL non-compliance as actionable copyright infringement once rights terminate.</p>
 
         <p><strong>What do you have to do?</strong> The AGPL requires you to provide the Corresponding Source of the &ldquo;work based on the Program&rdquo; to all network users. If the AGPL library is tightly coupled to your application logic, this scope expands to your entire backend service.</p>
 
@@ -701,7 +701,7 @@
 
         <p>On-premise applications are installed directly inside a client's data center or private cloud. Because corporate clients often mandate lengthy QA cycles, security reviews, and scheduled maintenance windows, deploying updates in on-prem environments takes time.</p>
 
-        <p><strong>The example.</strong> An enterprise vendor bundles a GPL command-line utility, such as BusyBox or a specialized GPL data-processing tool, inside an installer package or virtual appliance.</p>
+        <p><strong>The example.</strong> An enterprise vendor bundles a GPL command-line utility, such as BusyBox or a specialized GPL data-processing tool, inside an installer package or a virtual appliance, typically shipped as an Open Virtual Appliance (OVA), the single-file virtual machine image customers import into their own infrastructure.</p>
 
         <div class="diagram">[ On-Prem Enterprise Installer / OVA ]
  ├── Proprietary Business Engine
@@ -737,7 +737,7 @@
                                                               │
                                             <span class="warn">*Missed by SBOM &amp; Dependency Scanners*</span></div>
 
-        <p><strong>Why SBOM-based scanners miss it.</strong> Most SCA and SBOM tools, <strong>OSSScan included</strong>, operate at the package manifest and dependency tree level. They inspect files like <code>package.json</code>, <code>go.mod</code>, or lockfiles to detect declared dependencies and their licenses. Because copy-pasted or AI-generated snippets carry zero manifest footprint, a manifest scanner cannot discover this contamination. To that class of tool, a contaminated file looks like pure, original proprietary code. We would rather say that plainly than let you assume a clean scan means something it doesn't.</p>
+        <p><strong>Why SBOM-based scanners miss it.</strong> Most Software Composition Analysis (SCA) and Software Bill of Materials (SBOM) tools, <strong>OSSScan included</strong>, operate at the package manifest and dependency tree level. They inspect files like <code>package.json</code>, <code>go.mod</code>, or lockfiles to detect declared dependencies and their licenses. Because copy-pasted or AI-generated snippets carry zero manifest footprint, a manifest scanner cannot discover this contamination. To that class of tool, a contaminated file looks like pure, original proprietary code. We would rather say that plainly than let you assume a clean scan means something it doesn't.</p>
 
         <p><strong>How is contamination discovered?</strong> Despite the blindspot, direct snippet contamination is fairly rare in practice, and it is almost never caught in the wild by maintainers, because the snippet sits buried inside a compiled binary or a closed-source backend. Instead it surfaces during technical due diligence for major business events:</p>
 
