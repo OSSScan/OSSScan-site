@@ -764,19 +764,9 @@
 
         <p><strong>GPLv3 and AGPLv3 include a 30-day cure period.</strong> Section 8 of the v3 licenses provides that if you cure a violation within 30 days of receiving notice from the copyright holder, and you have not previously received notice from that holder, your rights are reinstated. This is a term written into the license itself, not a protection granted by statute, and the reinstatement mechanics are more detailed than a single deadline suggests.</p>
 
-        <p><strong>GPLv2 and permissive licenses have no cure clause.</strong> Under GPLv2, rights terminate on breach with no written path back, though in practice cease-and-desist letters almost always grant a working remedy window of roughly 14 to 30 days before formal filings. MPL 2.0 is the exception among the older licenses: Section 5.1 does provide a cure mechanism, so do not lump it in with GPLv2 when you assess your exposure.</p>
+        <p><strong>GPLv2 and permissive licenses have no cure clause.</strong> Under GPLv2, rights terminate on breach with no written path back, though in practice cease-and-desist letters almost always grant a working remedy window of roughly 14 to 30 days before formal filings. MPL 2.0 is the exception among the older licenses: Section 5 does provide a cure mechanism, so do not lump it in with GPLv2 when you assess your exposure.</p>
 
-        <div class="table-wrap">
-        <table>
-          <thead><tr><th>Task</th><th>Typical timeline</th></tr></thead>
-          <tbody>
-            <tr><td>Emergency refactor / swap</td><td>1 to 4 weeks</td></tr>
-            <tr><td>Legal negotiation &amp; commercial settlement</td><td>2 to 8 weeks</td></tr>
-            <tr><td>App store review &amp; release cycle</td><td>1 to 7 days</td></tr>
-            <tr><td>Enterprise on-prem patch rollout</td><td>3 to 18 months</td></tr>
-          </tbody>
-        </table>
-        </div>
+        <p>So the window you are actually granted is measured in weeks, not months: a fixed 30 days under the v3 licenses, and a comparable practical grace under the rest. The catch is that the clock is set by the license, not by how long your fix takes. Pulling a component and re-releasing might be a week's work, or, for on-prem software deployed across enterprise customers, considerably longer than any cure window, which is why the moment to start is when the notice arrives rather than when the plan is finished.</p>
 
         <h2>Can you just ignore the notice?</h2>
 
@@ -784,7 +774,7 @@
 
         <ul class="bullets">
           <li><strong>Platform takedowns.</strong> Copyright holders can issue DMCA takedown notices to cloud providers and to the Apple and Google app stores. App store removal is the common, well-documented outcome; getting an entire cloud-hosted service pulled is rarer and slower, but the pressure is real.</li>
-          <li><strong>Willful infringement damages.</strong> Ignoring written notice is the classic route to a willfulness finding, which in the US raises the statutory damages ceiling to $150,000 per infringed work, plus fees. That ceiling applies only where the copyright was registered in time; otherwise the holder is limited to actual damages and profits.</li>
+          <li><strong>Willful infringement damages.</strong> US copyright law (17 U.S.C. &sect; 504) sets statutory damages per work, and raises the ceiling to $150,000 for infringement a court finds to be willful. Ignoring a written notice is the classic way infringement gets characterized as willful. That ceiling is not automatic, though: under &sect; 412, statutory damages and attorneys' fees are available only where the work was registered in time, and otherwise the holder is limited to its actual damages and the infringer's profits.</li>
           <li><strong>M&amp;A and fundraising freeze.</strong> An unresolved compliance dispute will stall venture funding or an acquisition during investor legal due diligence, and this is the consequence companies actually feel most often.</li>
         </ul>
 
