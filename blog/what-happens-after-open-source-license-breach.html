@@ -576,7 +576,7 @@
         <p>Compliance notices do not all look the same. The tone, leverage, and objectives depend heavily on who identifies the issue:</p>
 
         <ul class="bullets">
-          <li><strong>Commercial dual-license vendors</strong> (iText, Neo4j, Qt): driven by business protection. Expect formal legal letters, automated audit findings, and demands for retroactive commercial licensing fees.</li>
+          <li><strong>Commercial dual-license vendors:</strong> companies that offer the same software under both a copyleft license and a paid commercial one, a model used by projects such as iText, Neo4j, and Qt. Enforcement is structural here rather than incidental: the copyleft license is what makes the commercial one worth buying, so unlicensed commercial use tends to be identified and pursued. Notices in this category typically arrive from a legal team and may seek licensing fees covering the period of unlicensed use.</li>
           <li><strong>Rights organizations</strong> (Software Freedom Conservancy, FSF): driven by open-source advocacy. They prioritize compliance over financial settlements, usually starting with informal outreach before issuing formal requests.</li>
           <li><strong>Individual maintainers:</strong> driven by recognition or project integrity. Outreach ranges from friendly GitHub issues to legal demand letters if ignored.</li>
           <li><strong>Enterprise customers:</strong> driven by corporate risk management. Issues surface during procurement scans or Software Composition Analysis (SCA) audits of vendor installers.</li>
@@ -644,7 +644,7 @@
 
         <p>Mobile applications are binaries compiled and distributed directly to millions of end-user devices. Because binaries are physically distributed, standard GPLv2 and GPLv3 rules apply in full force whenever GPL code is statically or dynamically linked into the application bundle.</p>
 
-        <p><strong>The example.</strong> A mobile team adds video chat, VoIP, or audio filtering using a GPL-licensed library compiled into the app. A well-known public example is the Wix mobile app dispute, where GPL-licensed code from the WordPress ecosystem was found embedded in a closed-source mobile application; it played out publicly rather than in court, but the reputational cost was real.</p>
+        <p><strong>The example.</strong> A mobile team adds video chat, VoIP, or audio filtering using a GPL-licensed library compiled into the app. Disputes of exactly this shape, where GPL-licensed code from a well-known open-source project turns up inside a closed-source mobile app, have played out publicly more than once. They are frequently settled through public pressure and a quick remediation rather than through litigation, but the reputational cost lands either way.</p>
 
         <div class="diagram">[ iOS / Android App Bundle ]
  ├── Proprietary App Logic
@@ -658,7 +658,7 @@
           <p><strong>Note.</strong> Calling a completely separate GPL utility as a distinct, independent subprocess is generally understood not to trigger copyleft obligations on the caller, but static or dynamic compilation into the mobile app binary does. The boundary here is contested and fact-specific, so treat it as a question for counsel rather than a settled rule.</p>
         </div>
 
-        <p><strong>Who notifies you &amp; how?</strong> Two sources dominate in the mobile space. First, rights organizations like the Software Freedom Conservancy, or independent maintainers. Second, app store takedowns: maintainers can file a DMCA takedown notice directly with Apple or Google, forcing them to pull your app from the store until the issue is resolved.</p>
+        <p><strong>Who notifies you &amp; how?</strong> Two sources dominate in the mobile space. First, rights organizations like the Software Freedom Conservancy, or independent maintainers. Second, app store takedowns: maintainers can file a Digital Millennium Copyright Act (DMCA) takedown notice directly with Apple or Google, forcing them to pull your app from the store until the issue is resolved.</p>
 
         <p><strong>What do you have to do?</strong> Under the GPL, distributing compiled binaries requires you to provide the Complete Corresponding Source of the linked application to anyone who receives the binary.</p>
 
