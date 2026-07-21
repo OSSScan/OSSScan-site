@@ -713,24 +713,13 @@
 
         <p><strong>Who notifies you &amp; how?</strong> Enterprise buyers frequently perform their own SCA scans on third-party installers during vendor risk assessments. A customer's legal team, or an open-source rights enforcer, flags the violation.</p>
 
-        <p class="article-q">The on-prem dilemma: why you can't just fix it instantly.</p>
+        <p class="article-q">On-prem is a toothpaste-back-in-the-tube problem.</p>
 
-        <p>Under the GPL, the obligation attaches to the act of distribution: the binary has to go out accompanied either by the corresponding source or by a valid written offer to supply it. Which route you took determines what happens afterwards. If you took the written-offer route, the source moves <strong>on request</strong>, so you are not expected to ring around offering it unprompted. If you shipped neither, which is the position you are in when a breach surfaces, curing it generally means getting source or a valid offer to affected customers proactively rather than waiting to be asked.</p>
+        <p>This is what separates on-prem from every other scenario here. With SaaS you control the deployment, so a fix you ship on Tuesday is live on Tuesday. With on-prem you control the release and nothing else. Your customers decide when, or whether, to take it. Six to eighteen months is an ordinary approval cycle. Never is entirely possible, if the version they are running still works and nothing is forcing them to move.</p>
 
-        <div class="aside-note">
-          <p><strong>Who can ask is not only your customers.</strong> It is tempting to assume the obligation runs solely to the people you sold to. Under GPLv2, the written-offer route asks that the offer be good for <em>any third party</em>, not just your recipients. GPLv3 narrows this to anyone who possesses the object code, and also requires the offer stay valid for at least three years and for as long as you offer spare parts or support for that product. Which version of the license you are on therefore changes the shape of the exposure, which is exactly the kind of detail worth handing to counsel rather than eyeballing.</p>
-        </div>
+        <p>So you can cut a clean version 2.0 the same week you find the problem, and the affected code still sits in the field for as long as your customers leave it there. That is not a lever you hold.</p>
 
-        <p>The timeline is the harder problem. Even if you patch today and release version 2.0 without the GPL code, enterprise clients may take 6 to 18 months to approve and deploy the update, <strong>or never</strong>, if the version they are running still works and nothing is forcing them to move. As long as those clients run version 1.0, non-compliant code remains active in the field.</p>
-
-        <p><strong>Can you fix it?</strong> Not instantly, and the gap between your fix and your customers' deployment is the part worth planning with counsel. Two things are usually on the table, and they are not alternatives so much as parallel tracks:</p>
-
-        <ul class="bullets">
-          <li><strong>A compliance patch.</strong> A hotfix removing the component, routed through account managers with whatever priority your customer agreements allow. How hard you can push a mandatory update, and what you are permitted to tell customers about why, depends on those contracts.</li>
-          <li><strong>Disclosure for the versions already deployed.</strong> Customers running the affected release received the binary, and the obligation attaches to that delivery. Shipping a clean 2.0 does not retire it while 1.0 is still in the field, which is why this track runs alongside the patch rather than after it.</li>
-        </ul>
-
-        <p>The sequencing, what you communicate to customers, and how the obligation interacts with your existing contracts are questions for your lawyers. The engineering work is usually the easy half.</p>
+        <p><strong>What happens in practice.</strong> Two things run in parallel. You cut a patched release and push it through account managers with whatever urgency your customer agreements allow. And you work out, with counsel, what you owe the customers already running the affected version, because a clean new release does not retire whatever attached to the one you already shipped. The engineering half is usually the easy half.</p>
 
         <span class="scenario-tag">Scenario 6</span>
         <h2>Code contamination and the SBOM blindspot</h2>
