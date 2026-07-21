@@ -715,7 +715,13 @@
 
         <p class="article-q">The on-prem dilemma: why you can't just fix it instantly.</p>
 
-        <p>Under the GPL, your source disclosure obligations run to the customers who received the binary, not the general public. But even if you patch the issue today and release version 2.0 without the GPL code, your enterprise clients may take 6 to 18 months to approve and deploy the update. As long as those clients run version 1.0, non-compliant code remains active in the field.</p>
+        <p>Under the GPL, the obligation attaches to the act of distribution: the binary has to go out accompanied either by the corresponding source or by a valid written offer to supply it. Which route you took determines what happens afterwards. If you took the written-offer route, the source moves <strong>on request</strong>, so you are not expected to ring around offering it unprompted. If you shipped neither, which is the position you are in when a breach surfaces, curing it generally means getting source or a valid offer to affected customers proactively rather than waiting to be asked.</p>
+
+        <div class="aside-note">
+          <p><strong>Who can ask is not only your customers.</strong> It is tempting to assume the obligation runs solely to the people you sold to. Under GPLv2, the written-offer route asks that the offer be good for <em>any third party</em>, not just your recipients. GPLv3 narrows this to anyone who possesses the object code, and also requires the offer stay valid for at least three years and for as long as you offer spare parts or support for that product. Which version of the license you are on therefore changes the shape of the exposure, which is exactly the kind of detail worth handing to counsel rather than eyeballing.</p>
+        </div>
+
+        <p>The timeline is the harder problem. Even if you patch today and release version 2.0 without the GPL code, enterprise clients may take 6 to 18 months to approve and deploy the update, <strong>or never</strong>, if the version they are running still works and nothing is forcing them to move. As long as those clients run version 1.0, non-compliant code remains active in the field.</p>
 
         <p><strong>Can you fix it?</strong> Not instantly, and the gap between your fix and your customers' deployment is the part worth planning with counsel. Two things are usually on the table, and they are not alternatives so much as parallel tracks:</p>
 
