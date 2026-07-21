@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>&ldquo;We Shipped Copyleft&rdquo;: What Happens After an Open Source License Breach? | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="Who catches an open-source license breach, how you get notified, what you owe, and how long you have to fix it. Six real-world compliance scenarios across AGPL, MPL, GPL, and permissive licenses." />
+  <link rel="canonical" href="https://ossscan.com/blog/what-happens-after-open-source-license-breach.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="&ldquo;We Shipped Copyleft&rdquo;: What Happens After an Open Source License Breach?" />
+  <meta property="og:description" content="A formal letter lands in your CEO's inbox. Here is who sends it, what your obligations actually are, how long you have to cure the breach, and what remediation looks like across six delivery models." />
+  <meta property="og:url" content="https://ossscan.com/blog/what-happens-after-open-source-license-breach.html" />
+  <meta property="og:image" content="https://ossscan.com/blog/og-license-breach.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="What happens after an open-source license breach: notification, obligations, cure periods, and remediation." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-21" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="&ldquo;We Shipped Copyleft&rdquo;: What Happens After a License Breach?" />
+  <meta name="twitter:description" content="Who catches you, what you owe, and how long you have to fix it. Six compliance scenarios across AGPL, MPL, GPL, and permissive licenses." />
+  <meta name="twitter:image" content="https://ossscan.com/blog/og-license-breach.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "\"We Shipped Copyleft\": What Happens After an Open Source License Breach?",
+    "description": "Who catches an open-source license breach, how you are notified, what your obligations are, and how long you have to fix it, across six real-world delivery models and license categories.",
+    "image": "https://ossscan.com/blog/og-license-breach.png",
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-07-21",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/what-happens-after-open-source-license-breach.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Finding card — the dismissed-alert example */
+    .finding {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 0 28px;
+    }
+    .finding-row { padding: 18px 20px; }
+    .finding-row + .finding-row { border-top: 1px solid #d0d9e8; }
+    .finding-headline { background: #fdf0e8; }
+    .finding-context { background: #eef6ee; }
+    .finding-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .finding-headline .finding-label { color: #c2410c; }
+    .finding-context .finding-label { color: #1f7a34; }
+    .finding p { font-size: 15px; color: #445; line-height: 1.65; margin: 0; }
+    .finding code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Two layers cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path.permissive::before { background: #4ab3f4; }
+    .path.copyleft::before { background: #f07c20; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path.permissive .path-sub { color: #1056b8; }
+    .path.copyleft .path-sub { color: #c2410c; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path ul { margin: 10px 0 0; padding-left: 18px; }
+    .path li { font-size: 14px; color: #556; line-height: 1.6; margin-bottom: 4px; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+
+    /* ── Additions for this post: tables, ASCII diagrams, bullet lists ── */
+    .table-wrap { overflow-x: auto; margin: 0 0 28px; -webkit-overflow-scrolling: touch; }
+    .article-wrap table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 560px;
+      font-size: 14.5px;
+      border: 1px solid #d0d9e8;
+      border-radius: 10px;
+    }
+    .article-wrap th {
+      background: #0b1a3d;
+      color: #fff;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 14px;
+      vertical-align: bottom;
+    }
+    .article-wrap td {
+      padding: 13px 14px;
+      color: #445;
+      line-height: 1.6;
+      border-top: 1px solid #dde4ef;
+      vertical-align: top;
+    }
+    .article-wrap tbody tr:nth-child(even) { background: #f7f9fc; }
+    .article-wrap td strong { color: #0b1a3d; }
+    .table-note { font-size: 13px; color: #8494a8; margin: -18px 0 28px; font-style: italic; }
+
+    /* ASCII architecture diagrams */
+    .diagram {
+      background: #0b1a3d;
+      color: #c5dcf5;
+      border-radius: 10px;
+      border-left: 3px solid #4ab3f4;
+      padding: 20px 22px;
+      margin: 0 0 28px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre;
+      -webkit-overflow-scrolling: touch;
+    }
+    .diagram .hl { color: #4ab3f4; font-weight: 700; }
+    .diagram .warn { color: #f9a76c; font-weight: 700; }
+
+    /* Bulleted lists in body copy */
+    .article-wrap ul.bullets { margin: 0 0 24px; padding-left: 20px; }
+    .article-wrap ul.bullets li { font-size: 16px; color: #334; line-height: 1.7; margin-bottom: 12px; }
+    .article-wrap ul.bullets li strong { color: #0b1a3d; }
+
+    /* Legal disclaimer */
+    .disclaimer {
+      background: #fdf6ee;
+      border: 1px solid #e8d5bd;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 32px;
+    }
+    .disclaimer p { font-size: 14.5px; color: #6b5a45; margin: 0; line-height: 1.65; }
+    .disclaimer strong { color: #8a5a20; }
+
+    /* Scenario section marker */
+    .scenario-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1056b8;
+      background: #eaf2fd;
+      border-radius: 5px;
+      padding: 4px 10px;
+      margin: 44px 0 4px;
+    }
+    .article-wrap .scenario-tag + h2 { margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">← OSSScan Blog</a></div>
+        <h1>&ldquo;We Shipped Copyleft&rdquo;: What Happens After an Open Source License Breach?</h1>
+        <p class="article-standfirst">A formal letter lands in your CEO's inbox referencing dynamic linking, terms of use, and copyright compliance. Who sends it, what you actually owe, how long you have to cure it, and what remediation looks like across six different delivery models.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-21">21 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>15 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">For most engineering teams, shipping software feels like crossing the finish line. CI/CD pipelines green, tests passing, code deployed to production, job done. Until an email arrives in the inbox of your CEO or General Counsel.</p>
+
+        <div class="disclaimer">
+          <p><strong>Not legal advice.</strong> We are not lawyers. This article describes patterns we have seen and what license texts say on their face; it is not a substitute for qualified counsel. Copyleft obligations, cure periods, and damages exposure all depend on the specific licenses involved, how your product is distributed, your contracts, and your jurisdiction. If you have received a compliance notice, talk to a lawyer before you respond to it.</p>
+        </div>
+
+        <p>The subject line is formal, referencing dynamic linking, terms of use, and copyright compliance. Someone discovered that your proprietary, revenue-generating software contains an open-source component with unresolved license obligations, and you distributed or hosted it without complying with the terms.</p>
+
+        <p>Accidental license breaches happen all the time. A developer under deadline pressure drops in a handy library, unaware that it carries the GNU General Public License (GPL) or Affero GPL (AGPL). But once you ship or deploy that code, the clock starts ticking.</p>
+
+        <p class="article-q">What actually happens when an open-source license breach is discovered? Who catches you, how are you notified, what are your legal obligations, and, most importantly, can you fix it?</p>
+
+        <p>Let's break down six real-world compliance scenarios across different license types and delivery models.</p>
+
+        <h2>Quick reference: license categories &amp; compliance obligations</h2>
+
+        <p>Before looking at specific scenarios, it helps to understand where different open-source licenses sit on the spectrum of compliance risk:</p>
+
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>License category</th><th>Common examples</th><th>Source disclosure required?</th><th>Primary obligation</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Strong copyleft</strong></td>
+              <td>GPLv2, GPLv3, AGPL</td>
+              <td>Yes, for the work based on the program</td>
+              <td>Open-source the corresponding source of integrated modules if distributed or hosted</td>
+            </tr>
+            <tr>
+              <td><strong>Weak copyleft</strong></td>
+              <td>MPL 2.0, LGPL, EPL</td>
+              <td>Partial, only for modified library files</td>
+              <td>Keep proprietary app code private, publish edits made to library files or provide a source offer</td>
+            </tr>
+            <tr>
+              <td><strong>Permissive</strong></td>
+              <td>MIT, Apache 2.0, BSD</td>
+              <td>No</td>
+              <td>Retain original copyright headers, attribution notices, and NOTICE files</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2>Who typically contacts you?</h2>
+
+        <p>Compliance notices do not all look the same. The tone, leverage, and objectives depend heavily on who identifies the issue:</p>
+
+        <ul class="bullets">
+          <li><strong>Commercial dual-license vendors</strong> (iText, Neo4j, Qt): driven by business protection. Expect formal legal letters, automated audit findings, and demands for retroactive commercial licensing fees.</li>
+          <li><strong>Rights organizations</strong> (Software Freedom Conservancy, FSF): driven by open-source advocacy. They prioritize compliance over financial settlements, usually starting with informal outreach before issuing formal requests.</li>
+          <li><strong>Individual maintainers:</strong> driven by recognition or project integrity. Outreach ranges from friendly GitHub issues to legal demand letters if ignored.</li>
+          <li><strong>Enterprise customers:</strong> driven by corporate risk management. Issues surface during procurement scans or Software Composition Analysis (SCA) audits of vendor installers.</li>
+          <li><strong>Automated compliance firms:</strong> specialized agencies hired by copyright holders to scan public repositories, client-side assets, and app stores for unauthorized usage.</li>
+        </ul>
+
+        <span class="scenario-tag">Scenario 1</span>
+        <h2>The SaaS platform &amp; AGPL</h2>
+
+        <p>For years, SaaS companies felt immune to traditional copyleft licenses like the GPL. Because web applications run on cloud servers and are never &ldquo;distributed&rdquo; to the user's hard drive, the GPL's source-code disclosure trigger was never pulled.</p>
+
+        <p>Enter the AGPL (Affero General Public License), specifically designed to close that gap. Under AGPL, simply letting users interact with the software over a network counts as a trigger.</p>
+
+        <p><strong>The example: iText / iTextSharp.</strong> A classic trap involves PDF generation. iTextSharp moved from a weak-copyleft MPL/LGPL dual license to the strong-copyleft AGPL at version 5. A SaaS team integrates iText to generate invoices, reports, or contracts, completely unaware of the license shift.</p>
+
+        <div class="diagram">[ Your Closed-Source SaaS ] ---> (Calls via API / Reflection) ---> [ iText (AGPL) ]
+                                                                       │
+                                              User interacts over Network
+                                                                       │
+                                           <span class="warn">*AGPL Source Disclosure Triggered*</span></div>
+
+        <p><strong>Who notifies you &amp; how?</strong> With dual-licensed libraries like iText, compliance enforcement is part of the vendor's core business model. You will receive a formal cease and desist letter or audit inquiry from the vendor's legal team. They track usage via client-side PDF metadata, which often embeds the engine name, along with public repositories and automated web scrapers.</p>
+
+        <p><strong>Real-world precedents.</strong> In <em>Neo4j, Inc. v. PureThink, LLC</em>, Neo4j enforced its AGPLv3-plus-Commons-Clause terms in federal court; the Ninth Circuit affirmed that downstream parties could not strip the added commercial restriction and continue redistributing. Separately, companies like Elastic relicensed to the SSPL, an AGPL-derived license, in response to cloud providers offering their software as a managed service. Vendors actively treat AGPL non-compliance as actionable copyright infringement once rights terminate.</p>
+
+        <p><strong>What do you have to do?</strong> The AGPL requires you to provide the Corresponding Source of the &ldquo;work based on the Program&rdquo; to all network users. If the AGPL library is tightly coupled to your application logic, this scope expands to your entire backend service.</p>
+
+        <p><strong>Can you fix it?</strong> You generally have three options:</p>
+
+        <ul class="article-list">
+          <li><p><span class="li-title">Pay for a commercial license.</span> The copyright holder offers to sell you one. But because you were previously in breach, they hold the negotiating leverage and may demand retroactive fees or damages.</p></li>
+          <li><p><span class="li-title">Open-source the integrated backend.</span> Comply with the AGPL by publishing the corresponding backend source under AGPL. For commercial startups, this is rarely viable.</p></li>
+          <li><p><span class="li-title">Refactor and isolate immediately.</span> Strip out the AGPL component and replace it with a permissively licensed alternative, or isolate it behind an out-of-process API microservice boundary.</p></li>
+        </ul>
+
+        <span class="scenario-tag">Scenario 2</span>
+        <h2>Weak copyleft &amp; modified code (MPL)</h2>
+
+        <p>Not all copyleft licenses reach your entire codebase. Weak or file-level copyleft licenses, such as the Mozilla Public License (MPL 2.0) or Eclipse Public License (EPL), create a middle ground. You can link an MPL library to your proprietary app without open-sourcing your app.</p>
+
+        <p>The trap occurs when developers modify the internal source files of the MPL library itself.</p>
+
+        <p><strong>The example.</strong> Your team pulls in an MPL-licensed networking or rendering library. A developer finds a bug or adds a custom performance tweak directly inside the library's source files, commits the changes to your internal repo, and ships the compiled binary.</p>
+
+        <div class="diagram">[ Proprietary App ] ---> Links To ---> [ MPL Component Source Files ]
+                                                    │
+                                         <span class="hl">*Modified internally*</span>
+                                                    │
+                                        <span class="warn">*MPL Source Triggered for*</span>
+                                        <span class="warn">*modified files ONLY*</span></div>
+
+        <p><strong>Who notifies you &amp; how?</strong> MPL violations are usually caught during corporate M&amp;A due diligence, external code audits, or when an engineer unintentionally submits a pull request upstream that reveals customized internal files.</p>
+
+        <p><strong>What do you have to do?</strong> Unlike the GPL, the MPL does not force you to open-source your entire application. Under Section 3 of the MPL, you must make the source of the modified MPL files available, or provide a valid written offer to supply it, to anyone to whom you distribute the executable.</p>
+
+        <p><strong>Can you fix it?</strong> Yes, MPL violations are relatively clean to resolve:</p>
+
+        <ul class="bullets">
+          <li><strong>Option A:</strong> publish your specific file modifications to a public repository, such as a public GitHub fork, and include the required MPL notices.</li>
+          <li><strong>Option B:</strong> revert your custom file edits and move your logic outside the library, extending it via public interfaces or wrappers in your own proprietary files.</li>
+        </ul>
+
+        <span class="scenario-tag">Scenario 3</span>
+        <h2>The mobile app &amp; GPL</h2>
+
+        <p>Mobile applications are binaries compiled and distributed directly to millions of end-user devices. Because binaries are physically distributed, standard GPLv2 and GPLv3 rules apply in full force whenever GPL code is statically or dynamically linked into the application bundle.</p>
+
+        <p><strong>The example.</strong> A mobile team adds video chat, VoIP, or audio filtering using a GPL-licensed library compiled into the app. A well-known public example is the Wix mobile app dispute, where GPL-licensed code from the WordPress ecosystem was found embedded in a closed-source mobile application; it played out publicly rather than in court, but the reputational cost was real.</p>
+
+        <div class="diagram">[ iOS / Android App Bundle ]
+ ├── Proprietary App Logic
+ └── Embedded GPL Component (Compiled/Linked)
+          │
+  Distributed via App Store / Google Play
+          │
+  <span class="warn">*GPL Trigger: Must provide complete corresponding source code*</span></div>
+
+        <div class="aside-note">
+          <p><strong>Note.</strong> Calling a completely separate GPL utility as a distinct, independent subprocess is generally understood not to trigger copyleft obligations on the caller, but static or dynamic compilation into the mobile app binary does. The boundary here is contested and fact-specific, so treat it as a question for counsel rather than a settled rule.</p>
+        </div>
+
+        <p><strong>Who notifies you &amp; how?</strong> Two sources dominate in the mobile space. First, rights organizations like the Software Freedom Conservancy, or independent maintainers. Second, app store takedowns: maintainers can file a DMCA takedown notice directly with Apple or Google, forcing them to pull your app from the store until the issue is resolved.</p>
+
+        <p><strong>What do you have to do?</strong> Under the GPL, distributing compiled binaries requires you to provide the Complete Corresponding Source of the linked application to anyone who receives the binary.</p>
+
+        <p><strong>Can you fix it?</strong> In the short term, pull the app update from the stores immediately to halt further non-compliant distribution. Then rewrite the module to remove the GPL component, or swap it for an LGPL or MIT library.</p>
+
+        <span class="scenario-tag">Scenario 4</span>
+        <h2>The missing notice (permissive non-compliance)</h2>
+
+        <p>A common misconception is that permissive licenses like MIT, BSD, and Apache 2.0 carry zero risk. While they allow you to keep your source code completely private, they are not public domain. They are conditional licenses, and the primary condition is attribution and notice propagation.</p>
+
+        <p><strong>The example.</strong> Your team builds a web application or SDK using dozens of npm or Cargo packages licensed under MIT and Apache 2.0. To optimize bundle size, your build script strips out all comments, headers, LICENSE files, and Apache NOTICE files, serving a single minified JavaScript bundle to millions of users.</p>
+
+        <div class="diagram">[ Source Code with MIT/Apache Headers ] ---> Minifier / Bundler ---> [ Clean JS Bundle ]
+                                                                             │
+                                                                 <span class="hl">*Attribution Stripped*</span>
+                                                                             │
+                                                                <span class="warn">*Copyright Violation*</span></div>
+
+        <p><strong>Who notifies you &amp; how?</strong> Maintainers or security researchers notice their copyright headers missing from your distributed assets or client-side bundles. You receive a formal inquiry requesting immediate restoration of attribution.</p>
+
+        <p><strong>What do you have to do?</strong> Because you stripped the copyright notices and mandatory Apache NOTICE contents, you are distributing the software outside the terms that granted you the license in the first place, which is what turns an attribution slip into a copyright problem once notice is served.</p>
+
+        <p><strong>Can you fix it?</strong> Permissive violations are the easiest to fix, but they require swift action:</p>
+
+        <ul class="article-list">
+          <li><p><span class="li-title">Add an open-source notices file.</span> Create an &ldquo;About / Third-Party Software Notices&rdquo; screen in your app, or an accessible NOTICES.txt in your distribution package.</p></li>
+          <li><p><span class="li-title">Configure your build pipeline.</span> Update Webpack, Vite, or your compiler to automatically extract and aggregate package LICENSE and NOTICE files into a final notice bundle during production builds, rather than stripping them.</p></li>
+        </ul>
+
+        <span class="scenario-tag">Scenario 5</span>
+        <h2>On-premise enterprise software &amp; GPL</h2>
+
+        <p>On-premise applications are installed directly inside a client's data center or private cloud. Because corporate clients often mandate lengthy QA cycles, security reviews, and scheduled maintenance windows, deploying updates in on-prem environments takes time.</p>
+
+        <p><strong>The example.</strong> An enterprise vendor bundles a GPL command-line utility, such as BusyBox or a specialized GPL data-processing tool, inside an installer package or virtual appliance.</p>
+
+        <div class="diagram">[ On-Prem Enterprise Installer / OVA ]
+ ├── Proprietary Business Engine
+ └── Embedded GPL System Utility (e.g., BusyBox)
+          │
+  Shipped to Enterprise Customers
+          │
+  <span class="warn">*GPL Trigger: Obligation to provide source code to customers*</span></div>
+
+        <p><strong>Who notifies you &amp; how?</strong> Enterprise buyers frequently perform their own SCA scans on third-party installers during vendor risk assessments. A customer's legal team, or an open-source rights enforcer, flags the violation.</p>
+
+        <p class="article-q">The on-prem dilemma: why you can't just fix it instantly.</p>
+
+        <p>Under the GPL, your source disclosure obligations run to the customers who received the binary, not the general public. But even if you patch the issue today and release version 2.0 without the GPL code, your enterprise clients may take 6 to 18 months to approve and deploy the update. As long as those clients run version 1.0, non-compliant code remains active in the field.</p>
+
+        <ul class="article-list">
+          <li><p><span class="li-title">Issue an immediate compliance patch.</span> Release a hotfix removing the GPL code and prioritize it through client account managers as a mandatory legal patch.</p></li>
+          <li><p><span class="li-title">Fulfill source disclosure for affected versions.</span> For customers currently running the affected version, meet your GPL obligations by providing the required source for the GPL components directly to those customers while they transition to the clean release.</p></li>
+        </ul>
+
+        <span class="scenario-tag">Scenario 6</span>
+        <h2>Code contamination and the SBOM blindspot</h2>
+
+        <p>Not all license breaches enter through formal package managers. One of the most subtle ways copyleft risk enters a codebase is through <strong>code snippet contamination</strong>: a developer manually copy-pastes a non-trivial algorithm from an AGPL project, or a generative AI coding assistant echoes a memorized, copyleft-derived snippet directly into a proprietary file.</p>
+
+        <div class="diagram">[ Developer Copy-Paste / GenAI Suggestion ] ---> Pastes Snippet Into Proprietary File
+                                                              │
+                                                  <span class="hl">*Zero Manifest Footprint*</span>
+                                                              │
+                                            <span class="warn">*Missed by SBOM &amp; Dependency Scanners*</span></div>
+
+        <p><strong>Why SBOM-based scanners miss it.</strong> Most SCA and SBOM tools, <strong>OSSScan included</strong>, operate at the package manifest and dependency tree level. They inspect files like <code>package.json</code>, <code>go.mod</code>, or lockfiles to detect declared dependencies and their licenses. Because copy-pasted or AI-generated snippets carry zero manifest footprint, a manifest scanner cannot discover this contamination. To that class of tool, a contaminated file looks like pure, original proprietary code. We would rather say that plainly than let you assume a clean scan means something it doesn't.</p>
+
+        <p><strong>How is contamination discovered?</strong> Despite the blindspot, direct snippet contamination is fairly rare in practice, and it is almost never caught in the wild by maintainers, because the snippet sits buried inside a compiled binary or a closed-source backend. Instead it surfaces during technical due diligence for major business events:</p>
+
+        <ul class="bullets">
+          <li><strong>M&amp;A due diligence:</strong> when a company undergoes acquisition or private equity investment, buyers deploy specialized pattern-matching tools like Black Duck or FossID.</li>
+          <li><strong>Deep pattern-matching scans:</strong> these engines compare source at the token and syntax level, matching structural fingerprints against large databases of public open-source repositories to flag code overlaps.</li>
+        </ul>
+
+        <p><strong>Can you fix it?</strong> If a pattern-matching scan flags a copyleft snippet, you have two primary options. Either commission a <strong>clean-room rewrite</strong>, where an engineer who has not viewed the copyleft source rewrites the function from scratch against a functional spec, or <strong>refactor using standard libraries</strong>, since idiomatic language utilities and simpler patterns typically break the token signature and eliminate the derivation risk.</p>
+
+        <h2>What happens inside your company after notice?</h2>
+
+        <p>When a formal compliance letter hits executive inboxes, companies follow a predictable internal workflow:</p>
+
+        <div class="diagram">[ 1. Legal Triage ] ---> [ 2. Engineering Audit ] ---> [ 3. Architecture Review ]
+                                                                  │
+[ 5. Resolution &amp; Release ] <--- [ 4. Remediation Strategy ] <────┘</div>
+
+        <ul class="article-list">
+          <li><p><span class="li-title">Legal triage.</span> Legal assesses the validity of the notice, identifies the specific license version, and evaluates whether distribution or network access occurred.</p></li>
+          <li><p><span class="li-title">Engineering audit.</span> Engineers locate the exact dependency, determine how it is linked or called, and check build outputs and server deployments.</p></li>
+          <li><p><span class="li-title">Architecture review.</span> The team decides whether the component can be swapped, refactored out-of-process, or whether a commercial license must be negotiated.</p></li>
+          <li><p><span class="li-title">Remediation strategy.</span> Engineering and legal align on a timeline, draft a response to the copyright holder, and assign refactoring tickets.</p></li>
+          <li><p><span class="li-title">Resolution &amp; release.</span> The patch is deployed, notice files are updated, or commercial terms are executed, followed by written confirmation to the copyright holder.</p></li>
+        </ul>
+
+        <h2>Timelines: how long do you have?</h2>
+
+        <p><strong>GPLv3 and AGPLv3 include a 30-day cure period.</strong> Section 8 of the v3 licenses provides that if you cure a violation within 30 days of receiving notice from the copyright holder, and you have not previously received notice from that holder, your rights are reinstated. This is a term written into the license itself, not a protection granted by statute, and the reinstatement mechanics are more detailed than a single deadline suggests.</p>
+
+        <p><strong>GPLv2 and permissive licenses have no cure clause.</strong> Under GPLv2, rights terminate on breach with no written path back, though in practice cease-and-desist letters almost always grant a working remedy window of roughly 14 to 30 days before formal filings. MPL 2.0 is the exception among the older licenses: Section 5.1 does provide a cure mechanism, so do not lump it in with GPLv2 when you assess your exposure.</p>
+
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>Task</th><th>Typical timeline</th></tr></thead>
+          <tbody>
+            <tr><td>Emergency refactor / swap</td><td>1 to 4 weeks</td></tr>
+            <tr><td>Legal negotiation &amp; commercial settlement</td><td>2 to 8 weeks</td></tr>
+            <tr><td>App store review &amp; release cycle</td><td>1 to 7 days</td></tr>
+            <tr><td>Enterprise on-prem patch rollout</td><td>3 to 18 months</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2>Can you just ignore the notice?</h2>
+
+        <p>No. Once your license rights terminate due to an uncured breach, continued distribution or hosting is infringing. Ignoring a notice compounds the problem in three ways:</p>
+
+        <ul class="bullets">
+          <li><strong>Platform takedowns.</strong> Copyright holders can issue DMCA takedown notices to cloud providers and to the Apple and Google app stores. App store removal is the common, well-documented outcome; getting an entire cloud-hosted service pulled is rarer and slower, but the pressure is real.</li>
+          <li><strong>Willful infringement damages.</strong> Ignoring written notice is the classic route to a willfulness finding, which in the US raises the statutory damages ceiling to $150,000 per infringed work, plus fees. That ceiling applies only where the copyright was registered in time; otherwise the holder is limited to actual damages and profits.</li>
+          <li><strong>M&amp;A and fundraising freeze.</strong> An unresolved compliance dispute will stall venture funding or an acquisition during investor legal due diligence, and this is the consequence companies actually feel most often.</li>
+        </ul>
+
+        <h2>Summary matrix</h2>
+
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>Scenario</th><th>License type</th><th>Primary trigger</th><th>Remediation strategy</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SaaS platform</strong></td><td>AGPLv3</td><td>Network interaction by end users</td><td>Refactor out-of-process, buy a commercial license, or publish the backend within the cure window</td></tr>
+            <tr><td><strong>Modified internal files</strong></td><td>MPL 2.0</td><td>Distributing binaries with edited library source files</td><td>Publish modified library files or move changes to external wrapper code</td></tr>
+            <tr><td><strong>Mobile app</strong></td><td>GPLv2 / GPLv3</td><td>App store binary distribution of linked code</td><td>Remove GPL code, release an app update, or fulfill source disclosure</td></tr>
+            <tr><td><strong>Stripped attribution</strong></td><td>MIT / Apache 2.0</td><td>Shipping binaries or JS bundles without copyright and NOTICE files</td><td>Aggregate third-party licenses into an About / Notices file or build asset</td></tr>
+            <tr><td><strong>On-premise software</strong></td><td>GPLv2 / GPLv3</td><td>Delivering installers or OVAs to client data centers</td><td>Issue an immediate hotfix and offer source to affected clients</td></tr>
+            <tr><td><strong>Snippet contamination</strong></td><td>Any copyleft</td><td>Copy-paste or AI-suggested code with no manifest entry</td><td>Clean-room rewrite or refactor to idiomatic standard-library patterns</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>An accidental open-source breach requires a calm, coordinated effort between engineering and legal. Knowing how your delivery architecture interacts with open-source licenses is what lets you resolve these questions long before you ever face a public compliance retrospective.</p>
+
+        <a class="back-link" href="index.html">← Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>Find the copyleft before the letter does</h2>
+        <p>Most of these scenarios start the same way: a dependency nobody looked at closely. OSSScan reads your manifests and tells you which licenses you have actually taken on and what they oblige you to do. Check your project's coverage first, with no license required.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions? Or a topic you want covered?</h2>
+          <p class="engage-body">If this raised a question about your own delivery model and what it triggers, ask. And if there is a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20What%20Happens%20After%20an%20Open%20Source%20License%20Breach">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+
+</body>
+</html>
