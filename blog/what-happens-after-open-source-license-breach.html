@@ -527,10 +527,6 @@
 
         <p class="lede">For most engineering teams, shipping software feels like crossing the finish line. CI/CD pipelines green, tests passing, code deployed to production, job done. Until an email arrives in the inbox of your CEO or General Counsel.</p>
 
-        <div class="disclaimer">
-          <p><strong>Not legal advice.</strong> We are not lawyers. This article describes patterns we have seen and what license texts say on their face; it is not a substitute for qualified counsel. Copyleft obligations, cure periods, and damages exposure all depend on the specific licenses involved, how your product is distributed, your contracts, and your jurisdiction. If you have received a compliance notice, talk to a lawyer before you respond to it.</p>
-        </div>
-
         <p>The subject line is formal, referencing dynamic linking, terms of use, and copyright compliance. Someone discovered that your proprietary, revenue-generating software contains an open-source component with unresolved license obligations, and you distributed or hosted it without complying with the terms.</p>
 
         <p>Accidental license breaches happen all the time. A developer under deadline pressure drops in a handy library, unaware that it carries the GNU General Public License (GPL) or Affero GPL (AGPL). But once you ship or deploy that code, the clock starts ticking.</p>
@@ -538,6 +534,10 @@
         <p class="article-q">What actually happens when an open-source license breach is discovered? Who catches you, how are you notified, what are your legal obligations, and, most importantly, can you fix it?</p>
 
         <p>Let's break down six real-world compliance scenarios across different license types and delivery models.</p>
+
+        <div class="disclaimer">
+          <p><strong>Not legal advice.</strong> We are not lawyers. This article describes patterns we have seen and what license texts say on their face; it is not a substitute for qualified counsel. Copyleft obligations, cure periods, and damages exposure all depend on the specific licenses involved, how your product is distributed, your contracts, and your jurisdiction. If you have received a compliance notice, talk to a lawyer before you respond to it.</p>
+        </div>
 
         <h2>Quick reference: license categories &amp; compliance obligations</h2>
 
@@ -596,13 +596,13 @@
                                                                        │
                                               User interacts over Network
                                                                        │
-                                           <span class="warn">*AGPL Source Disclosure Triggered*</span></div>
+                                        <span class="warn">*AGPL disclosure may be triggered*</span></div>
 
         <p><strong>Who notifies you &amp; how?</strong> With dual-licensed libraries like iText, compliance enforcement is part of the vendor's core business model. You will receive a formal cease-and-desist letter or audit inquiry from the vendor's legal team. They track usage via client-side PDF metadata, which often embeds the engine name, along with public repositories and automated web scrapers.</p>
 
-        <p><strong>Real-world precedents.</strong> In <em>Neo4j, Inc. v. PureThink, LLC</em>, Neo4j enforced its AGPLv3-plus-Commons-Clause terms in federal court; the Ninth Circuit affirmed that downstream parties could not strip the added commercial restriction and continue redistributing. Separately, companies like Elastic relicensed to the Server Side Public License (SSPL), an AGPL-derived license, in response to cloud providers offering their software as a managed service. Vendors actively treat AGPL non-compliance as actionable copyright infringement once rights terminate.</p>
+        <p><strong>Real-world precedents.</strong> In <em>Neo4j, Inc. v. PureThink, LLC</em>, Neo4j enforced its AGPLv3-plus-Commons-Clause terms in federal court; the Ninth Circuit affirmed that downstream parties could not strip the added commercial restriction and continue redistributing. Separately, companies like Elastic relicensed to the Server Side Public License (SSPL), an AGPL-derived license, in response to cloud providers offering their software as a managed service. In many real-world cases, vendors treat AGPL non-compliance as a copyright issue once rights terminate under the license.</p>
 
-        <p><strong>What do you have to do?</strong> The AGPL requires you to provide the Corresponding Source of the &ldquo;work based on the Program&rdquo; to all network users. If the AGPL library is tightly coupled to your application logic, this scope expands to your entire backend service.</p>
+        <p><strong>What do you have to do?</strong> The AGPL asks you to provide the Corresponding Source of the &ldquo;work based on the Program&rdquo; to all network users. Depending on integration details, that can reach beyond the library itself: where the AGPL component is tightly coupled to your application logic, the scope may extend to tightly integrated backend modules.</p>
 
         <p><strong>Can you fix it?</strong> You generally have three options:</p>
 
@@ -652,7 +652,7 @@
           │
   Distributed via App Store / Google Play
           │
-  <span class="warn">*GPL Trigger: Must provide complete corresponding source code*</span></div>
+  <span class="warn">*GPL trigger: may require complete corresponding source*</span></div>
 
         <div class="aside-note">
           <p><strong>Note.</strong> Calling a completely separate GPL utility as a distinct, independent subprocess is generally understood not to trigger copyleft obligations on the caller, but static or dynamic compilation into the mobile app binary does. The boundary here is contested and fact-specific, so treat it as a question for counsel rather than a settled rule.</p>
@@ -660,7 +660,7 @@
 
         <p><strong>Who notifies you &amp; how?</strong> Two sources dominate in the mobile space. First, rights organizations like the Software Freedom Conservancy, or independent maintainers. Second, app store takedowns: maintainers can file a Digital Millennium Copyright Act (DMCA) takedown notice directly with Apple or Google, forcing them to pull your app from the store until the issue is resolved.</p>
 
-        <p><strong>What do you have to do?</strong> Under the GPL, distributing compiled binaries requires you to provide the Complete Corresponding Source of the linked application to anyone who receives the binary.</p>
+        <p><strong>What do you have to do?</strong> Under the GPL, distributing compiled binaries can require providing the Complete Corresponding Source to anyone who receives the binary, where the GPL component is part of a work based on the Program.</p>
 
         <p><strong>Can you fix it?</strong> This is a point to involve counsel before acting, because the right first move depends on facts specific to your situation, and some of the obvious-looking moves carry consequences of their own. Broadly, teams in this position tend to weigh some combination of three things:</p>
 
@@ -687,7 +687,7 @@
 
         <p><strong>Who notifies you &amp; how?</strong> Maintainers or security researchers notice their copyright headers missing from your distributed assets or client-side bundles. You receive a formal inquiry requesting immediate restoration of attribution.</p>
 
-        <p><strong>What do you have to do?</strong> Because you stripped the copyright notices and mandatory Apache NOTICE contents, you are distributing the software outside the terms that granted you the license in the first place, which is what turns an attribution slip into a copyright problem once notice is served.</p>
+        <p><strong>What do you have to do?</strong> Because you stripped the copyright notices and mandatory Apache NOTICE contents, you are distributing the software without meeting the license's conditions, which is what creates a copyright problem once notice is served.</p>
 
         <p><strong>Can you fix it?</strong> Permissive violations are the easiest to fix, but they require swift action:</p>
 
@@ -717,9 +717,9 @@
 
         <p>This is what separates on-prem from every other scenario here. With SaaS you control the deployment, so a fix you ship on Tuesday is live on Tuesday. With on-prem you control the release and nothing else. Your customers decide when, or whether, to take it. A 6-to-18-month approval cycle is ordinary. Never is entirely possible, if the version they are running still works and nothing is forcing them to move.</p>
 
-        <p>So you can cut a clean version 2.0 the same week you find the problem, and the affected code still sits in the field for as long as your customers leave it there. That is not a lever you hold.</p>
+        <p>So you can cut a clean version 2.0 the same week you find the problem, and the affected code still sits in the field for as long as your customers leave it there, and a vendor typically has limited control over customer upgrade timelines.</p>
 
-        <p><strong>What happens in practice.</strong> Two things run in parallel. You cut a patched release and push it through account managers with whatever urgency your customer agreements allow. Meanwhile you work out, with counsel, where you stand with the customers already running the affected version.</p>
+        <p><strong>Can you fix it?</strong> Two things run in parallel. You cut a patched release and push it through account managers with whatever urgency your customer agreements allow. Meanwhile you work out, with counsel, where you stand with the customers already running the affected version.</p>
 
         <p>That second part is usually less dramatic than it sounds, because it depends entirely on who your customers are. Most on-prem customers have no interest in copyleft whatsoever. They bought a product to solve a problem, and a notice about license obligations in a component they have never heard of is not something they are going to act on. A minority will care, and they tend to be the ones with a real legal or compliance function, or an open-source policy they are held to. Those customers may ask for source access to the components in question, which is what the license entitles them to. So the useful question is not what your entire install base might demand, but how many of them sit in that second group. Usually it is a short list, and you can generally work out who is on it before anyone asks.</p>
 
@@ -766,11 +766,11 @@
 
         <p><strong>GPLv2 and permissive licenses have no cure clause.</strong> Under GPLv2, rights terminate on breach with no written path back, though in practice cease-and-desist letters almost always grant a working remedy window of roughly 14 to 30 days before formal filings. MPL 2.0 is the exception among the older licenses: Section 5 does provide a cure mechanism, so do not lump it in with GPLv2 when you assess your exposure.</p>
 
-        <p>So the window you are actually granted is measured in weeks, not months: a fixed 30 days under the v3 licenses, and a comparable practical grace under the rest. The catch is that the clock is set by the license, not by how long your fix takes. Pulling a component and re-releasing might be a week's work, or, for on-prem software deployed across enterprise customers, considerably longer than any cure window, which is why the moment to start is when the notice arrives rather than when the plan is finished.</p>
+        <p>In practice, cure or remediation windows tend to be measured in weeks rather than months: a fixed 30 days under the v3 licenses, and a comparable practical grace under the rest. The catch is that the clock is set by the license, not by how long your fix takes. Pulling a component and re-releasing might be a week's work, or, for on-prem software deployed across enterprise customers, considerably longer than any cure window, which is why the moment to start is when the notice arrives rather than when the plan is finished.</p>
 
         <h2>Can you just ignore the notice?</h2>
 
-        <p>No. Once your license rights terminate due to an uncured breach, continued distribution or hosting is infringing. Ignoring a notice compounds the problem in three ways:</p>
+        <p>No. Under copyleft licenses, rights terminate upon breach, and continuing to distribute or host after termination can constitute infringement. Ignoring a notice compounds the problem in three ways:</p>
 
         <ul class="bullets">
           <li><strong>Platform takedowns.</strong> Copyright holders can issue DMCA takedown notices to cloud providers and to the Apple and Google app stores. App store removal is the common, well-documented outcome; getting an entire cloud-hosted service pulled is rarer and slower, but the pressure is real.</li>
