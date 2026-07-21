@@ -662,7 +662,15 @@
 
         <p><strong>What do you have to do?</strong> Under the GPL, distributing compiled binaries requires you to provide the Complete Corresponding Source of the linked application to anyone who receives the binary.</p>
 
-        <p><strong>Can you fix it?</strong> In the short term, pull the app update from the stores immediately to halt further non-compliant distribution. Then rewrite the module to remove the GPL component, or swap it for an LGPL or MIT library.</p>
+        <p><strong>Can you fix it?</strong> This is a point to involve counsel before acting, because the right first move depends on facts specific to your situation, and some of the obvious-looking moves carry consequences of their own. Broadly, teams in this position tend to weigh some combination of three things:</p>
+
+        <ul class="bullets">
+          <li><strong>Halting further distribution</strong> by pulling the affected release from the stores. This stops new non-compliant copies going out, but it is a business and contractual decision as much as a compliance one, and counsel may have views on timing.</li>
+          <li><strong>Removing the component</strong> and rewriting the module against a permissive or weak-copyleft alternative.</li>
+          <li><strong>Fulfilling the disclosure obligation</strong> for the versions already in users' hands, which does not go away just because later releases are clean.</li>
+        </ul>
+
+        <p>Which of these applies, in what order, and on what timeline is a legal question at least as much as an engineering one. Work it out with your lawyers rather than from a blog post.</p>
 
         <span class="scenario-tag">Scenario 4</span>
         <h2>The missing notice (permissive non-compliance)</h2>
