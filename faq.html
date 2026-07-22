@@ -1197,15 +1197,13 @@
               <div class="faq-q">Why do I see duplicated packages or results after scanning a folder?</div>
               <div class="faq-a">
                 <p>
-                  AI coding tools such as <strong>Claude Code</strong>, <strong>GitHub Copilot</strong>, and <strong>Cursor</strong> create a hidden working directory inside your project folder (for example <code>.claude/</code>, <code>.copilot/</code>).
-                  When you scan that folder, OSSScan picks up those directories alongside your real source files, which can cause components to appear more than once in the results.
+                  OSSScan now handles the most common cause automatically. It <strong>skips duplicate copies of your project</strong> — Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders — and, for a dependency audit, it skips installed-dependency folders such as <code>node_modules</code> or <code>venv</code> that your lockfiles already describe. So a scan no longer double-counts components just because a worktree or an installed <code>node_modules</code> sits inside your project.
                 </p>
                 <p>
-                  <strong>Fix:</strong> Before scanning, delete or move any AI tool working directories out of the folder you intend to scan.
-                  For Claude Code specifically, remove the <code>.claude/</code> folder (or any branch worktree it created inside your project) and then re-run the scan.
+                  If you still see duplicates, it usually means the scan root contains <strong>another full copy of the code</strong> that isn't a worktree — for example another tool's working copy, a manual backup folder, or build output that bundles vendored sources. Move those out of the folder you scan, or scan a clean checkout.
                 </p>
                 <p class="muted">
-                  The same applies to other generated or vendor directories (<code>node_modules/</code>, <code>dist/</code>, <code>.git/</code> submodules, etc.) that are present inside the scan root but should not be treated as first-party source.
+                  Submodules and nested checkouts are kept on purpose — they're intentional source, not duplicates. See <em>“Understanding source scans vs artifact scans”</em> in Help for how scan scope is decided.
                 </p>
               </div>
             </section>

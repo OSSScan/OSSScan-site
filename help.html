@@ -604,9 +604,8 @@
       Those outputs can add bundled or generated components that do not reflect the source dependency graph by itself.
     </p>
     <p>
-      AI coding tools such as <strong>Claude Code</strong>, <strong>GitHub Copilot</strong>, and <strong>Cursor</strong> create a hidden working directory inside your project folder (for example <code>.claude/</code>, <code>.copilot/</code>).
-      If those directories are present when you scan, OSSScan will include them and you may see duplicated packages in your results.
-      Remove any AI tool working directories from the scan root before scanning to avoid this.
+      OSSScan automatically skips duplicate copies of your project — Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders — so a scan won't double-count components just because a worktree sits inside your project.
+      If a <em>different</em> full copy of the code is present in the scan root (another tool's working copy, a manual backup, or build output that bundles vendored sources), move it out or scan a clean checkout.
     </p>
 
     <h3>Artifact scan (distribution view)</h3>
