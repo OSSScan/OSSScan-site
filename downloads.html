@@ -230,6 +230,36 @@
       line-height: 1.6;
     }
     .beta-banner strong { color: #0b1a3d; }
+    /* Release-notes callout. Sits above the beta gate so it is reachable
+       without an access code, and styled as an action rather than another
+       banner so it does not read as a third warning. */
+    .release-callout {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d0d9e8;
+      border-left: 4px solid #4ab3f4;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(11,26,61,.05);
+    }
+    .release-callout .rc-text { flex: 1 1 240px; font-size: 13px; color: #556; line-height: 1.55; }
+    .release-callout .rc-text strong { display: block; color: #0b1a3d; font-size: 14px; margin-bottom: 2px; }
+    .release-callout .rc-btn {
+      flex-shrink: 0;
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .release-callout .rc-btn:hover { background: #0d2460; }
 
     /* ── Loading / error states ── */
     .status { font-size: 14px; color: #667; padding: 24px 0; }
@@ -337,6 +367,14 @@
         below are a secondary integrity check only.
       </div>
 
+      <div class="release-callout">
+        <div class="rc-text">
+          <strong>What&rsquo;s new in this build?</strong>
+          Every release adds features and improvements. See what arrived since you last downloaded.
+        </div>
+        <a class="rc-btn" href="release-notes.html">Read the release notes</a>
+      </div>
+
       <div id="loading" class="status">Loading downloads&hellip;</div>
       <div id="error" class="status err" hidden>
         Unable to load download information. Please try again later or contact
@@ -371,7 +409,7 @@
           <li>Verify the SHA-256 checksum matches before unzipping (see below).</li>
           <li>Unzip the archive.</li>
           <li>Launch <strong>OSSScan</strong> and run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan&rsquo;s required tools are installed on your machine and to generate your machine fingerprint.</li>
-          <li>Click <strong>Check Project Coverage&hellip;</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both &mdash; no license required &mdash; and see whether OSSScan will produce Strong, Partial, or Limited coverage for it before procuring a license.</li>
+          <li>Click <strong>Check Project Coverage&hellip;</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both (no license required) and see whether OSSScan will produce Strong, Partial, or Limited coverage for it before procuring a license.</li>
         </ol>
 
         <h2>Verify your download</h2>

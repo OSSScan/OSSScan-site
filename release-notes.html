@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSScan: Release Notes</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="What is new in each OSSScan release: new features, improvements, and fixes, newest first." />
+  <link rel="canonical" href="https://ossscan.com/release-notes.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OSSScan Release Notes" />
+  <meta property="og:description" content="What is new in each OSSScan release: new features, improvements, and fixes, newest first." />
+  <meta property="og:url" content="https://ossscan.com/release-notes.html" />
+  <meta property="og:image" content="https://ossscan.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="OSSScan Release Notes" />
+  <meta name="twitter:description" content="What is new in each OSSScan release: new features, improvements, and fixes, newest first." />
+  <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#111; background:#f4f6f9; min-height:100vh; display:flex; flex-direction:column; }
+    /* Header */
+    .site-header { background:linear-gradient(135deg,#0b1a3d 0%,#0d2460 60%,#0e2d7a 100%); border-bottom:2px solid #4ab3f4; padding:0 24px; }
+    .site-header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:14px; height:64px; }
+    .site-header img.logo { height:44px; width:44px; border-radius:10px; object-fit:contain; flex-shrink:0; box-shadow:0 0 0 2px #4ab3f4,0 0 10px rgba(74,179,244,.4); }
+    .site-header-wordmark { display:flex; flex-direction:column; line-height:1.1; }
+    .site-header-wordmark .brand-name { font-size:20px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+    .site-header-wordmark .brand-tagline { font-size:11px; color:#4ab3f4; letter-spacing:0.06em; text-transform:uppercase; }
+    .header-nav { margin-left:auto; display:flex; gap:18px; align-items:center; }
+    .header-nav a { color:#a8c8ea; text-decoration:none; font-size:13px; font-weight:500; }
+    .header-nav a:hover { color:#fff; }
+    .header-nav .btn-nav { background:#4ab3f4; color:#0b1a3d; padding:7px 16px; border-radius:6px; font-weight:700; font-size:13px; }
+    /* Page */
+    .page-body { flex:1; padding:40px 24px 60px; }
+    .wrap { max-width:760px; margin:0 auto; }
+    .doc-header { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:28px; box-shadow:0 2px 8px rgba(11,26,61,.06); }
+    .doc-header h1 { font-size:24px; font-weight:800; color:#0b1a3d; margin:0 0 8px; }
+    .doc-header p { font-size:14px; color:#334; line-height:1.7; margin:0 0 10px; }
+    .doc-header p:last-child { margin-bottom:0; }
+    .doc-header a { color:#1056b8; }
+    /* Content */
+    .doc-section { background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px 28px; margin-bottom:16px; box-shadow:0 2px 6px rgba(11,26,61,.04); }
+    .doc-section p { font-size:14px; color:#334; line-height:1.7; margin:0 0 12px; }
+    .doc-section p:last-child { margin-bottom:0; }
+    .doc-section ul { font-size:14px; color:#334; line-height:1.7; margin:0 0 4px; padding-left:20px; }
+    .doc-section li { margin-bottom:10px; }
+    .doc-section li:last-child { margin-bottom:0; }
+    .doc-section strong { color:#0b1a3d; }
+    .doc-section a { color:#1056b8; }
+    .doc-section code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:#f0f4fa; padding:1px 5px; border-radius:4px; overflow-wrap:anywhere; }
+    /* Release heading block */
+    .rel-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin:0 0 4px; padding-bottom:12px; border-bottom:1px solid #e8eef7; }
+    .rel-head h2 { font-size:19px; font-weight:800; color:#0b1a3d; margin:0; }
+    .rel-date { font-size:13px; color:#667; }
+    .rel-badge { font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+      padding:3px 9px; border-radius:20px; }
+    .rel-badge.current { color:#0b1a3d; background:#4ab3f4; }
+    .rel-summary { font-size:14px; color:#445; line-height:1.7; margin:14px 0 14px; }
+    /* Companion blog article for a feature. Own line so it reads as a pointer
+       away from the page, not as part of the feature description. */
+    .rel-more { display:block; margin-top:7px; font-size:13px; font-weight:600;
+      color:#1056b8; text-decoration:none; }
+    .rel-more::after { content:' \2192'; }
+    .rel-more:hover { text-decoration:underline; }
+    /* Footer */
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    /* Secondary nav action links + dropdown */
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .site-footer { background:#0b1a3d; border-top:1px solid #1e3a6e; padding:20px 24px; text-align:center; }
+    .site-footer p { margin:0; font-size:12px; color:#6e8db5; line-height:1.6; }
+    .site-footer a { color:#4ab3f4; text-decoration:none; }
+    .site-footer a:hover { text-decoration:underline; }
+
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. Must stay last so it wins on source order. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      /* long unbreakable URLs in body copy */
+      li a, p a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img class="logo" src="logo.png" alt="OSSScan logo" />
+    <div class="site-header-wordmark">
+      <span class="brand-name">OSSScan</span>
+      <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="payments.html" class="btn-nav">Get Beta License</a>
+    </nav>
+  </div>
+</header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="index.html">Home</a>
+    <a href="downloads.html" class="nav-action">Downloads</a>
+    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="tutorials.html">Video Tutorials</a>
+    <a href="help.html">Help</a>
+    <a href="faq.html">FAQ</a>
+    <a href="blog/index.html">Blog</a>
+    <a href="support.html">Support</a>
+    <a href="about.html">About</a>
+    <a href="security.html">Security</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="wrap">
+
+    <div class="doc-header">
+      <h1>Release Notes</h1>
+      <p>What changed in each OSSScan build, newest first. OSSScan is in active beta and ships frequently, so this page is the fastest way to see what arrived since you last downloaded.</p>
+      <p>Get the current build from the <a href="downloads.html">Downloads page</a>. Your existing license keeps working across beta releases.</p>
+    </div>
+
+    <div class="doc-section">
+      <div class="rel-head">
+        <h2>Version 0.2.6</h2>
+        <span class="rel-badge current">Latest Release</span>
+      </div>
+      <p class="rel-summary">Two integrations that carry your review work outward: cleared CVE verdicts into GitHub, and permissive-license attribution obligations into a report you can act on. Plus direct control over what a scan counts, and faster ways to work through a long review queue.</p>
+      <ul>
+        <li><strong>Dependabot integration: push cleared CVE verdicts to GitHub.</strong> An <strong>Update Dependabot</strong> action dismisses the Dependabot alerts matching CVE findings your team has already cleared in OSSScan, so investigated alerts stop reappearing. Each dismissal carries the reviewer&rsquo;s name and reason into the alert&rsquo;s activity timeline. The repository is detected from your git remote, every run starts with a dry-run preview, and the token you paste is never stored. The integration is one-way by design: OSSScan writes dismissals and never reads Dependabot state back. It also fails closed, holding a package&rsquo;s alerts whenever copies of it carry conflicting verdicts, never treating a disputed finding as cleared, and reopening its own dismissal if a later scan re-flags something it cleared earlier.
+          <a class="rel-more" href="blog/dependabot-and-ossscan-better-together.html">Read: Dependabot and OSSScan, Better Together</a></li>
+        <li><strong>Attribution Report for permissive licenses.</strong> Permissive licenses are not obligation-free. Most require you to carry the license text and copyright notice into whatever you ship. Tick <strong>&ldquo;Also check permissive-license attribution&rdquo;</strong> in the bulk license export, or pass <code>--check-attribution</code>, and OSSScan lists every permissive package with its obligation category and exactly what that category requires, then your review agent reads the real project files and writes the report. The categories come from a published catalog of 183 permissive licenses: <strong>A</strong> requires no attribution, <strong>B</strong> requires the license text and copyright notice, <strong>C</strong> is Apache-style and involves a NOTICE file, and <strong>D</strong> is a special non-copyleft case, with compound expressions resolving to the strictest category present. OSSScan states the category as a fact and leaves the judgement to your reviewer.
+          <a class="rel-more" href="blog/do-i-need-to-care-about-permissive-licenses.html">Read: Do I Need to Care About Permissive Licenses?</a></li>
+        <li><strong>Scan scope control.</strong> Tell OSSScan whether you are auditing dependencies or examining a shippable artifact, and it scopes the scan to match. Nested repositories, working copies and VCS directories are left out of a dependency audit; installed-environment folders such as <code>node_modules</code> and <code>venv</code> are set aside only when a manifest provably accounts for the same packages, and kept whenever it cannot. Per-project setting in the UI, <code>--scope-intent</code> on the CLI.</li>
+        <li><strong>Bulk edit for License and CVE evaluations.</strong> Every review row has a checkbox, and the header checkbox selects everything currently visible, so selection composes with the new search bar in both review tables: search for MIT, select all, uncheck the two you want to handle separately, then act on the rest. <strong>Bulk Edit</strong> opens one modal where you choose a single determination and write one shared comment, and both are applied to every selected row. Licenses offer No concern, Needs review, and Compliance concern; CVEs offer Not exploitable, Needs investigation, and Exploitable. If the selection includes rows that already carry a determination, the modal asks whether to skip those or replace them rather than quietly overwriting earlier work, and where the agent flagged a finding for review, its reasoning is kept as provenance alongside your decision.</li>
+        <li>Plus a range of smaller improvements and fixes across the app.</li>
+      </ul>
+    </div>
+
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+    <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+    <a href="https://ossscan.com">ossscan.com</a>
+  </p>
+  <p style="margin-top:6px;">
+    OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+    <a href="about.html">About BigBrainCorp</a>
+  </p>
+  <p style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+    <a href="support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+    <a href="refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+    <a href="terms.html">Terms of Use</a>
+  </p>
+</footer>
+
+</body>
+</html>
