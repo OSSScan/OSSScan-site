@@ -144,7 +144,7 @@
     <div class="workflow-checklist">
       <ol>
         <li>Run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan's tools are installed and to generate your machine fingerprint</li>
-        <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both — see whether OSSScan will produce Strong, Partial, or Limited coverage for it <em>before</em> purchasing a license</li>
+        <li>Click <strong>Check Project Coverage…</strong> in the Compatibility Check dialog to test a project folder, an existing SBOM, or both. See whether OSSScan will produce Strong, Partial, or Limited coverage for it <em>before</em> purchasing a license</li>
         <li>If coverage looks good, copy your machine fingerprint and click <strong>Buy a License…</strong></li>
         <li>Install the license file you receive</li>
         <li>Accept the Terms of Use (EULA)</li>
@@ -170,7 +170,7 @@
       Prefer a guided walkthrough? The video below shows the full workflow end to end.
     </p>
     <ol>
-      <li><a href="tutorials.html">Video Tutorials</a> — the full tutorial index.</li>
+      <li><a href="tutorials.html">Video Tutorials</a>: the full tutorial index.</li>
       <li><a href="https://www.youtube.com/watch?v=uikx5pShNL8" target="_blank" rel="noreferrer">Using AI to Create an OSS Baseline</a></li>
     </ol>
 
@@ -179,15 +179,15 @@
       Before purchasing a license, run <strong>Compatibility Check</strong> from the startup dialog to confirm OSSScan's tools are installed and to generate your machine fingerprint.
     </p>
 
-    <h3>Check Project Coverage — verify before you buy</h3>
+    <h3>Check Project Coverage: verify before you buy</h3>
     <p>
-      The Compatibility Check dialog includes a <strong>Check Project Coverage…</strong> button — no license required.
+      The Compatibility Check dialog includes a <strong>Check Project Coverage…</strong> button. No license required.
       Use it to test a project folder, an existing SBOM (SPDX or CycloneDX), or both, and see whether OSSScan will produce Strong, Partial, or Limited coverage before you commit to a purchase.
     </p>
     <ul>
-      <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected. OSSScan found a lock file or equivalent that pins dependency versions.</li>
-      <li><strong>Partial</strong> — useful results but known gaps. Often improvable by committing a lock file or running a package manager step.</li>
-      <li><strong>Limited</strong> — little or no package-level coverage. Typically a structural ceiling: the ecosystem has no lock file standard or no Syft cataloger yet.</li>
+      <li><strong>Strong</strong>: solid SBOM, license, and CVE coverage expected. OSSScan found a lock file or equivalent that pins dependency versions.</li>
+      <li><strong>Partial</strong>: useful results but known gaps. Often improvable by committing a lock file or running a package manager step.</li>
+      <li><strong>Limited</strong>: little or no package-level coverage. Typically a structural ceiling: the ecosystem has no lock file standard or no Syft cataloger yet.</li>
     </ul>
     <p>
       If you check both a folder and an SBOM for the same project, OSSScan grades each independently so you can compare them side by side, useful for deciding whether to scan the source directly or bring your own SBOM instead.
@@ -204,12 +204,12 @@
       OSSScan uses external command-line tools for SBOM and CVE analysis:
     </p>
     <ul>
-      <li><strong>Syft</strong> — required. Generates the SBOM from the folder you selected.</li>
-      <li><strong>Grype</strong> — optional. Scans the in-memory SBOM for known vulnerabilities.</li>
-      <li><strong>ScanCode Toolkit</strong> — used for Deep and Audit scan modes. Reads files on disk to detect license text for packages where metadata is incomplete or missing.</li>
+      <li><strong>Syft</strong>: required. Generates the SBOM from the folder you selected.</li>
+      <li><strong>Grype</strong>: optional. Scans the in-memory SBOM for known vulnerabilities.</li>
+      <li><strong>ScanCode Toolkit</strong>: used for Deep and Audit scan modes. Reads files on disk to detect license text for packages where metadata is incomplete or missing.</li>
     </ul>
     <p>
-      These tools are <strong>not bundled</strong> with OSSScan — you install them once on your machine.
+      These tools are <strong>not bundled</strong> with OSSScan. You install them once on your machine.
       This keeps OSSScan smaller, lets you update tools independently, and avoids redistributing the tools' full dependency trees.
     </p>
 
@@ -218,10 +218,10 @@
       The tooling strip at the top of the main window summarizes tool health. Click a chip to open the tooling drawer.
     </p>
     <ul>
-      <li><strong>Green</strong> — installed and up to date (verified).</li>
-      <li><strong>Yellow</strong> — installed but needs attention (update available, stale DB, or OSSScan can't verify the latest version).</li>
-      <li><strong>Red</strong> — missing or unusable (not installed, not executable, or DB is too old/missing).</li>
-      <li><strong>Gray</strong> — checking status.</li>
+      <li><strong>Green</strong>: installed and up to date (verified).</li>
+      <li><strong>Yellow</strong>: installed but needs attention (update available, stale DB, or OSSScan can't verify the latest version).</li>
+      <li><strong>Red</strong>: missing or unusable (not installed, not executable, or DB is too old/missing).</li>
+      <li><strong>Gray</strong>: checking status.</li>
     </ul>
 
     <h3>Installing Syft and Grype</h3>
@@ -232,12 +232,12 @@
       <a href="https://oss.anchore.com/docs/installation/grype/" target="_blank">Grype</a>.
       If you use Homebrew on macOS, the common commands are <code>brew install syft</code> and <code>brew install grype</code>.
       On Windows with WinGet, use <code>winget install Anchore.Syft --source winget</code> and <code>winget install Anchore.Grype --source winget</code>.
-      After installing, run <code>syft version</code> and <code>grype version</code> once in PowerShell — this lets Windows Defender pre-scan the new binaries so OSSScan detects them immediately.
+      After installing, run <code>syft version</code> and <code>grype version</code> once in PowerShell; this lets Windows Defender pre-scan the new binaries so OSSScan detects them immediately.
       The Anchore pages start with a Unix-style <code>curl | sh</code> example, so on Windows you should scroll down to the <strong>WinGet</strong> section instead.
     </p>
     <p class="muted">
       Separately, on Windows, Defender's real-time scanning of every file read during a <em>folder</em> scan can slow large scans. After you pick a folder, OSSScan offers the exact
-      <code>Add-MpPreference -ExclusionPath '&lt;folder&gt;'</code> command (run in an Administrator PowerShell) to exclude it — this affects scan speed only, not results. Loading an SBOM is unaffected. See the FAQ for details.
+      <code>Add-MpPreference -ExclusionPath '&lt;folder&gt;'</code> command (run in an Administrator PowerShell) to exclude it; this affects scan speed only, not results. Loading an SBOM is unaffected. See the FAQ for details.
     </p>
 
     <h3>Keeping Syft/Grype up to date</h3>
@@ -252,7 +252,7 @@
     <p>
       During OSSScan development, we ran a deep scan of OSSScan itself. When Syft or Grype were bundled inside the application,
       OSSScan (and other compliance tools) surfaced <strong>copyleft‑licensed</strong> components embedded inside those third‑party binaries.
-      These findings came from the compiled dependency trees of Syft and Grype—not from OSSScan's own code.
+      These findings came from the compiled dependency trees of Syft and Grype, not from OSSScan's own code.
     </p>
     <p>
       This experience is a good example of why OSSScan exists at all: to give developers clear insight into the open‑source components they
@@ -341,9 +341,9 @@
       <li>Click <strong>Browse…</strong> and select a local folder (for example, a folder containing a GitHub repository).</li>
       <li>Select a scan mode:
         <ul>
-          <li><strong>Light</strong> — Syft only; fastest, but may miss packages or leave more licenses unresolved.</li>
-          <li><strong>Deep</strong> — most accurate; combines Syft, ClearlyDefined, and ScanCode for broader license coverage (uses network).</li>
-          <li><strong>Audit</strong> — runs ScanCode on every package and highlights disagreements with Syft for review (slowest).</li>
+          <li><strong>Light</strong>: Syft only; fastest, but may miss packages or leave more licenses unresolved.</li>
+          <li><strong>Deep</strong>: most accurate; combines Syft, ClearlyDefined, and ScanCode for broader license coverage (uses network).</li>
+          <li><strong>Audit</strong>: runs ScanCode on every package and highlights disagreements with Syft for review (slowest).</li>
         </ul>
       </li>
       <li>Click <strong>Scan</strong> and wait for the stages to complete.</li>
@@ -357,7 +357,7 @@
 
       <h2>Loading an Existing SBOM</h2>
       <p>
-        If you already have an SBOM — generated by OSSScan, Syft, Trivy, or any other tool — you can load it directly
+        If you already have an SBOM, generated by OSSScan, Syft, Trivy, or any other tool, you can load it directly
         instead of scanning a source directory. This lets you run CVE scanning and license analysis on SBOMs from
         CI/CD pipelines, vendor-supplied SBOMs, or any other external source without needing the original source code.
         <strong>Your source code never leaves your machine.</strong>
@@ -366,11 +366,11 @@
         Click <strong>Load SBOM…</strong> and select a JSON file. OSSScan accepts:
       </p>
       <ul>
-        <li><strong>SPDX JSON</strong> — the format OSSScan generates natively, also produced by Syft, Trivy, GitHub's SBOM export, and many other tools.</li>
-        <li><strong>CycloneDX JSON</strong> — produced by Syft, Trivy, cdxgen, Maven/Gradle plugins, OWASP Dependency Track, and others.</li>
+        <li><strong>SPDX JSON</strong>: the format OSSScan generates natively, also produced by Syft, Trivy, GitHub's SBOM export, and many other tools.</li>
+        <li><strong>CycloneDX JSON</strong>: produced by Syft, Trivy, cdxgen, Maven/Gradle plugins, OWASP Dependency Track, and others.</li>
       </ul>
       <p>
-        OSSScan auto-detects the format. CycloneDX files are converted to the internal SPDX representation automatically — no manual steps required.
+        OSSScan auto-detects the format. CycloneDX files are converted to the internal SPDX representation automatically. No manual steps required.
         All loaded packages are tagged with an <strong>External SBOM</strong> provenance badge in the Licenses table so you can see at a glance that they came from an imported file rather than a fresh scan.
       </p>
       <p>
@@ -379,7 +379,7 @@
       <ul>
         <li>Review licenses and filter by risk (the full Licenses tab works normally).</li>
         <li>Run <strong>Deep Enrich (network)…</strong> to fill in unknown licenses using package coordinates.</li>
-        <li>Run a <strong>CVE Scan</strong> using Grype — no source code needed.</li>
+        <li>Run a <strong>CVE Scan</strong> using Grype, no source code needed.</li>
         <li>Run <strong>Bulk License Review</strong> or <strong>Bulk Investigate</strong> to prepare AI agent prompts.</li>
         <li>Export the License Report or CVE Report.</li>
       </ul>
@@ -390,14 +390,14 @@
 
       <h3 id="cyclonedx-xml">Got a CycloneDX XML SBOM?</h3>
       <p>
-        OSSScan loads CycloneDX <strong>JSON</strong> only — CycloneDX <strong>XML</strong> (recognizable by a
+        OSSScan loads CycloneDX <strong>JSON</strong> only. CycloneDX <strong>XML</strong> (recognizable by a
         <code>&lt;bom&gt;</code> root element instead of a <code>bomFormat</code> field) is not currently supported.
         Convert it to JSON first using the official, free
         <a href="https://github.com/CycloneDX/cyclonedx-cli">CycloneDX CLI</a> tool (Apache-2.0, native binaries for macOS/Windows/Linux):
       </p>
       <ol>
         <li>
-          Install it — macOS with Homebrew: <code>brew install cyclonedx-cli</code>.
+          Install it. On macOS with Homebrew: <code>brew install cyclonedx-cli</code>.
           On Windows, download the <code>cyclonedx-cli</code> binary for your platform from the
           <a href="https://github.com/CycloneDX/cyclonedx-cli/releases">GitHub releases page</a> and put it on your <code>PATH</code>.
         </li>
@@ -405,7 +405,7 @@
         <li>Load the resulting <code>bom.json</code> into OSSScan using <strong>Load SBOM…</strong>.</li>
       </ol>
       <p class="muted">
-        This runs entirely on your machine — no data leaves it. To convert several files at once, repeat the command for each <code>.xml</code> file (or loop over them in your shell).
+        This runs entirely on your machine, no data leaves it. To convert several files at once, repeat the command for each <code>.xml</code> file (or loop over them in your shell).
       </p>
 
       <h3 id="get-an-sbom">How to get an SBOM for your project</h3>
@@ -414,10 +414,10 @@
         Based on testing, the two generators that consistently produce high license coverage are:
       </p>
 
-      <h4>Option 1 — GitHub (no tooling required)</h4>
+      <h4>Option 1: GitHub (no tooling required)</h4>
       <p>
         GitHub builds a dependency graph for every repository and can export it as an SPDX SBOM with one click.
-        No local tools needed — works from your browser.
+        No local tools needed; works from your browser.
       </p>
       <ol>
         <li>Open your repository on GitHub.</li>
@@ -436,10 +436,10 @@
         If the export fails, use cdxgen below instead.
       </p>
 
-      <h4>Option 2 — cdxgen (any project, any platform)</h4>
+      <h4>Option 2: cdxgen (any project, any platform)</h4>
       <p>
         <strong>cdxgen</strong> generates a CycloneDX SBOM locally from your project files.
-        It requires <a href="https://nodejs.org/">Node.js</a> but does not need to be installed separately —
+        It requires <a href="https://nodejs.org/">Node.js</a> but does not need to be installed separately: 
         the <code>npx</code> command downloads and runs it automatically.
       </p>
       <p>Open a terminal in your project folder and run:</p>
@@ -451,32 +451,32 @@
         (e.g. run <code>npm install</code> or <code>go mod download</code> first).
       </p>
 
-      <h4>Option 3 — GitLab, Bitbucket, Azure DevOps (via CI pipeline)</h4>
+      <h4>Option 3: GitLab, Bitbucket, Azure DevOps (via CI pipeline)</h4>
       <p>
         These platforms don't have a one-click SBOM export, but you can generate one in your CI pipeline
         using cdxgen and download the artifact:
       </p>
       <ul>
         <li>
-          <strong>GitLab CI</strong> — add a job that runs <code>npx @cyclonedx/cdxgen . -o sbom.json</code>
+          <strong>GitLab CI</strong>: add a job that runs <code>npx @cyclonedx/cdxgen . -o sbom.json</code>
           and saves <code>sbom.json</code> as a pipeline artifact.
         </li>
         <li>
-          <strong>Bitbucket Pipelines</strong> — same approach: add a step running cdxgen and export the file.
+          <strong>Bitbucket Pipelines</strong>: same approach: add a step running cdxgen and export the file.
         </li>
         <li>
-          <strong>Azure DevOps</strong> — Microsoft's open-source
+          <strong>Azure DevOps</strong>: Microsoft's open-source
           <a href="https://github.com/microsoft/sbom-tool">sbom-tool</a> integrates directly into Azure pipelines.
         </li>
       </ul>
       <p class="muted">
-        Tip: Once you have the SBOM file from your pipeline, download it and load it into OSSScan — no source code access needed.
+        Tip: Once you have the SBOM file from your pipeline, download it and load it into OSSScan, no source code access needed.
       </p>
 
       <h3>Loading an SBOM from the CLI</h3>
       <p>
         Use <code>--load-sbom &lt;file&gt;</code> instead of <code>--scan &lt;dir&gt;</code>.
-        The two flags are mutually exclusive — the CLI will reject a command that specifies both and prompt you to fix it.
+        The two flags are mutually exclusive: the CLI will reject a command that specifies both and prompt you to fix it.
       </p>
       <pre><code>OSSScan --headless --load-sbom /path/to/bom.json --out /path/to/output --license-report --cve-scan --cve-report</code></pre>
       <p>
@@ -484,7 +484,7 @@
         Grype is still required for CVE scanning. Output files are named using the SBOM filename as the base (for example <code>bom.imported.license-report.html</code>).
       </p>
       <p>
-        The <code>--ui</code> mode also supports <code>--load-sbom</code> — OSSScan will open the UI, load the file automatically, and display the results:
+        The <code>--ui</code> mode also supports <code>--load-sbom</code>: OSSScan will open the UI, load the file automatically, and display the results:
       </p>
       <pre><code>OSSScan --ui --load-sbom /path/to/bom.json --out /path/to/output --license-report --cve-scan --cve-report</code></pre>
 
@@ -508,7 +508,7 @@
     </p>
     <ul>
       <li><strong>ClearlyDefined</strong> (metadata lookup): helps fill in licenses for packages where manifest/registry metadata is incomplete.
-        This often improves coverage for ecosystems and packages that Syft and basic registry lookups can miss or underspecify — for example
+        This often improves coverage for ecosystems and packages that Syft and basic registry lookups can miss or underspecify, for example
         <strong>RubyGems</strong>, <strong>NuGet</strong>, <strong>Composer</strong>, and some older or edge-case <strong>Maven</strong>/<strong>Cargo</strong> coordinates.</li>
       <li><strong>ScanCode Toolkit</strong> (local content scan): for the remaining residual unknowns, ScanCode reads files on disk and detects license text.
         This is useful for cases where there simply isn't reliable upstream license metadata.</li>
@@ -604,7 +604,7 @@
       Those outputs can add bundled or generated components that do not reflect the source dependency graph by itself.
     </p>
     <p>
-      OSSScan automatically skips duplicate copies of your project — Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders — so a scan won't double-count components just because a worktree sits inside your project.
+      OSSScan automatically skips duplicate copies of your project: Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders. A scan will not double-count components just because a worktree sits inside your project.
       If a <em>different</em> full copy of the code is present in the scan root (another tool's working copy, a manual backup, or build output that bundles vendored sources), move it out or scan a clean checkout.
     </p>
 
@@ -621,7 +621,7 @@
 
     <h3>Recommendation</h3>
     <p>
-      For dependency analysis or development review, scan a clean source tree. For distribution review — understanding what is actually included in the package or release — scan the built artifact you intend to ship. Many teams run both.
+      For dependency analysis or development review, scan a clean source tree. For distribution review, meaning what is actually included in the package or release, scan the built artifact you intend to ship. Many teams run both.
     </p>
     <p class="muted">
       This is an informational observation about scan coverage, not legal advice. What matters for your specific situation depends on the licenses involved, how your product is distributed, and your jurisdiction. Consult qualified counsel for compliance decisions.
@@ -656,7 +656,7 @@
 
     <h3>Bulk License Review (Agentic workflows)</h3>
     <p>
-      Sometimes you don't want one prompt — you want a queue. OSSScan is built to make it easy to hand the repetitive digging to AI,
+      Sometimes you don't want one prompt: you want a queue. OSSScan is built to make it easy to hand the repetitive digging to AI,
       then keep the important part (judgment, policy, and sign-off) firmly human.
     </p>
     <ol>
@@ -672,10 +672,10 @@
       <li>Click <strong>Bulk License Review</strong>.</li>
       <li>Choose an export mode:
         <ul>
-          <li><strong>Delta Investigation</strong> (default) — continue from a prior baseline. Browse to the output folder from an earlier bulk export; OSSScan validates it, then previously cleared items carry forward with their evaluation so only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline, so future delta runs treat it as the new starting point.</li>
-          <li><strong>Clean Baseline</strong> — start from scratch with no carry-overs; every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
+          <li><strong>Delta Investigation</strong> (default): continue from a prior baseline. Browse to the output folder from an earlier bulk export; OSSScan validates it, then previously cleared items carry forward with their evaluation so only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline, so future delta runs treat it as the new starting point.</li>
+          <li><strong>Clean Baseline</strong>: start from scratch with no carry-overs; every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
         </ul>
-        See <a href="#cli-delta-screening-rules">delta screening rules</a> below for exactly which items get skipped, re-assessed, or evaluated in Delta Investigation mode — the same rules apply whether you triggered it from the UI or from the CLI's <code>--baseline</code> flag.
+        See <a href="#cli-delta-screening-rules">delta screening rules</a> below for exactly which items get skipped, re-assessed, or evaluated in Delta Investigation mode; the same rules apply whether you triggered it from the UI or from the CLI's <code>--baseline</code> flag.
       </li>
       <li>In the app UI, read the yellow AI/legal disclaimer and check <strong>I agree</strong> to enable the export button. For CLI/headless exports, there is no interactive prompt; include <code>--ack-license-ai-not-legal-advice</code> alongside <code>--bulk-license</code> instead.</li>
       <li>Choose (or create) an output folder.</li>
@@ -686,6 +686,7 @@
           <li><code>LicenseInstructions.md</code> (how to process prompts and where to write results)</li>
           <li><code>Evaluations/</code> (recommended folder for agent-written outputs)</li>
           <li>One <code>.json</code> prompt file per <em>visible</em> package row (filenames are based on <code>name@version</code>)</li>
+          <li><code>AttributionReview.md</code>: only when <strong>Also check permissive-license attribution</strong> is ticked; the agent completes it and writes <code>AttributionReport.md</code></li>
         </ul>
       </li>
       <li>
@@ -693,6 +694,9 @@
         any request <code>.json</code> files you want to skip. The agent runner will only process the requests that remain.
       </li>
       <li>By default, <strong>Overwrite existing files</strong> is enabled so re-exports stay in sync with your current filters/selection. Turn it off if you want to keep existing files unchanged.</li>
+      <li>
+        Optionally tick <strong>Also check permissive-license attribution</strong> (off by default; worth it when you set a baseline). OSSScan then adds an <code>AttributionReview.md</code> task listing every permissive package and what its license category requires, and asks the agent to verify each is attributed in your project and write an <code>AttributionReport.md</code>. OSSScan itself never decides whether your notices are complete; the agent reads your real files and is told never to invent license text. From the CLI, use <code>--check-attribution</code>.
+      </li>
       <li>Point your agentic coding platform / runner at the exported prompts and have it:
         <ul>
           <li>Investigate each component in the context of your repo</li>
@@ -721,8 +725,8 @@
 
     <h2>Exporting License Outputs</h2>
     <ul>
-      <li><strong>Export License Report</strong> — creates an HTML license report.</li>
-      <li><strong>Save SBOM…</strong> — exports an SBOM file for archiving or sharing.</li>
+      <li><strong>Export License Report</strong>: creates an HTML license report.</li>
+      <li><strong>Save SBOM…</strong>: exports an SBOM file for archiving or sharing.</li>
     </ul>
 
     <p class="muted">
@@ -812,7 +816,7 @@
       After a CVE scan completes, use <strong>Export CVE Report</strong> to export an HTML report of the current vulnerability findings.
     </p>
 
-      <h2>Review Tab — Annotating AI Evaluations</h2>
+      <h2>Review Tab: Annotating AI Evaluations</h2>
       <p>
         After an AI agent has processed a bulk export, use the <strong>Review</strong> tab to read each evaluation and record your team's final disposition.
         Annotations are written as <code>.annotation.json</code> files alongside the agent's <code>.result.json</code> files inside the <code>Evaluations/</code> folder.
@@ -843,7 +847,7 @@
       <p>
         If you have a prior evaluations folder from an earlier scan, you can load it as a <strong>Baseline</strong>.
         OSSScan will check each current finding against the baseline and pre-fill the annotation form for items that already have an accepted annotation in the baseline.
-        Items with a carried annotation show an <strong>&#8629; Carried</strong> badge — click <strong>Edit</strong> to review and confirm.
+        Items with a carried annotation show an <strong>&#8629; Carried</strong> badge; click <strong>Edit</strong> to review and confirm.
       </p>
       <p class="muted">
         Annotations carry over only for the same package version. If a package version has changed, no baseline annotation is carried.
@@ -856,7 +860,7 @@
         This produces a standalone HTML report that combines the AI agent's evaluation with your team's annotations for each finding.
       </p>
       <p>
-        The annotated report is useful for sharing with stakeholders — it shows every finding, what the AI concluded, whether your team accepted it and why, and which items are still pending review.
+        The annotated report is useful for sharing with stakeholders: it shows every finding, what the AI concluded, whether your team accepted it and why, and which items are still pending review.
         Findings the AI cleared (not exploitable / no concern) and findings the team has accepted both appear with their reasoning, giving the reader a complete picture.
       </p>
       <p class="muted">
@@ -870,10 +874,10 @@
         ensuring time-sensitive acceptances get re-examined on schedule.
       </p>
 
-      <h2 id="update-dependabot">Update Dependabot — pushing your verdicts to GitHub</h2>
+      <h2 id="update-dependabot">Update Dependabot: pushing your verdicts to GitHub</h2>
       <p>
         If your project uses <strong>GitHub Dependabot</strong>, OSSScan can act as a companion to it.
-        Dependabot watches continuously but is noisy &mdash; it keeps re-raising the same CVE alerts with no idea which ones
+        Dependabot watches continuously but is noisy: it keeps re-raising the same CVE alerts with no idea which ones
         you have already investigated. <strong>Update Dependabot</strong> (a button on the <strong>Review</strong> tab)
         pushes the conclusions from your evaluation back to GitHub: it <strong>dismisses the Dependabot alerts for the
         CVEs you cleared</strong>, each with a comment explaining why. Between OSSScan runs Dependabot keeps working, but the
@@ -886,7 +890,7 @@
 
       <h3>What you need: a short-lived token</h3>
       <p>
-        You paste a GitHub token once per push. OSSScan never stores it &mdash; it is used for that single update and dropped
+        You paste a GitHub token once per push. OSSScan never stores it: it is used for that single update and dropped
         when the dialog closes. Create a <strong>fine-grained personal access token</strong> scoped to just
         <strong>Dependabot alerts: Read and write</strong> on the repositories you choose, then revoke it when you are done.
         The dialog's <strong>How to enable</strong> link walks you through creating and revoking it step by step.
@@ -894,19 +898,19 @@
 
       <h3>How a push works</h3>
       <ol>
-        <li>Evaluate your CVE findings in the Review tab until the scan is clean &mdash; accept the AI's calls, or set your own verdict with <strong>Override</strong>.</li>
+        <li>Evaluate your CVE findings in the Review tab until the scan is clean: accept the AI's calls, or set your own verdict with <strong>Override</strong>.</li>
         <li>Click <strong>Update Dependabot</strong>, confirm the repository, and paste your token.</li>
-        <li>Click <strong>Preview changes</strong>. OSSScan reads your open and dismissed alerts and shows exactly what it will do &mdash; <em>nothing is written yet</em>.</li>
+        <li>Click <strong>Preview changes</strong>. OSSScan reads your open and dismissed alerts and shows exactly what it will do: <em>nothing is written yet</em>.</li>
         <li>Review the plan and click <strong>Apply</strong>. Only then are any alerts changed.</li>
       </ol>
 
       <h3>What the preview shows</h3>
       <ul>
-        <li><strong>Will be dismissed</strong> &mdash; alerts for findings you cleared (not exploitable).</li>
-        <li><strong>Will be reopened</strong> &mdash; an alert OSSScan dismissed on an earlier run, where you have since changed the verdict to a concern. Re-export makes the vulnerability visible again.</li>
-        <li><strong>Held &mdash; no unanimous verdict</strong> &mdash; when a package resolves to several copies and you cleared some but not all, OSSScan cannot tell which alert is the risky copy, so it dismisses none of them. Give every copy the same verdict to release them.</li>
-        <li><strong>You dismissed by hand</strong> &mdash; an alert you dismissed yourself in Dependabot that OSSScan now considers a concern. OSSScan will not override your manual decision, but offers a <strong>reopen</strong> checkbox so you can choose to act on its finding.</li>
-        <li><strong>Not dismissed (no cleared finding)</strong> &mdash; open alerts OSSScan either evaluated as a concern (correctly left open) or has no finding for (for example, newer than your Grype database).</li>
+        <li><strong>Will be dismissed</strong>: alerts for findings you cleared (not exploitable).</li>
+        <li><strong>Will be reopened</strong>: an alert OSSScan dismissed on an earlier run, where you have since changed the verdict to a concern. Re-export makes the vulnerability visible again.</li>
+        <li><strong>Held &mdash; no unanimous verdict</strong>: when a package resolves to several copies and you cleared some but not all, OSSScan cannot tell which alert is the risky copy, so it dismisses none of them. Give every copy the same verdict to release them.</li>
+        <li><strong>You dismissed by hand</strong>: an alert you dismissed yourself in Dependabot that OSSScan now considers a concern. OSSScan will not override your manual decision, but offers a <strong>reopen</strong> checkbox so you can choose to act on its finding.</li>
+        <li><strong>Not dismissed (no cleared finding)</strong>: open alerts OSSScan either evaluated as a concern (correctly left open) or has no finding for (for example, newer than your Grype database).</li>
       </ul>
 
       <h3>Re-running is safe</h3>
@@ -917,7 +921,7 @@
       </p>
       <p class="muted">
         Scope: <strong>Update Dependabot</strong> acts on the cleared findings matching your current Review filter/search. If a filter is
-        active, the preview says how many cleared findings it is hiding &mdash; clear the filter to push everything you have cleared.
+        active, the preview says how many cleared findings it is hiding; clear the filter to push everything you have cleared.
       </p>
 
     <h2>Copyleft Analysis (Licenses tab)</h2>
@@ -936,7 +940,7 @@
     <p>
       OSSScan can be driven from the command line so it can run in automation and be controlled by an agentic framework
       (for example: an IDE agent runner, Claude Code (the terminal CLI), or a custom internal workflow).
-      This lets you kick off scans, produce outputs into a known folder, and then hand the repetitive investigation work to an agent —
+      This lets you kick off scans, produce outputs into a known folder, and then hand the repetitive investigation work to an agent, 
       while keeping final review and policy decisions human.
     </p>
     <p>
@@ -948,20 +952,20 @@
     <p>
       OSSScan is a bridge application that makes that practical today: it produces a normalized package inventory (SBOM + enrichments),
       summarizes findings in the UI, and can <strong>bulk-export structured investigation requests</strong> so an agentic workflow can process them
-      at scale. The outcome is similar to an AI-native analysis pipeline — but with OSSScan providing the high-signal inputs and guardrails.
+      at scale. The outcome is similar to an AI-native analysis pipeline, but with OSSScan providing the high-signal inputs and guardrails.
     </p>
     <ul>
       <li><strong>Headless</strong> (<code>--headless</code>): runs the job and exits automatically when complete.</li>
       <li><strong>UI automation</strong> (<code>--ui</code>): opens the UI, auto-runs the same job, and keeps the app open so a user can take over for manual investigations.</li>
     </ul>
     <p>
-      In both modes, OSSScan does not show "pick a folder" dialogs — the scan directory and output folder come from CLI arguments.
+      In both modes, OSSScan does not show "pick a folder" dialogs: the scan directory and output folder come from CLI arguments.
       These modes also <strong>fail fast</strong> (with no dialogs) if the license is invalid/missing or if the Terms of Use have not been accepted
       on this machine.
     </p>
     <p>
       Use <code>--scan &lt;dir&gt;</code> to scan a source directory, or <code>--load-sbom &lt;file&gt;</code> to skip scanning and load an existing SBOM file instead (SPDX JSON or CycloneDX JSON).
-      These two flags are mutually exclusive — specifying both is an error.
+      These two flags are mutually exclusive: specifying both is an error.
       When using <code>--load-sbom</code>, Syft is not required or invoked; Grype is still required for CVE scanning.
     </p>
     <p class="muted">
@@ -974,12 +978,12 @@
       In the app menu, open <strong>Help → Create Command Line…</strong> to open the dialog (macOS menu bar, or the window menu on Windows).
     </p>
     <ul>
-      <li>The <strong>OSSScan binary</strong> field is auto-populated from the running app — no need to browse for it.</li>
+      <li>The <strong>OSSScan binary</strong> field is auto-populated from the running app, no need to browse for it.</li>
       <li>Choose <strong>Headless</strong> vs <strong>UI automation</strong> and set the output folder.</li>
       <li>Under <strong>License data</strong>, choose one of two mutually exclusive input sources:
         <ul>
-          <li><strong>Generate from directory scan</strong> — browse to your project folder; OSSScan runs Syft and its enrichment pipeline and generates a fresh SBOM. Use <code>--mode deep</code> for best license coverage (matches what the UI's Deep scan produces).</li>
-          <li><strong>Load from SBOM</strong> — browse to an existing SPDX JSON or CycloneDX JSON file; OSSScan loads it and runs license and CVE analysis without invoking Syft.</li>
+          <li><strong>Generate from directory scan</strong>: browse to your project folder; OSSScan runs Syft and its enrichment pipeline and generates a fresh SBOM. Use <code>--mode deep</code> for best license coverage (matches what the UI's Deep scan produces).</li>
+          <li><strong>Load from SBOM</strong>: browse to an existing SPDX JSON or CycloneDX JSON file; OSSScan loads it and runs license and CVE analysis without invoking Syft.</li>
         </ul>
       </li>
       <li>Select which outputs to produce (SBOM, reports, and/or bulk investigation requests).</li>
@@ -989,20 +993,20 @@
     </ul>
 
       <h3 id="cli-delta-screening-rules">Delta screening rules (<code>--baseline</code> / Delta Investigation)</h3>
-      <p>These rules apply whenever a baseline is used — the GUI's <strong>Delta Investigation</strong> mode for Bulk License Review / Bulk Investigate, or the CLI's <code>--baseline &lt;dir&gt;</code> flag alongside <code>--bulk-cve</code> or <code>--bulk-license</code>. OSSScan applies the following rules before writing any request files:</p>
+      <p>These rules apply whenever a baseline is used: the GUI's <strong>Delta Investigation</strong> mode for Bulk License Review / Bulk Investigate, or the CLI's <code>--baseline &lt;dir&gt;</code> flag alongside <code>--bulk-cve</code> or <code>--bulk-license</code>. OSSScan applies the following rules before writing any request files:</p>
       <p><strong>CVE findings:</strong></p>
       <ul>
-        <li><strong>Skip</strong> — prior result was <em>Not exploitable</em>.</li>
-        <li><strong>Skip</strong> — a human annotation marked it accepted (<code>carry_over: true</code>, not expired).</li>
-        <li><strong>Re-assess</strong> — prior result was <em>Exploitable</em> or <em>Needs further investigation</em> with no accepted annotation.</li>
-        <li><strong>Evaluate</strong> — new finding with no prior result.</li>
+        <li><strong>Skip</strong>: prior result was <em>Not exploitable</em>.</li>
+        <li><strong>Skip</strong>: a human annotation marked it accepted (<code>carry_over: true</code>, not expired).</li>
+        <li><strong>Re-assess</strong>: prior result was <em>Exploitable</em> or <em>Needs further investigation</em> with no accepted annotation.</li>
+        <li><strong>Evaluate</strong>: new finding with no prior result.</li>
       </ul>
       <p><strong>License findings:</strong></p>
       <ul>
-        <li><strong>Skip</strong> — same package version, prior result was <em>No material copyleft concern</em>.</li>
-        <li><strong>Skip</strong> — same package version with an accepted human annotation.</li>
-        <li><strong>Re-assess</strong> — same version but prior result was <em>Review required</em> or <em>Likely compliance issue</em> with no accepted annotation.</li>
-        <li><strong>Evaluate</strong> — new package or new version (annotations never carry across version changes).</li>
+        <li><strong>Skip</strong>: same package version, prior result was <em>No material copyleft concern</em>.</li>
+        <li><strong>Skip</strong>: same package version with an accepted human annotation.</li>
+        <li><strong>Re-assess</strong>: same version but prior result was <em>Review required</em> or <em>Likely compliance issue</em> with no accepted annotation.</li>
+        <li><strong>Evaluate</strong>: new package or new version (annotations never carry across version changes).</li>
       </ul>
       <p class="muted">
         Skipped items have their prior <code>.result.json</code> and <code>.annotation.json</code> copied into the new <code>Evaluations/</code> folder so the export remains a complete record. Delta counts (new, re-assessed, screened) are logged to stdout and written into the <code>ossscan.agent_job.json</code> manifest.

@@ -508,15 +508,15 @@
             <p><code>path-to-regexp 0.1.12</code>, flagged High. A regular-expression denial-of-service (ReDoS) advisory. On a plain list, a red row demanding a response.</p>
           </div>
           <div class="finding-row finding-context">
-            <p class="finding-label">AI &mdash; What it is</p>
+            <p class="finding-label">AI: What it is</p>
             <p>path-to-regexp generates a regex vulnerable to ReDoS on crafted route strings.</p>
           </div>
           <div class="finding-row finding-context">
-            <p class="finding-label">AI &mdash; Reachability</p>
+            <p class="finding-label">AI: Reachability</p>
             <p>Not reachable in production. path-to-regexp is a dependency of express inside <code>webpack-dev-server</code>, used for dev-server route matching only. The vulnerable code executes only on a developer's machine on localhost during development; it is not deployed and end users never reach it. Residual risk is limited to a developer running the dev server while exposed to a malicious origin or network.</p>
           </div>
           <div class="finding-row finding-context">
-            <p class="finding-label">AI &mdash; Key facts</p>
+            <p class="finding-label">AI: Key facts</p>
             <ul>
               <li>Present only as a transitive dependency (<code>is_direct_dependency=false</code>, <code>imported_in_total=0</code>).</li>
               <li>A dependency of express inside webpack-dev-server, used for dev-server route matching only (<code>npm why path-to-regexp</code>).</li>
@@ -525,14 +525,14 @@
             </ul>
           </div>
           <div class="finding-row finding-context">
-            <p class="finding-label">AI &mdash; Inferences</p>
+            <p class="finding-label">AI: Inferences</p>
             <ul>
               <li>The deployed application does not ship this component, so production users cannot trigger the vulnerability.</li>
               <li>A residual, low-likelihood dev-time risk exists if a developer runs the dev server and visits a malicious website, or exposes localhost to a hostile network.</li>
             </ul>
           </div>
           <div class="finding-row finding-context">
-            <p class="finding-label">AI &mdash; Suggested next checks</p>
+            <p class="finding-label">AI: Suggested next checks</p>
             <ul>
               <li>Confirm the dev server binds to localhost only and is not exposed to untrusted networks.</li>
               <li>Optionally override path-to-regexp to 0.1.13 to clear the advisory.</li>

@@ -157,7 +157,7 @@
 
     <div class="doc-section">
       <h2>What Leaves Your Machine</h2>
-      <p>In normal (non-Light) mode, OSSScan makes a small number of outbound HTTPS requests. The table below documents every category of outbound call. <strong>Light mode makes no enrichment calls of OSSScan's own.</strong> This table covers OSSScan's own traffic only &mdash; Syft, Grype, and ScanCode run as separate processes and can independently attempt outbound calls for certain ecosystems regardless of scan mode. <strong>Network isolation</strong> (on by default, see below) is what actually restricts that tool-process traffic, not the Light/Deep/Audit choice.</p>
+      <p>In normal (non-Light) mode, OSSScan makes a small number of outbound HTTPS requests. The table below documents every category of outbound call. <strong>Light mode makes no enrichment calls of OSSScan's own.</strong> This table covers OSSScan's own traffic only: Syft, Grype, and ScanCode run as separate processes and can independently attempt outbound calls for certain ecosystems regardless of scan mode. <strong>Network isolation</strong> (on by default, see below) is what actually restricts that tool-process traffic, not the Light/Deep/Audit choice.</p>
       <table>
         <thead>
           <tr>
@@ -185,7 +185,7 @@
           <tr>
             <td>Tool update checks</td>
             <td>api.github.com (Syft/Grype releases), pypi.org (ScanCode releases)</td>
-            <td>No user data &mdash; a public release-info lookup only</td>
+            <td>No user data: a public release-info lookup only</td>
           </tr>
         </tbody>
       </table>

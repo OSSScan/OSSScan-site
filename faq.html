@@ -152,7 +152,7 @@
               <div class="faq-q">How do I verify OSSScan will give good results for my project before buying?</div>
               <div class="faq-a">
                 <p>
-                  Use <strong>Check Project Coverage…</strong> — no license required. The button is in the Compatibility Check dialog, which is available from the startup screen before any purchase.
+                  Use <strong>Check Project Coverage…</strong>: no license required. The button is in the Compatibility Check dialog, which is available from the startup screen before any purchase.
                 </p>
                 <ol>
                   <li>Launch OSSScan and run <strong>Compatibility Check</strong> from the startup dialog.</li>
@@ -160,14 +160,14 @@
                   <li>OSSScan reports a coverage grade for each source you selected: <strong>Strong</strong>, <strong>Partial</strong>, or <strong>Limited</strong>.</li>
                 </ol>
                 <ul>
-                  <li><strong>Strong</strong> — solid SBOM, license, and CVE coverage expected.</li>
-                  <li><strong>Partial</strong> — useful results but known gaps; often improvable with a lock file or package manager step.</li>
-                  <li><strong>Limited</strong> — little or no package-level coverage; a structural ceiling for that ecosystem.</li>
+                  <li><strong>Strong</strong>: solid SBOM, license, and CVE coverage expected.</li>
+                  <li><strong>Partial</strong>: useful results but known gaps; often improvable with a lock file or package manager step.</li>
+                  <li><strong>Limited</strong>: little or no package-level coverage; a structural ceiling for that ecosystem.</li>
                 </ul>
                 <p>
                   If you have both a project folder and an SBOM for it, checking both shows you the grade for each side by side, useful if you're deciding whether to scan the source directly or bring your own SBOM instead.
                   If the grade is Partial or Limited, OSSScan explains why and suggests improvement steps where they exist.
-                  Check coverage on your actual projects before purchasing — there is no obligation to buy if coverage doesn't meet your needs.
+                  Check coverage on your actual projects before purchasing. There is no obligation to buy if coverage doesn't meet your needs.
                 </p>
                 <p class="muted">
                   After a license is installed, Check Project Coverage is also available any time from <strong>Help → Check Project Coverage…</strong> in the main app menu.
@@ -216,7 +216,7 @@
                 </p>
                 <ul>
                   <li>In the <strong>Review</strong> tab, use <strong>Refresh</strong> to pull in colleagues’ latest evaluations without re-selecting the folder.</li>
-                  <li>Divide the work so two people don’t edit the <strong>same finding</strong> at once — there is no live multi-user locking, so if they do, the last save wins.</li>
+                  <li>Divide the work so two people don’t edit the <strong>same finding</strong> at once. There is no live multi-user locking, so if they do, the last save wins.</li>
                   <li>Each person’s computer still needs its own OSSScan license (see the VM question below).</li>
                 </ul>
               </div>
@@ -226,16 +226,16 @@
               <div class="faq-a">
                 <p>
                   Yes, OSSScan runs in a virtual machine. Because licensing is <strong>machine-bound</strong> (see above),
-                  what matters is how many <strong>distinct machines</strong> you create — not how many people use them.
+                  what matters is how many <strong>distinct machines</strong> you create, not how many people use them.
                 </p>
                 <ul>
                   <li>
                     <strong>One shared VM that everyone logs into</strong> is a single machine: it has one fingerprint, so
-                    <strong>one license covers everyone</strong> who uses that VM — just like a shared physical workstation.
+                    <strong>one license covers everyone</strong> who uses that VM, just like a shared physical workstation.
                     (OSSScan is a desktop app, so genuine concurrent use needs a multi-session host such as a Windows Server / Remote Desktop setup.)
                   </li>
                   <li>
-                    <strong>Giving each user their own VM</strong> — even cloned from one template — creates a <strong>separate machine</strong> each.
+                    <strong>Giving each user their own VM</strong>, even cloned from one template, creates a <strong>separate machine</strong> each.
                     Virtualization assigns every VM its own identity, so each gets a <strong>different fingerprint</strong> and needs its own license.
                     This is intended: one license cannot cover a fleet of separate VMs.
                   </li>
@@ -294,7 +294,7 @@
                   If you edit the file contents, OSSScan will treat it as invalid.
                 </p>
                 <p>
-                  If you need a renewal or replacement, purchase one from the <a href="payments.html">Beta License page</a> using the same machine fingerprint &mdash; see <em>&ldquo;Can I renew my license before it expires?&rdquo;</em> below. Contact <strong>info@ossscan.com</strong> only if the self-service flow doesn't work for your situation.
+                  If you need a renewal or replacement, purchase one from the <a href="payments.html">Beta License page</a> using the same machine fingerprint. See <em>&ldquo;Can I renew my license before it expires?&rdquo;</em> below. Contact <strong>info@ossscan.com</strong> only if the self-service flow doesn't work for your situation.
                 </p>
               </div>
             </section>
@@ -302,16 +302,16 @@
               <div class="faq-q">Can I renew my license before it expires?</div>
               <div class="faq-a">
                 <p>
-                  Yes, but not immediately &mdash; renewal purchases open starting <strong>2 days before</strong> your current license's expiry date. If you try earlier, the <a href="payments.html">Beta License page</a> will tell you the exact date renewal becomes available for your machine.
+                  Yes, but not immediately: renewal purchases open starting <strong>2 days before</strong> your current license's expiry date. If you try earlier, the <a href="payments.html">Beta License page</a> will tell you the exact date renewal becomes available for your machine.
                 </p>
                 <p>
-                  Buying inside that window gets you bonus days for free: whatever days were still left on your current license are added on top of the new one's tier length. For example, renewing a 30-day tier with 2 days still remaining gives you a license valid for 32 days once installed &mdash; renewing early only helps, it never costs you anything.
+                  Buying inside that window gets you bonus days for free: whatever days were still left on your current license are added on top of the new one's tier length. For example, renewing a 30-day tier with 2 days still remaining gives you a license valid for 32 days once installed: renewing early only helps, it never costs you anything.
                 </p>
                 <p class="muted">
-                  Use the same machine fingerprint you used for your current license. Once your new license file arrives by email, installing it is easy: OSSScan's <strong>&ldquo;License expiring soon&rdquo;</strong> banner offers an <strong>Install License&hellip;</strong> button once you're within a day of expiry (relaunch OSSScan if you don't see it yet). If you let the old license lapse before installing, the startup screen will prompt you to install the new one just as easily &mdash; either way, nothing is lost.
+                  Use the same machine fingerprint you used for your current license. Once your new license file arrives by email, installing it is easy: OSSScan's <strong>&ldquo;License expiring soon&rdquo;</strong> banner offers an <strong>Install License&hellip;</strong> button once you're within a day of expiry (relaunch OSSScan if you don't see it yet). If you let the old license lapse before installing, the startup screen will prompt you to install the new one just as easily, either way, nothing is lost.
                 </p>
                 <p class="muted">
-                  We don't allow stockpiling licenses: a machine fingerprint can have at most one purchase awaiting download at a time. If you've already bought a license (first purchase or renewal) and haven't downloaded it yet, you'll need to download that one &mdash; check your inbox and junk mail folder, or contact <strong>info@ossscan.com</strong> &mdash; before another purchase for that fingerprint is allowed.
+                  We don't allow stockpiling licenses: a machine fingerprint can have at most one purchase awaiting download at a time. If you've already bought a license (first purchase or renewal) and haven't downloaded it yet, you'll need to download that one: check your inbox and junk mail folder, or contact <strong>info@ossscan.com</strong>: before another purchase for that fingerprint is allowed.
                 </p>
               </div>
             </section>
@@ -424,7 +424,7 @@
                   <p>
                     Windows Defender's real-time protection inspects every file OSSScan reads while it
                     builds the package inventory, which can noticeably slow folder scans on large
-                    projects. (Loading an existing SBOM is unaffected — it reads a single file and does
+                    projects. (Loading an existing SBOM is unaffected: it reads a single file and does
                     no folder walk.)
                   </p>
                   <p>
@@ -535,7 +535,7 @@
                   <strong>No.</strong> OSSScan does not upload your source code, file contents, or repository structure anywhere.
                 </p>
                 <p>
-                  <strong>Light</strong> scans make no enrichment calls of OSSScan's own &mdash; no lookups to deps.dev, package registries, or ClearlyDefined, regardless of scan mode.
+                  <strong>Light</strong> scans make no enrichment calls of OSSScan's own: no lookups to deps.dev, package registries, or ClearlyDefined, regardless of scan mode.
                   Syft itself can still attempt outbound calls for certain ecosystems (for example, resolving Go modules), independent of the Light/Deep/Audit choice.
                   <strong>Network isolation</strong> (on by default) is what actually blocks that tool-process traffic; see the Security page for details.
                 </p>
@@ -546,7 +546,7 @@
                   ScanCode, when used, runs <strong>locally</strong> by reading files inside the folder you selected.
                 </p>
                 <p class="muted">
-                  We also periodically review the published Syft, Grype, and ScanCode source code itself, checking specifically for any code path that could transmit scanned file contents off-machine — see the <a href="security.html">Security page</a> for how that review works. Each review is dated and tied to a specific commit; a copy of the latest one is available on request at <a href="mailto:info@ossscan.com">info@ossscan.com</a>.
+                  We also periodically review the published Syft, Grype, and ScanCode source code itself, checking specifically for any code path that could transmit scanned file contents off-machine; see the <a href="security.html">Security page</a> for how that review works. Each review is dated and tied to a specific commit; a copy of the latest one is available on request at <a href="mailto:info@ossscan.com">info@ossscan.com</a>.
                 </p>
               </div>
             </section>
@@ -713,13 +713,13 @@
               <div class="faq-q">Does OSSScan check for license attribution compliance?</div>
               <div class="faq-a">
                 <p>
-                  No. OSSScan surfaces which licenses apply to which components, but it does not verify that your built artifact or distribution actually includes the required attribution notices.
+                  Not by itself. OSSScan surfaces which licenses apply to which components, but it does not inspect your built artifact to decide whether the required attribution notices are actually present. Whether your distribution reproduces every notice depends on what you ship and in what format, so OSSScan does not guess at it.
                 </p>
                 <p>
-                  Many permissive licenses -- including MIT, BSD-2-Clause, BSD-3-Clause, and Apache-2.0 -- require that copyright and attribution notices travel with distributions. Confirming attribution compliance (for example, checking that a NOTICE file, credits screen, or LICENSE folder is present and complete in your release) is a separate step that requires human review or a dedicated attribution tool.
+                  What it can do is hand that check to your AI agent. In the <strong>Bulk License Review</strong> export dialog, tick <strong>Also check permissive-license attribution</strong> (off by default; a good idea when you establish a baseline). OSSScan then writes an <code>AttributionReview.md</code> task listing every permissive package and what its license category requires, and asks the agent to verify each is attributed in your project and write an <strong>Attribution Report</strong>. From the CLI, the same option is <code>--check-attribution</code>.
                 </p>
-                <p class="muted">
-                  OSSScan's Audit scan mode can surface disagreements between tools about which license applies to a component, which helps you make sure your attribution is correct. But whether the notices are actually present in your distribution is outside OSSScan's scope.
+                <p>
+                  Many permissive licenses -- including MIT, BSD-2-Clause, BSD-3-Clause, and Apache-2.0 -- require that copyright and attribution notices travel with distributions. The agent reads your real files (for example a <code>THIRD_PARTY_NOTICES</code> file, vendored <code>LICENSE</code> files, or a credits screen) to check coverage; it is told never to invent license text and to flag anything it cannot resolve.
                 </p>
               </div>
             </section>
@@ -835,8 +835,8 @@
                   Yes. When you click <strong>Bulk License Review</strong> or <strong>Bulk Investigate</strong>, choose an export mode:
                 </p>
                 <ul>
-                  <li><strong>Delta Investigation</strong> (default) — browse to the output folder from a prior bulk export as the <strong>baseline</strong>. OSSScan validates it, then carries forward previously cleared items with their evaluation; only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline for future delta runs.</li>
-                  <li><strong>Clean Baseline</strong> — starts from scratch with no carry-overs. Every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
+                  <li><strong>Delta Investigation</strong> (default): browse to the output folder from a prior bulk export as the <strong>baseline</strong>. OSSScan validates it, then carries forward previously cleared items with their evaluation; only new or re-assessable items need fresh review. An optional <strong>Reset lineage</strong> checkbox marks carried items as originating from this baseline for future delta runs.</li>
+                  <li><strong>Clean Baseline</strong>: starts from scratch with no carry-overs. Every visible item needs fresh evaluation. Use this for a first scan, or when prior evaluations are no longer valid.</li>
                 </ul>
                 <p class="muted">
                   The same choice is available from the CLI via <code>--baseline &lt;dir&gt;</code> alongside <code>--bulk-cve</code> or <code>--bulk-license</code>.
@@ -856,7 +856,7 @@
                 </p>
                 <p>
                   Each annotation you save is written as a <code>.annotation.json</code> file alongside the agent result.
-                  These annotations drive future <strong>delta scans</strong> &mdash; findings your team has accepted are automatically skipped in the next bulk export,
+                  These annotations drive future <strong>delta scans</strong>: findings your team has accepted are automatically skipped in the next bulk export,
                   so the AI agent only re-examines what is genuinely new or changed.
                 </p>
               </div>
@@ -895,7 +895,7 @@
               <div class="faq-a">
                 <p>
                   Setting a <strong>Re-review after</strong> date marks the annotation as expiring on that date.
-                  Once expired, the annotation shows an <strong>Expired</strong> badge and is not carried over in future delta scans &mdash;
+                  Once expired, the annotation shows an <strong>Expired</strong> badge and is not carried over in future delta scans: 
                   the finding will be re-assessed by the AI agent on the next run.
                 </p>
                 <p class="muted">
@@ -915,11 +915,11 @@
                 <p>Each finding in the report shows:</p>
                 <ul>
                   <li>The AI agent's determination or classification (e.g., &ldquo;Not exploitable&rdquo;, &ldquo;Review required&rdquo;).</li>
-                  <li>The AI's key reasoning &mdash; reachability assessment, obligations, facts.</li>
+                  <li>The AI's key reasoning: reachability assessment, obligations, facts.</li>
                   <li>Your team's disposition: <strong>Accepted</strong> (with who accepted it, when, and why), <strong>Pending</strong> (not yet reviewed), or <strong>Expired</strong> (accepted but past the re-review date).</li>
                 </ul>
                 <p>
-                  This makes the annotated report useful for communicating with stakeholders &mdash; it shows not just what was found,
+                  This makes the annotated report useful for communicating with stakeholders: it shows not just what was found,
                   but what was investigated, what was concluded, and what your team has formally accepted as a known or non-applicable risk.
                 </p>
                 <p class="muted">
@@ -934,8 +934,8 @@
                 <p>
                   A delta scan is a bulk export that compares new scan findings against a prior evaluations folder (the <strong>baseline</strong>)
                   and only exports request files for findings that genuinely need fresh investigation.
-                  Findings your team has already cleared &mdash; either because the AI marked them not exploitable / no concern, or because you accepted them
-                  with an annotation in the Review tab &mdash; are skipped automatically.
+                  Findings your team has already cleared (either because the AI marked them not exploitable / no concern, or because you accepted them
+                  with an annotation in the Review tab) are skipped automatically.
                 </p>
                 <p><strong>How to run a delta scan (UI):</strong></p>
                 <ol>
@@ -950,11 +950,11 @@
                 <p>Add <code>--baseline &lt;prior-export-dir&gt;</code> alongside <code>--bulk-cve</code> or <code>--bulk-license</code>. The baseline is validated before the scan starts (exit code 8 if invalid or if output and baseline are the same folder).</p>
                 <p><strong>Screening rules:</strong></p>
                 <ul>
-                  <li><strong>CVE &mdash; Skip:</strong> prior result was <em>Not exploitable</em>, or a human annotation is active (carry_over, not expired).</li>
-                  <li><strong>CVE &mdash; Re-assess:</strong> prior result was <em>Exploitable</em> or <em>Needs further investigation</em> with no accepted annotation.</li>
-                  <li><strong>License &mdash; Skip:</strong> same package version, prior result was <em>No material copyleft concern</em>, or a human annotation is active.</li>
-                  <li><strong>License &mdash; Re-assess:</strong> same version but prior result was <em>Review required</em> or <em>Likely compliance issue</em> with no accepted annotation.</li>
-                  <li><strong>Any kind &mdash; Evaluate fresh:</strong> new finding with no prior result, or same package with a different version (annotations never carry across version changes).</li>
+                  <li><strong>CVE / Skip:</strong> prior result was <em>Not exploitable</em>, or a human annotation is active (carry_over, not expired).</li>
+                  <li><strong>CVE / Re-assess:</strong> prior result was <em>Exploitable</em> or <em>Needs further investigation</em> with no accepted annotation.</li>
+                  <li><strong>License / Skip:</strong> same package version, prior result was <em>No material copyleft concern</em>, or a human annotation is active.</li>
+                  <li><strong>License / Re-assess:</strong> same version but prior result was <em>Review required</em> or <em>Likely compliance issue</em> with no accepted annotation.</li>
+                  <li><strong>Any kind / Evaluate fresh:</strong> new finding with no prior result, or same package with a different version (annotations never carry across version changes).</li>
                 </ul>
                 <p class="muted">
                   Skipped items have their prior result and annotation copied into the new <code>Evaluations/</code> folder so the export remains a complete record.
@@ -1035,17 +1035,17 @@
                 </p>
                 <p>
                   Use <code>--scan &lt;dir&gt;</code> to scan a source directory, or <code>--load-sbom &lt;file&gt;</code> to load an existing SBOM file instead of scanning.
-                  These two flags are mutually exclusive — specifying both is an error (exit code 2).
+                  These two flags are mutually exclusive: specifying both is an error (exit code 2).
                   Syft is not required when using <code>--load-sbom</code>; Grype is still needed for CVE scanning.
                 </p>
                 <p>
-                  For a directory scan, add <code>--mode deep</code> to get the same license coverage as the UI's Deep scan —
+                  For a directory scan, add <code>--mode deep</code> to get the same license coverage as the UI's Deep scan: 
                   this tells Syft to fetch license data from package registries and enables ClearlyDefined enrichment,
                   producing results that match what you see when you scan the same project in the app.
                 </p>
                 <p>
-                  The <strong>Create Command Line…</strong> dialog (Help menu) builds the correct command for you — including
-                  auto-detecting the OSSScan binary path — with a <strong>License data</strong> section where you choose between
+                  The <strong>Create Command Line…</strong> dialog (Help menu) builds the correct command for you (including
+                  auto-detecting the OSSScan binary path) with a <strong>License data</strong> section where you choose between
                   scanning a directory or loading an SBOM file.
                 </p>
                 <p class="muted">
@@ -1095,12 +1095,12 @@
                 </p>
                 <p>
                   After loading you can run a full CVE scan (Grype), review and filter licenses, export the License and CVE reports,
-                  and prepare AI agent investigation prompts — without needing the original source code at all.
+                  and prepare AI agent investigation prompts, without needing the original source code at all.
                   Deep Enrich (network) can also fill in missing licenses using just the package coordinates (name + version) in the SBOM.
                 </p>
                 <p class="muted">
                   The main thing that won't work without source files is copyleft import/reference analysis and ScanCode-based enrichment,
-                  both of which need files on disk to read. Everything else — CVE scanning, license review, bulk AI investigations — works normally from an imported SBOM.
+                  both of which need files on disk to read. Everything else (CVE scanning, license review, bulk AI investigations) works normally from an imported SBOM.
                 </p>
               </div>
             </section>
@@ -1112,7 +1112,7 @@
             Generate the SBOM yourself using one of these tools, then load the file into OSSScan.
             Your source code stays on your machine.
           </p>
-          <p><strong>GitHub (easiest — no tooling needed):</strong></p>
+          <p><strong>GitHub (easiest, no tooling needed):</strong></p>
           <ol>
             <li>Open your repository on GitHub → click the <strong>Insights</strong> tab.</li>
             <li>Click <strong>Dependency graph</strong> in the left sidebar.</li>
@@ -1138,13 +1138,13 @@
             The recommended approach is to generate the SBOM in your CI/CD pipeline using cdxgen and download the artifact:
           </p>
           <ul>
-            <li><strong>GitLab CI</strong> — add a job that runs <code>npx @cyclonedx/cdxgen . -o sbom.json</code> and saves it as a pipeline artifact.</li>
-            <li><strong>Bitbucket Pipelines</strong> — same: add a step running cdxgen and export the file as an artifact.</li>
-            <li><strong>Azure DevOps</strong> — use Microsoft's open-source <code>sbom-tool</code>, which integrates directly into Azure pipelines and produces SPDX SBOMs.</li>
+            <li><strong>GitLab CI</strong>: add a job that runs <code>npx @cyclonedx/cdxgen . -o sbom.json</code> and saves it as a pipeline artifact.</li>
+            <li><strong>Bitbucket Pipelines</strong>: same: add a step running cdxgen and export the file as an artifact.</li>
+            <li><strong>Azure DevOps</strong>: use Microsoft's open-source <code>sbom-tool</code>, which integrates directly into Azure pipelines and produces SPDX SBOMs.</li>
           </ul>
-          <p>Once you have the SBOM file, load it into OSSScan using <strong>Load SBOM…</strong> — no source code access needed.</p>
+          <p>Once you have the SBOM file, load it into OSSScan using <strong>Load SBOM…</strong>: no source code access needed.</p>
           <p class="muted">
-            Alternatively, run <code>npx @cyclonedx/cdxgen . -o sbom.json</code> locally in your project folder — this works with any source control system and requires only Node.js.
+            Alternatively, run <code>npx @cyclonedx/cdxgen . -o sbom.json</code> locally in your project folder; this works with any source control system and requires only Node.js.
           </p>
         </div>
       </section>
@@ -1153,25 +1153,25 @@
         <div class="faq-q">What is an &ldquo;Unclassified Binary&rdquo; (LicenseRef-OSSScan-Unclassified-Binary) entry?</div>
         <div class="faq-a">
           <p>
-            Syft identifies most packages by reading manifest files (<code>package.json</code>, <code>Podfile.lock</code>, and similar) — that works the same on every platform.
+            Syft identifies most packages by reading manifest files (<code>package.json</code>, <code>Podfile.lock</code>, and similar). That works the same on every platform.
             For compiled binaries with no such manifest, Syft instead relies on a curated list of signatures for roughly 86 well-known open-source projects, matched by filename pattern and file content.
             Anything outside that list produces no package at all from Syft on its own.
           </p>
           <p>
             When OSSScan's scan finds an executable file that Syft could not match to any known project, it creates a placeholder entry for it rather than letting it disappear silently.
-            These entries are labeled <code>LicenseRef-OSSScan-Unclassified-Binary</code> and grouped under <strong>Manual License Review</strong> in your report — distinct from the general &ldquo;Unknown / No Assertion&rdquo; bucket, since the true license genuinely could not be determined rather than merely being missing metadata.
+            These entries are labeled <code>LicenseRef-OSSScan-Unclassified-Binary</code> and grouped under <strong>Manual License Review</strong> in your report, distinct from the general &ldquo;Unknown / No Assertion&rdquo; bucket, since the true license genuinely could not be determined rather than merely being missing metadata.
           </p>
           <p>
-            This shows up more often on macOS build/artifact scans. Windows binaries carry an embedded version-info resource block that Syft can read to get at least a name (even when the license is still unresolved); macOS binaries have no equivalent, so a bundled native library — for example, FFmpeg or a graphics library bundled inside an Electron app's <code>.framework</code> — can be entirely invisible on macOS while still showing up (with an unresolved license) on Windows.
+            This shows up more often on macOS build/artifact scans. Windows binaries carry an embedded version-info resource block that Syft can read to get at least a name (even when the license is still unresolved); macOS binaries have no equivalent, so a bundled native library (for example, FFmpeg or a graphics library bundled inside an Electron app's <code>.framework</code>) can be entirely invisible on macOS while still showing up (with an unresolved license) on Windows.
           </p>
           <p>
-            <strong>What to do:</strong> run <strong>Bulk License Review</strong> (see <em>&ldquo;What are &lsquo;Bulk License Review&rsquo; and &lsquo;Bulk Investigate&rsquo;?&rdquo;</em> above) — these entries are included automatically and get investigated the same way as any other unresolved license, since they carry a real (non-permissive) license value rather than being filtered out. You can also check whether the vendor of the bundling framework ships its own notices file alongside the binary (for example, Electron ships <code>LICENSES.chromium.html</code> documenting FFmpeg and its other bundled third-party components) as a fast manual cross-check.
+            <strong>What to do:</strong> run <strong>Bulk License Review</strong> (see <em>&ldquo;What are &lsquo;Bulk License Review&rsquo; and &lsquo;Bulk Investigate&rsquo;?&rdquo;</em> above): these entries are included automatically and get investigated the same way as any other unresolved license, since they carry a real (non-permissive) license value rather than being filtered out. You can also check whether the vendor of the bundling framework ships its own notices file alongside the binary (for example, Electron ships <code>LICENSES.chromium.html</code> documenting FFmpeg and its other bundled third-party components) as a fast manual cross-check.
           </p>
         </div>
       </section>
 
       <section class="faq-card">
-        <div class="faq-q">My loaded SBOM shows mostly unknown licenses — what can I do?</div>
+        <div class="faq-q">My loaded SBOM shows mostly unknown licenses. What can I do?</div>
         <div class="faq-a">
           <p>
             This means the SBOM generator did not include license metadata for most packages.
@@ -1179,15 +1179,15 @@
           </p>
           <ol>
             <li>
-              <strong>Run Deep Enrich (network)…</strong> — OSSScan will query ClearlyDefined and other registries
+              <strong>Run Deep Enrich (network)…</strong>: OSSScan will query ClearlyDefined and other registries
               using just the package name and version from your SBOM. This can resolve many unknowns without any source code.
             </li>
             <li>
-              <strong>Re-generate with a better tool</strong> — use cdxgen (<code>npx @cyclonedx/cdxgen . -o sbom.json</code>)
+              <strong>Re-generate with a better tool</strong>: use cdxgen (<code>npx @cyclonedx/cdxgen . -o sbom.json</code>)
               or download the SBOM from GitHub's dependency graph. Both include license data from package manifests.
             </li>
             <li>
-              <strong>Scan the source directly</strong> — if you have access to the source code, a native OSSScan
+              <strong>Scan the source directly</strong>: if you have access to the source code, a native OSSScan
               Deep scan will produce the most complete license picture using ScanCode enrichment.
             </li>
           </ol>
@@ -1197,13 +1197,13 @@
               <div class="faq-q">Why do I see duplicated packages or results after scanning a folder?</div>
               <div class="faq-a">
                 <p>
-                  OSSScan now handles the most common cause automatically. It <strong>skips duplicate copies of your project</strong> — Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders — and, for a dependency audit, it skips installed-dependency folders such as <code>node_modules</code> or <code>venv</code> that your lockfiles already describe. So a scan no longer double-counts components just because a worktree or an installed <code>node_modules</code> sits inside your project.
+                  OSSScan now handles the most common cause automatically. It <strong>skips duplicate copies of your project</strong>: Git worktrees (including the branch worktrees AI coding tools like <strong>Claude Code</strong> create under <code>.claude/worktrees/</code>) and version-control folders, and, for a dependency audit, it skips installed-dependency folders such as <code>node_modules</code> or <code>venv</code> that your lockfiles already describe. So a scan no longer double-counts components just because a worktree or an installed <code>node_modules</code> sits inside your project.
                 </p>
                 <p>
-                  If you still see duplicates, it usually means the scan root contains <strong>another full copy of the code</strong> that isn't a worktree — for example another tool's working copy, a manual backup folder, or build output that bundles vendored sources. Move those out of the folder you scan, or scan a clean checkout.
+                  If you still see duplicates, it usually means the scan root contains <strong>another full copy of the code</strong> that isn't a worktree, for example another tool's working copy, a manual backup folder, or build output that bundles vendored sources. Move those out of the folder you scan, or scan a clean checkout.
                 </p>
                 <p class="muted">
-                  Submodules and nested checkouts are kept on purpose — they're intentional source, not duplicates. See <em>“Understanding source scans vs artifact scans”</em> in Help for how scan scope is decided.
+                  Submodules and nested checkouts are kept on purpose: they're intentional source, not duplicates. See <em>“Understanding source scans vs artifact scans”</em> in Help for how scan scope is decided.
                 </p>
               </div>
             </section>

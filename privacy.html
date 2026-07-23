@@ -174,7 +174,7 @@
     <div class="doc-section">
       <h2>Outbound Network Requests</h2>
       <h3>What is sent</h3>
-      <p>When OSSScan makes outbound requests, only the minimum data necessary is transmitted, typically package names, versions, and ecosystems (e.g., <code>npm/lodash@4.17.21</code>). No file contents, source code, or personal information are included in these requests. <strong>Light mode makes no enrichment calls of OSSScan's own</strong> &mdash; the table below covers OSSScan's own traffic only; Syft, Grype, and ScanCode run as separate processes with their own independent network behavior, restricted by network isolation (on by default) rather than by scan mode. See the <a href="security.html">Security page</a> for details.</p>
+      <p>When OSSScan makes outbound requests, only the minimum data necessary is transmitted, typically package names, versions, and ecosystems (e.g., <code>npm/lodash@4.17.21</code>). No file contents, source code, or personal information are included in these requests. <strong>Light mode makes no enrichment calls of OSSScan's own</strong>: the table below covers OSSScan's own traffic only; Syft, Grype, and ScanCode run as separate processes with their own independent network behavior, restricted by network isolation (on by default) rather than by scan mode. See the <a href="security.html">Security page</a> for details.</p>
       <h3>Which third parties receive requests</h3>
       <table>
         <thead>
@@ -203,11 +203,11 @@
           <tr>
             <td>api.github.com (Syft/Grype releases), pypi.org (ScanCode releases)</td>
             <td>Tool update checks</td>
-            <td>No user data &mdash; a public release-info lookup only</td>
+            <td>No user data: a public release-info lookup only</td>
           </tr>
         </tbody>
       </table>
-      <p>All requests use HTTPS. There is no licensing server: license validation happens entirely on-device and involves no network request at all. OSSScan does not check its own application version over the network &mdash; the only mention of <strong>ossscan.com</strong> is a download link opened in your browser if you choose to update after seeing an in-app notice.</p>
+      <p>All requests use HTTPS. There is no licensing server: license validation happens entirely on-device and involves no network request at all. OSSScan does not check its own application version over the network: the only mention of <strong>ossscan.com</strong> is a download link opened in your browser if you choose to update after seeing an in-app notice.</p>
     </div>
 
     <div class="doc-section" style="border-color:#1056b8; background:#f0f4fa;">
