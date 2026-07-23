@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>Unknown Licenses in Open Source Scanning: Why They Happen and Why Ignoring Them Is a Mistake | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="A scan comes back with hundreds of Unknown licenses and the temptation is to scroll past. Unknown is not one thing. Here are the three reasons a license comes back Unknown, why you cannot tell them apart from the list, and why the habit of dismissing them is what buries the finding that mattered." />
+  <link rel="canonical" href="https://ossscan.com/blog/unknown-licenses-why-they-happen.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Unknown Licenses in Open Source Scanning: Why They Happen and Why Ignoring Them Is a Mistake" />
+  <meta property="og:description" content="Three reasons a license comes back Unknown, why you cannot tell them apart from the list, and why dismissing them is what buries the finding that mattered." />
+  <meta property="og:url" content="https://ossscan.com/blog/unknown-licenses-why-they-happen.html" />
+  <meta property="og:image" content="https://ossscan.com/blog/og-unknown-licenses.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Why open source scanners report Unknown licenses, and why ignoring them is a mistake." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-23" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unknown Licenses: Why They Happen and Why Ignoring Them Is a Mistake" />
+  <meta name="twitter:description" content="Unknown is not a verdict, it is a question the scan could not answer. The three reasons it happens, and why the list is worth reading." />
+  <meta name="twitter:image" content="https://ossscan.com/blog/og-unknown-licenses.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Unknown Licenses in Open Source Scanning: Why They Happen and Why Ignoring Them Is a Mistake",
+    "description": "A scan comes back with hundreds of Unknown licenses and the temptation is to scroll past. Unknown is not one thing. Here are the three reasons a license comes back Unknown, why you cannot tell them apart from the list, and why the habit of dismissing them is what buries the finding that mattered.",
+    "image": "https://ossscan.com/blog/og-unknown-licenses.png",
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/unknown-licenses-why-they-happen.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 32px 0 12px;
+      line-height: 1.35;
+    }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+    .article-wrap code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Category cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path .path-eg {
+      display: block; margin-top: 13px; padding: 11px 13px;
+      background: #f5f8fc; border-left: 3px solid #cfdcec;
+      border-radius: 0 8px 8px 0; font-size: 14px; color: #4a5568; line-height: 1.6;
+    }
+    .path .path-eg strong { color: #0b1a3d; font-weight: 700; }
+    .path .path-req { display: block; margin-top: 12px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; color: #8494a8; }
+    /* Card accent tracks how much the category should worry you:
+       grey/blue = usually benign, orange/red = read it properly. */
+    .path.cat-a::before { background: #8494a8; }
+    .path.cat-b::before { background: #8494a8; }
+    .path.cat-c::before { background: #c2410c; }
+    .path.cat-d::before { background: #7c6cc4; }
+    .path.cat-e::before { background: #f07c20; }
+    .path.cat-f::before { background: #4ab3f4; }
+    .path.cat-g::before { background: #4ab3f4; }
+    .path.cat-a .path-sub { color: #5a6b80; }
+    .path.cat-b .path-sub { color: #5a6b80; }
+    .path.cat-c .path-sub { color: #c2410c; }
+    .path.cat-d .path-sub { color: #5b4fa0; }
+    .path.cat-e .path-sub { color: #c2410c; }
+    .path.cat-f .path-sub { color: #1056b8; }
+    .path.cat-g .path-sub { color: #1056b8; }
+
+    /* Bulleted lists in body copy */
+    .article-wrap ul.bullets { margin: 0 0 24px; padding-left: 20px; }
+    .article-wrap ul.bullets li { font-size: 16px; color: #334; line-height: 1.7; margin-bottom: 12px; }
+    .article-wrap ul.bullets li strong { color: #0b1a3d; }
+
+    /* Simulated scan panel. Deliberately mirrors the product's own dark
+       palette and column order so the figure is not mistaken for a different
+       tool, or for a nicer version of this one. */
+    .scan-panel { border: 1px solid #30363d; border-radius: 12px; overflow: hidden; margin: 8px 0 14px; background: #0d1117; }
+    .scan-panel-bar { background: #161b22; color: #8b949e; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; padding: 11px 16px; display: flex; align-items: center; gap: 9px;
+      border-bottom: 1px solid #30363d; }
+    .scan-panel-bar .d { width: 8px; height: 8px; border-radius: 50%; background: #58a6ff; }
+    .scan-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .scan-table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 13.5px; }
+    .scan-table th {
+      background: #161b22; color: #8b949e; text-align: left; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; white-space: nowrap;
+      border-bottom: 1px solid #30363d;
+    }
+    .scan-table td {
+      padding: 11px 14px; color: #e6edf3; border-top: 1px solid #21262d; vertical-align: middle;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: nowrap;
+    }
+    .scan-table code { background: transparent; padding: 0; font-size: 13px; color: #e6edf3; }
+    .pri { font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    .pri.low     { background: rgba(63,185,80,.15);  color: #3fb950; }
+    .pri.high    { background: rgba(248,81,73,.15);  color: #f85149; }
+    .pri.manual  { background: rgba(88,166,255,.15); color: #58a6ff; }
+    .pri.unknown { background: rgba(139,148,158,.15); color: #8b949e; }
+    .scan-note { font-size: 13px; color: #8494a8; font-style: italic; margin: 0 0 30px; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">&larr; OSSScan Blog</a></div>
+        <h1>Unknown Licenses in Open Source Scanning: Why They Happen and Why Ignoring Them Is a Mistake</h1>
+        <p class="article-standfirst">A scan comes back with hundreds of Unknown licenses. You scroll the list, nothing looks familiar, and you move on. That instinct is half right, which is exactly what makes it dangerous. Unknown is not one thing: it is many different situations wearing the same label, and only some of them are safe to wave away.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-23">23 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>8 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">Almost everyone who runs an open-source scan for the first time has the same experience. The report lands, the copyleft section is mercifully short, and then there is a long tail of packages whose license is simply <strong>Unknown</strong>. Dozens of them. Sometimes hundreds. They have names you do not recognise and versions from years before you started the project. The natural reaction is to decide the scanner is being noisy and get on with your day.</p>
+
+        <p>Here is the uncomfortable thing about that reaction. It is often correct about the individual rows, and still the wrong conclusion. "Unknown" is not one finding repeated three hundred times. It is a bin that several unrelated situations get swept into, some of them genuinely harmless and some of them a restriction on what you are allowed to do with your own product.</p>
+
+        <h2>What "Unknown" actually means</h2>
+
+        <p>Start with the vocabulary, because the word does a lot of damage. Unknown does not mean "this package has no license." It means <strong>the scanner could not establish a license from the evidence it happened to look at</strong>. That is a statement about the scan, not about the package.</p>
+
+        <p>Once you say it that way, the useful follow-up appears:</p>
+
+        <p class="article-q">What did the scanner actually see, and why was it not enough to name a license?</p>
+
+        <p>Answer that for a given row and it stops being "unknown" and becomes something specific, with an obvious next step. The reasons repeat, and they sort into a handful of recognisable situations.</p>
+
+        <h2>The main categories of unknown licenses</h2>
+
+        <p>Sorting rows into these groups is the whole trick, because the groups differ enormously in how much they should worry you. Some are noise you can label once and stop thinking about. Others are real restrictions on your product, printed in your report as the same one word. Each card below is the plain version of the category and a worked example of what it looks like in a real scan.</p>
+
+        <div class="paths">
+          <div class="path cat-a">
+            <h3>Build-time artifacts</h3>
+            <p class="path-sub">Usually benign</p>
+            <p>Files a tool wrote rather than a person. Nothing gave them a license because nobody published them.</p>
+            <p class="path-eg"><strong>Example:</strong> <code>dist/app.min.js</code> comes back as Unknown. Your bundler produced it during the last build. Any obligations belong to the packages that went into it, and those are already in the report under their own names.</p>
+            <span class="path-req">Ask: what generated this?</span>
+          </div>
+          <div class="path cat-b">
+            <h3>Operating system components</h3>
+            <p class="path-sub">Usually out of scope</p>
+            <p>Parts of the machine or image around your project, picked up because the scan reached past your application. Distros also repackage and relicense, so a component can carry different terms here than it does upstream.</p>
+            <p class="path-eg"><strong>Example:</strong> you scan a container image instead of the application inside it, and get rows for <code>bash</code>, <code>coreutils</code> and a handful of kernel modules. They arrived with the base image. The real question is whether you redistribute that image, not whether you wrote the code.</p>
+            <span class="path-req">Ask: is this even mine to ship?</span>
+          </div>
+          <div class="path cat-c">
+            <h3>Modified open-source licenses</h3>
+            <p class="path-sub">Treat as serious</p>
+            <p>A familiar license with an extra clause bolted on. The scanner sees text that is nearly MIT, cannot match it exactly, and declines to call it MIT. That refusal is correct: the difference is the entire point.</p>
+            <p class="path-eg"><strong>Example:</strong> the LICENSE file is MIT word for word, plus one added sentence saying the software may not be used by companies offering a competing commercial service. That sentence may rule out your business model, and it reaches you as a row marked Unknown.</p>
+            <span class="path-req">Ask: what does the extra clause say?</span>
+          </div>
+          <div class="path cat-d">
+            <h3>Proprietary or hybrid licenses</h3>
+            <p class="path-sub">Needs a human</p>
+            <p>Commercial terms, internal corporate licenses, and dual-licensed components where your rights depend on which option you took. Your own first-party code usually lands here too, which is normal rather than a defect.</p>
+            <p class="path-eg"><strong>Example:</strong> a component is offered under either a copyleft license or a paid commercial one. The scanner cannot see which you bought, so it reports neither. Answering this row means finding the contract, not reading the code.</p>
+            <span class="path-req">Ask: which terms do we actually hold?</span>
+          </div>
+          <div class="path cat-e">
+            <h3>Incomplete or ambiguous statements</h3>
+            <p class="path-sub">The most deceptive</p>
+            <p>A string sitting in the license field that looks like an answer without being one. Naive tooling records it, treats the row as resolved, and stops asking.</p>
+            <p class="path-eg"><strong>Example:</strong> the package metadata says <code>SEE LICENSE IN LICENSE.txt</code> and the package ships no LICENSE.txt. Same family: "See website", "Free for evaluation", "All rights reserved". The field is populated and you still have no terms.</p>
+            <span class="path-req">Ask: what are the real terms?</span>
+          </div>
+          <div class="path cat-f">
+            <h3>Binary-embedded fragments</h3>
+            <p class="path-sub">Partial evidence</p>
+            <p>License text pulled out of a compiled file. It proves something was there. It does not reliably tell you what, or which version.</p>
+            <p class="path-eg"><strong>Example:</strong> a <code>.so</code> file contains a BSD-style copyright notice in its strings. Three libraries were linked into that file, so the notice belongs to one of them and you cannot tell which. Useful lead, not a license you can record.</p>
+            <span class="path-req">Ask: a lead, or a conclusion?</span>
+          </div>
+          <div class="path cat-g">
+            <h3>Misplaced or missing license files</h3>
+            <p class="path-sub">Findable with effort</p>
+            <p>The grant exists. It is just not where convention says to look: a header comment, a README, a docs page, a metadata field nobody filled in. Common in older and smaller packages.</p>
+            <p class="path-eg"><strong>Example:</strong> a package from 2014 ships no LICENSE file, and the third line of its README reads "Released under the MIT License". Nothing is wrong with the package. The scanner checked the standard place and the standard place was empty.</p>
+            <span class="path-req">Ask: did anyone look past LICENSE?</span>
+          </div>
+        </div>
+
+        <h2>Why you cannot triage this from the list</h2>
+
+        <p>Every category above renders as the same word in the same column. A build artifact that means nothing and a modified license that forbids you from competing with the author are visually identical rows. That is the actual problem. It is not that people are careless about unknowns, it is that the report gives them nothing to be careful <em>with</em>.</p>
+
+        <p class="article-q">Dismissing a list you cannot sort is not triage. It is a coin flip performed several hundred times.</p>
+
+        <p>And the flip is not even fair, because the categories are not evenly distributed. The benign ones are numerous and the serious ones are rare, which trains exactly the wrong instinct. Scroll past two hundred build artifacts and you will scroll past the one modified license too.</p>
+
+        <h2>Why ignoring them is a mistake</h2>
+
+        <p>The case for taking unknowns seriously does not rest on any single row being alarming. It rests on three things being true at once.</p>
+
+        <ul class="bullets">
+          <li><strong>No license means no permission.</strong> Copyright is default-deny. Code published with no license attached is not public domain and is not free to use. It is code you have no grant to redistribute at all. That is a stronger problem than most copyleft findings, and it sits in the list you are scrolling past.</li>
+          <li><strong>Some unknowns are restrictions in disguise.</strong> A modified MIT with a non-commercial clause, or a "free for evaluation" string, is not an absence of terms. It is terms you have not read, and they can be less permissive than the GPL you carefully avoided.</li>
+          <li><strong>Unknown licenses are not background noise.</strong> They are questions you should be ready to answer. Imagine an M&amp;A reps and warranties meeting where the auditor asks whether there are any IP concerns in the list of unknown licenses. Saying that you do not know or have not looked at them is a completely avoidable problem.</li>
+        </ul>
+
+        <p>The failure mode is not that somebody consciously accepts the risk. It is that the list is too long and too undifferentiated to read, so nobody reads any of it, and the rows that mattered were on page four.</p>
+
+        <h2>What to do about it</h2>
+
+        <ol class="article-list">
+          <li><p><span class="li-title">Sort before you dismiss.</span> The goal is not to resolve every unknown, it is to know which category each one is in. Once a row is labelled a build artifact or a first-party proprietary component, dismissing it is a decision rather than a guess.</p></li>
+          <li><p><span class="li-title">Treat an ambiguous string as worse than an empty one.</span> A blank license field is honest. "See website" is a blank field wearing a costume, and most tooling counts it as resolved. If your scanner reports a license you cannot map to real terms, that is an unknown regardless of what the column says.</p></li>
+          <li><p><span class="li-title">Keep package coordinates intact.</span> A row that reaches your report without identifying coordinates is a row nothing can ever look up, in any registry, by any tool. It is condemned to unknown permanently no matter how well known the component is.</p></li>
+          <li><p><span class="li-title">Then read what is left.</span> Once the benign categories are labelled and the resolvable ones resolved, the residue is small. Small enough to actually read. That is the point of the whole exercise: not to drive the number to zero, but to make the remaining number mean something.</p></li>
+        </ol>
+
+        <h2>How OSSScan approaches this</h2>
+
+        <p>Our position is that a scanner's job is to be precise about what it observed and honest when it does not know. Two rules follow, and they shape a lot of the product.</p>
+
+        <p><strong>Never guess a license.</strong> When the evidence does not support a conclusion, OSSScan fails closed to unknown and flags the component for review. It will not infer MIT because the neighbouring package is MIT, and it will not resolve a component from its name alone when it has no version to confirm the match. A confident wrong answer is worse than an honest gap, because the gap gets investigated and the wrong answer does not.</p>
+
+        <p><strong>Separate the categories rather than pooling them.</strong> Build and CI tooling is tagged and counted apart from your dependencies. First-party and proprietary components are marked for manual review rather than filed under unknown. Strings that look like answers but are not, including "see the url", "all rights reserved", "custom" and "TBD", are explicitly not treated as resolved, and where the metadata offered a URL it is carried forward so a reviewer has a concrete lead rather than a dead end. And in Audit mode, which reads the license text on disk rather than trusting the metadata, text that disagrees with the declared license is reported as a disagreement. That is how a modified license, or copyleft vendored inside a permissive package, announces itself.</p>
+
+        <p>What remains goes through several layers of resolution: the component's own metadata, then the ecosystem registry, then <a href="https://clearlydefined.io">ClearlyDefined</a>'s curated data. Only what fails all of them stays unknown. The registry and ClearlyDefined layers make network calls, so they run in Deep mode rather than in a quick local scan, and Deep mode is the one to use when you actually care about the size of the unknown list.</p>
+
+        <div class="scan-panel">
+          <div class="scan-panel-bar"><span class="d"></span> Packages &middot; OSSScan</div>
+          <div class="scan-scroll">
+            <table class="scan-table">
+              <thead>
+                <tr><th>Name</th><th>Version</th><th>Type</th><th>License</th><th>Review Priority</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>left-pad</td><td>1.3.0</td><td>npm</td>
+                  <td><code>MIT</code></td>
+                  <td><span class="pri low">Low Priority</span></td>
+                </tr>
+                <tr>
+                  <td>libfoo</td><td>1.2.0</td><td>npm</td>
+                  <td><code>GPL-3.0-only</code></td>
+                  <td><span class="pri high">High Priority</span></td>
+                </tr>
+                <tr>
+                  <td>your-app</td><td>0.1.0</td><td>npm</td>
+                  <td><code>LicenseRef-Proprietary</code></td>
+                  <td><span class="pri manual">Manual License Review</span></td>
+                </tr>
+                <tr>
+                  <td>vendor-sdk</td><td>2.4.0</td><td>npm</td>
+                  <td><code>&mdash;</code></td>
+                  <td><span class="pri unknown">Unknown</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="scan-note">Illustrative rows in OSSScan's real layout and priority labels. Build and CI tooling does not appear in this table at all; it is tagged and counted separately, which is the point. Of four rows only one is an open question, and it is short enough to be worth reading.</p>
+
+        <p>For that last row, OSSScan can hand the work to an AI agent through <strong>Bulk License Review</strong>. The agent reads the actual component, checks the upstream project, and writes up what it found, under explicit instructions never to invent a license and to flag anything it cannot resolve. That is the right division of labour: deterministic facts from the scanner, judgement from something that can read files and reason about them, and no pretending in either direction.</p>
+
+        <h2>Bottom line</h2>
+
+        <p>Unknown is not a verdict, it is a question the scan could not answer. Most of the time the honest answer is boring: a build artifact, a first-party component, a license sitting in a header comment instead of a LICENSE file. Occasionally it is a modified license with a clause that restricts you, or a component that grants you no rights at all. Those deserve a decision rather than a scroll.</p>
+
+        <p>You cannot tell which is which from an undifferentiated list of three hundred. So the goal is not to make peace with a long unknown list, and it is certainly not to drive the number to zero by guessing. It is to sort it, until what is left is short enough that reading it is obviously worth your time.</p>
+
+        <a class="back-link" href="index.html">&larr; Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>An Unknown list short enough to actually read</h2>
+        <p>OSSScan separates build tooling and first-party code from real unknowns, refuses to treat "see website" as a resolved license, and resolves the rest through package metadata, ecosystem registries and ClearlyDefined. What genuinely needs a human, it can hand to your AI agent to investigate.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions? Or a topic you want covered?</h2>
+          <p class="engage-body">If you ran the example above and got a surprising number out of your own project, we would genuinely like to hear it. And if there is a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20Unknown%20Licenses">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+</body>
+</html>

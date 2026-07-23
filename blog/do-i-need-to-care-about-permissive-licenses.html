@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>Do I Need to Care About Permissive Licenses? | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="Permissive licenses are the easy ones, but easy is not the same as nothing to do. The four kinds of permissive attribution, what modifying code adds, and how OSSScan helps you check it with an AI agent." />
+  <link rel="canonical" href="https://ossscan.com/blog/do-i-need-to-care-about-permissive-licenses.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Do I Need to Care About Permissive Licenses?" />
+  <meta property="og:description" content="Permissive licenses are the easy ones, but easy is not the same as nothing to do. The four kinds of permissive attribution, what modifying code adds, and how OSSScan helps you check it with an AI agent." />
+  <meta property="og:url" content="https://ossscan.com/blog/do-i-need-to-care-about-permissive-licenses.html" />
+  <meta property="og:image" content="https://ossscan.com/blog/og-permissive-licenses.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The four kinds of permissive-license attribution and how OSSScan helps you check them with an AI agent." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-22" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Do I Need to Care About Permissive Licenses?" />
+  <meta name="twitter:description" content="Permissive does not mean obligation-free. The four kinds of attribution in your MIT-and-BSD dependency list, and how OSSScan helps you check them." />
+  <meta name="twitter:image" content="https://ossscan.com/blog/og-permissive-licenses.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Do I Need to Care About Permissive Licenses?",
+    "description": "Permissive licenses are the easy ones, but easy is not the same as nothing to do. The four kinds of permissive attribution, what modifying code adds, and how OSSScan helps you check it with an AI agent.",
+    "image": "https://ossscan.com/blog/og-permissive-licenses.png",
+    "datePublished": "2026-07-22",
+    "dateModified": "2026-07-22",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/do-i-need-to-care-about-permissive-licenses.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Finding card — the dismissed-alert example */
+    .finding {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 0 28px;
+    }
+    .finding-row { padding: 18px 20px; }
+    .finding-row + .finding-row { border-top: 1px solid #d0d9e8; }
+    .finding-headline { background: #fdf0e8; }
+    .finding-context { background: #eef6ee; }
+    .finding-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .finding-headline .finding-label { color: #c2410c; }
+    .finding-context .finding-label { color: #1f7a34; }
+    .finding p { font-size: 15px; color: #445; line-height: 1.65; margin: 0; }
+    .finding code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Two layers cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path.permissive::before { background: #4ab3f4; }
+    .path.copyleft::before { background: #f07c20; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path.permissive .path-sub { color: #1056b8; }
+    .path.copyleft .path-sub { color: #c2410c; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path ul { margin: 10px 0 0; padding-left: 18px; }
+    .path li { font-size: 14px; color: #556; line-height: 1.6; margin-bottom: 4px; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    /* Mobile: the header's text links duplicate the secondary nav directly
+       below, and the tagline has no room left once the CTA is nowrapped.
+       Without this the header is wider than the viewport and the whole page
+       scrolls sideways. */
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    /* Very narrow: the original iPhone SE, and any iPhone with Display Zoom
+       enabled, which renders a 390pt device at a 320px CSS viewport. Entirely
+       inert at 375px and above, so normal phones are unaffected. */
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+
+    /* ── Additions for this post: tables, ASCII diagrams, bullet lists ── */
+    .table-wrap { overflow-x: auto; margin: 0 0 28px; -webkit-overflow-scrolling: touch; }
+    .article-wrap table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 560px;
+      font-size: 14.5px;
+      border: 1px solid #d0d9e8;
+      border-radius: 10px;
+    }
+    .article-wrap th {
+      background: #0b1a3d;
+      color: #fff;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 14px;
+      vertical-align: bottom;
+    }
+    .article-wrap td {
+      padding: 13px 14px;
+      color: #445;
+      line-height: 1.6;
+      border-top: 1px solid #dde4ef;
+      vertical-align: top;
+    }
+    .article-wrap tbody tr:nth-child(even) { background: #f7f9fc; }
+    .article-wrap td strong { color: #0b1a3d; }
+    .table-note { font-size: 13px; color: #8494a8; margin: -18px 0 28px; font-style: italic; }
+
+    /* ASCII architecture diagrams */
+    .diagram {
+      background: #0b1a3d;
+      color: #c5dcf5;
+      border-radius: 10px;
+      border-left: 3px solid #4ab3f4;
+      padding: 20px 22px;
+      margin: 0 0 28px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre;
+      -webkit-overflow-scrolling: touch;
+    }
+    .diagram .hl { color: #4ab3f4; font-weight: 700; }
+    .diagram .warn { color: #f9a76c; font-weight: 700; }
+
+    /* Bulleted lists in body copy */
+    .article-wrap ul.bullets { margin: 0 0 24px; padding-left: 20px; }
+    .article-wrap ul.bullets li { font-size: 16px; color: #334; line-height: 1.7; margin-bottom: 12px; }
+    .article-wrap ul.bullets li strong { color: #0b1a3d; }
+
+    /* Legal disclaimer */
+    .disclaimer {
+      background: #fdf6ee;
+      border: 1px solid #e8d5bd;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 32px;
+    }
+    .disclaimer p { font-size: 14.5px; color: #6b5a45; margin: 0; line-height: 1.65; }
+    .disclaimer strong { color: #8a5a20; }
+
+    /* Scenario section marker */
+    .scenario-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1056b8;
+      background: #eaf2fd;
+      border-radius: 5px;
+      padding: 4px 10px;
+      margin: 44px 0 4px;
+    }
+    .article-wrap .scenario-tag + h2 { margin-top: 8px; }
+  </style>
+
+  <style>
+    /* ── Additions for this post: category cards + folder-scan panel ── */
+    .path.cat-a::before { background: #8494a8; }
+    .path.cat-b::before { background: #4ab3f4; }
+    .path.cat-c::before { background: #f07c20; }
+    .path.cat-d::before { background: #7c6cc4; }
+    .path.cat-a .path-sub { color: #5a6b80; }
+    .path.cat-b .path-sub { color: #1056b8; }
+    .path.cat-c .path-sub { color: #c2410c; }
+    .path.cat-d .path-sub { color: #5b4fa0; }
+    .path .path-req { display: block; margin-top: 12px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; color: #8494a8; }
+
+    .scan-panel { border: 1px solid #d0d9e8; border-radius: 12px; overflow: hidden; margin: 8px 0 14px; }
+    .scan-panel-bar { background: #0b1a3d; color: #a8c8ea; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; padding: 11px 16px; display: flex; align-items: center; gap: 9px; }
+    .scan-panel-bar .d { width: 8px; height: 8px; border-radius: 50%; background: #4ab3f4; }
+    .scan-row { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 13px 16px; border-top: 1px solid #e3e9f2; }
+    .scan-row:first-of-type { border-top: 0; }
+    .scan-pkg { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13.5px;
+      color: #0b1a3d; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+    .scan-pkg .lic { color: #8494a8; }
+    .cat-badge { font-size: 11px; font-weight: 800; color: #fff; width: 19px; height: 19px;
+      border-radius: 4px; display: inline-grid; place-items: center; flex-shrink: 0; }
+    .cat-badge.a { background: #8494a8; } .cat-badge.b { background: #1056b8; }
+    .cat-badge.c { background: #c2410c; } .cat-badge.d { background: #5b4fa0; }
+    .scan-status { font-size: 12px; font-weight: 700; padding: 3px 11px; border-radius: 999px; white-space: nowrap; }
+    .scan-status.ok { background: #eaf6ee; color: #1f7a34; }
+    .scan-status.warn { background: #fdf0e8; color: #c2410c; }
+    .scan-status.none { background: #eef1f6; color: #67748a; }
+    .scan-note { font-size: 13px; color: #8494a8; font-style: italic; margin: 0 0 30px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">&larr; OSSScan Blog</a></div>
+        <h1>Do I Need to Care About Permissive Licenses?</h1>
+        <p class="article-standfirst">Short answer: yes, to a degree. Permissive does not mean obligation-free. Here are the four kinds of attribution hiding inside your MIT-and-BSD dependency list, what modifying code adds, and how OSSScan helps you check them with an AI agent.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-22">22 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>7 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">If you have ever glanced at your dependencies, seen a wall of MIT and BSD and ISC, and thought "great, those are the easy ones, nothing to do here," this post is for you. Permissive licenses really are the easy ones. But "easy" is not the same as "nothing to do," and the gap between those two is where a lot of otherwise-careful projects quietly fall short.</p>
+
+        <h2>What "permissive" actually means</h2>
+        <p>A permissive license lets you do almost anything with the code: use it, change it, ship it inside a closed-source product, sell it. It does not force your own code to become open source. That last part is the important contrast with copyleft licenses (GPL, AGPL, and friends), which can require you to release your source under the same terms. Copyleft is the category that gets all the attention because it can change how you are allowed to ship your product.</p>
+        <p>So people learn a rough rule: <strong>"copyleft is the scary one, permissive is fine."</strong> The first half is fair. The second half is where the trouble starts.</p>
+
+        <h2>The catch: attribution</h2>
+        <p>Almost every permissive license asks for one thing in return for all that freedom: attribution. You get to use the code however you like, as long as you carry the original copyright notice and the license text along to wherever you distribute it.</p>
+        <p>That means your shipped product (the installer, the app bundle, the container image, the "about" screen, a bundled notices file, whatever form your distribution takes) is supposed to reproduce the license text and copyright for each permissive dependency inside it. Not the whole internet's worth. Just the ones you actually ship.</p>
+
+        <p class="article-q">Nothing breaks when you skip attribution. The build runs, the tests pass. The obligation is invisible until someone goes looking.</p>
+
+        <h2>Not all permissive licenses are the same</h2>
+        <p>Here is the part most "permissive is fine" advice skips: permissive is a family, not a single rule. The licenses in that family ask for slightly different things. It helps to think in four buckets.</p>
+
+        <div class="paths">
+          <div class="path cat-a">
+            <h3>A &middot; Zero attribution</h3>
+            <p class="path-sub">Public domain style</p>
+            <p>0BSD, CC0, Unlicense, WTFPL, and BSL-1.0 explicitly remove the conditions. Use the code and keep nothing. There is genuinely nothing to track.</p>
+            <span class="path-req">Required: nothing</span>
+          </div>
+          <div class="path cat-b">
+            <h3>B &middot; Text + copyright</h3>
+            <p class="path-sub">The everyday case</p>
+            <p>MIT, ISC, Zlib, BSD-2-Clause, BSD-3-Clause, and most academic and corporate permissive licenses. Keep the copyright notice and license text in what you distribute.</p>
+            <span class="path-req">Required: notice + license text</span>
+          </div>
+          <div class="path cat-c">
+            <h3>C &middot; Text + NOTICE</h3>
+            <p class="path-sub">Apache style</p>
+            <p>Apache-2.0 and relatives add a step: if the package ships a NOTICE file, its contents travel with your distribution too. Apache also asks you to state, in files you changed, that you changed them.</p>
+            <span class="path-req">Required: license + NOTICE</span>
+          </div>
+          <div class="path cat-d">
+            <h3>D &middot; Special wording</h3>
+            <p class="path-sub">Non-copyleft, but unusual</p>
+            <p>A few licenses (CECILL-B, OLDAP, W3C, WordNet) behave like bucket B but carry an extra disclaimer or attribution clause. Treat as text-plus-copyright, and read the specific wording.</p>
+            <span class="path-req">Required: as B, plus a note</span>
+          </div>
+        </div>
+        <p>None of these are hard. But they are different, and "I have a LICENSE file somewhere" does not automatically satisfy all four.</p>
+
+        <h2>Modifying code can add requirements</h2>
+        <p>There is a second wrinkle that catches people: changing a dependency can add obligations that simply using it did not. The clearest example is Apache-2.0's "state your changes" clause. If you fork a file and edit it, you are expected to mark that the file was changed.</p>
+        <div class="aside-note">
+          <p>When you modify someone else's open‑source component, you reach a point where assumptions are no longer safe. Even permissive licenses have attribution rules, and a modified copy becomes partly your responsibility. Any change, even a small one, is a moment to stop and check.</p>
+        </div>
+
+        <h2>Why this matters for everyone</h2>
+        <p>Put the two ideas together and the picture is clear. You do not get to only think about the scary copyleft dependencies. You have to consider all of your open-source, including the long, boring tail of MIT and BSD packages, because that long tail is exactly where attribution obligations accumulate. A typical project has a handful of copyleft concerns at most and hundreds of permissive ones. The risk per package is small. The risk across all of them, ignored consistently, is not. The good news: the work is mostly bookkeeping, and bookkeeping is the kind of thing a tool should do for you.</p>
+
+        <h2>How OSSScan helps you check this</h2>
+        <p>Here is the important part: OSSScan does not try to decide whether your project is compliant. Whether your build actually reproduces every notice depends on what you ship and in what format, and any tool that guesses at that from the outside gets it wrong a lot. So OSSScan splits the work along the line where each side is reliable.</p>
+        <p>OSSScan states the deterministic facts. It sorts every permissive dependency into its category (A, B, C, or D) and knows what each category requires. The judgment part, whether your project actually carries these notices, it hands to your AI agent, which can read your real files and reason about them.</p>
+        <p>When you run <strong>Bulk License Review</strong> (the export that prepares work for an agent), tick <strong>Also check permissive-license attribution</strong>. It is off by default, and worth turning on when you set a baseline. OSSScan then writes the agent a task: here is every permissive package and what its category requires, verify each is attributed in this project and write an <strong>Attribution Report</strong>. From the command line the same option is <code>--check-attribution</code>.</p>
+
+        <div class="scan-panel">
+          <div class="scan-panel-bar"><span class="d"></span> AttributionReport.md &middot; written by your AI agent</div>
+          <div class="scan-row">
+            <div class="scan-pkg"><span class="cat-badge b">B</span> left-pad <span class="lic">MIT</span></div>
+            <span class="scan-status ok">Covered</span>
+          </div>
+          <div class="scan-row">
+            <div class="scan-pkg"><span class="cat-badge c">C</span> fast-glob <span class="lic">Apache-2.0</span></div>
+            <span class="scan-status warn">Needs attention</span>
+          </div>
+          <div class="scan-row">
+            <div class="scan-pkg"><span class="cat-badge a">A</span> tiny-inflate <span class="lic">0BSD</span></div>
+            <span class="scan-status none">Not required</span>
+          </div>
+          <div class="scan-row">
+            <div class="scan-pkg"><span class="cat-badge b">B</span> ghost-dep <span class="lic">BSD-3-Clause</span></div>
+            <span class="scan-status warn">Needs attention</span>
+          </div>
+        </div>
+        <p class="scan-note">Illustrative. Your agent writes this report after reading the project's real files; OSSScan supplies the package list and categories.</p>
+
+        <p>The division stays honest. OSSScan never claims your notices are complete, because it cannot know that reliably. The agent does the checking against your actual files, and it is told never to invent license text and to flag anything it cannot resolve. And because OSSScan's part is just the license list, it works the same whether you scanned a project folder or imported an SBOM.</p>
+
+        <h2>Bottom line</h2>
+        <p>Permissive licenses are the easy ones, and you should still care about them, because "easy" means a small amount of bookkeeping, not nothing. Keep the notices for the licenses that ask for it, respect the extra step for Apache-style and modified code, and do it across all your dependencies rather than just the intimidating ones. Let your tooling turn that from a nagging unknown into a checked-off list.</p>
+
+        <a class="back-link" href="index.html">&larr; Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>See your attribution obligations, not just your licenses</h2>
+        <p>OSSScan sorts every permissive dependency into its attribution category and can hand your AI agent a ready-made task to verify each is properly attributed and write an Attribution Report. The scary copyleft cases and the long permissive tail, in one pass.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions? Or a topic you want covered?</h2>
+          <p class="engage-body">If this raised a question about a specific license in your dependency tree, ask. And if there is a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20Do%20I%20Need%20to%20Care%20About%20Permissive%20Licenses">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+</body>
+</html>
