@@ -702,7 +702,7 @@
                   No. OSSScan identifies components from SBOM metadata and package coordinates. It has no visibility into whether a vendored or bundled binary differs from the upstream release.
                 </p>
                 <p>
-                  This matters because some licenses -- particularly copyleft licenses such as GPL -- treat modification as a trigger for additional obligations, for example requiring you to make your modifications available to recipients. OSSScan cannot detect or flag those situations.
+                  This matters because some licenses, particularly copyleft licenses such as GPL, treat modification as a trigger for additional obligations, for example requiring you to make your modifications available to recipients. OSSScan cannot detect or flag those situations.
                 </p>
                 <p class="muted">
                   If your project vendors or modifies upstream binaries, you need to track and evaluate those modifications separately. OSSScan can tell you what license applies to the upstream component, but the question of whether your modifications change your obligations requires human review.
@@ -713,13 +713,13 @@
               <div class="faq-q">Does OSSScan check for license attribution compliance?</div>
               <div class="faq-a">
                 <p>
-                  Not by itself. OSSScan surfaces which licenses apply to which components, but it does not inspect your built artifact to decide whether the required attribution notices are actually present. Whether your distribution reproduces every notice depends on what you ship and in what format, so OSSScan does not guess at it.
+                  Yes, as an opt-in check. In the <strong>Bulk License Review</strong> export dialog, tick <strong>Also check permissive-license attribution</strong> (off by default; a good idea when you establish a baseline). OSSScan writes an <code>AttributionReview.md</code> listing every permissive package in your project, its obligation category, and exactly what that category requires, then asks your AI agent to verify coverage and write an <strong>Attribution Report</strong>. From the CLI, the same option is <code>--check-attribution</code>.
                 </p>
                 <p>
-                  What it can do is hand that check to your AI agent. In the <strong>Bulk License Review</strong> export dialog, tick <strong>Also check permissive-license attribution</strong> (off by default; a good idea when you establish a baseline). OSSScan then writes an <code>AttributionReview.md</code> task listing every permissive package and what its license category requires, and asks the agent to verify each is attributed in your project and write an <strong>Attribution Report</strong>. From the CLI, the same option is <code>--check-attribution</code>.
+                  The division of labour is deliberate. OSSScan states only what it can establish deterministically: which packages are permissive, and what their license category obliges you to do. Your agent reads the real files (for example a <code>THIRD_PARTY_NOTICES</code> file, vendored <code>LICENSE</code> files, or a credits screen) and judges whether coverage is actually there. It is told never to invent license text and to flag anything it cannot resolve.
                 </p>
                 <p>
-                  Many permissive licenses -- including MIT, BSD-2-Clause, BSD-3-Clause, and Apache-2.0 -- require that copyright and attribution notices travel with distributions. The agent reads your real files (for example a <code>THIRD_PARTY_NOTICES</code> file, vendored <code>LICENSE</code> files, or a credits screen) to check coverage; it is told never to invent license text and to flag anything it cannot resolve.
+                  What OSSScan will not do is inspect your built artifact and declare you compliant on its own. Whether a distribution reproduces every notice depends on what you ship and in what format, and a scanner guessing at that would do more harm than good. Many permissive licenses, including MIT, BSD-2-Clause, BSD-3-Clause, and Apache-2.0, require copyright and attribution notices to travel with distributions; confirming yours did is a review step, not a scan result.
                 </p>
               </div>
             </section>
