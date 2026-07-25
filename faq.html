@@ -540,7 +540,7 @@
                   <strong>Network isolation</strong> (on by default) is what actually blocks that tool-process traffic; see the Security page for details.
                 </p>
                 <p>
-                  <strong>Deep</strong> and <strong>Audit</strong> scans (and <strong>Deep Enrich</strong>) make outbound HTTPS requests to public metadata services to look up license information. These requests send only <strong>package coordinates</strong> (name and version), not your repository contents.
+                  <strong>Deep</strong> and <strong>Audit</strong> scans make outbound HTTPS requests to public metadata services (package registries, deps.dev, and ClearlyDefined) to look up license information. These requests send only <strong>package coordinates</strong> (name and version), not your repository contents. deps.dev is skipped automatically when the machine is offline.
                 </p>
                 <p>
                   ScanCode, when used, runs <strong>locally</strong> by reading files inside the folder you selected.
@@ -557,7 +557,7 @@
                   That usually means the SBOM source (or upstream metadata) didn't provide a license expression for that component.
                 </p>
                 <ul>
-                  <li>Try <strong>Deep</strong> scan mode, or run <strong>Deep Enrich (network)…</strong> on an imported SBOM.</li>
+                  <li>Try <strong>Deep</strong> scan mode. Deep runs registry, deps.dev, and ClearlyDefined lookups (and, with source on disk, ScanCode) to fill unknown licenses. It works on an imported SBOM too: load it in Deep mode.</li>
                 </ul>
               </div>
             </section>
@@ -590,18 +590,21 @@
               </div>
             </section>
       <section class="faq-card">
-              <div class="faq-q">What does "Deep Enrich (network)…" do?</div>
+              <div class="faq-q">How does Deep mode resolve unknown licenses?</div>
               <div class="faq-a">
                 <p>
-                  Deep Enrich tries to fill unknown licenses in the <em>currently loaded SBOM</em> by looking up packages via their
-                  <code>purl</code> (package URL) + version.
+                  Deep mode resolves each still-unknown package through a fixed order of sources, preferring the
+                  <strong>declared</strong> license (what the author granted) and using <strong>scanned</strong> sources
+                  (license text derived from source) only for what declared sources cannot resolve:
                 </p>
                 <ul>
-                  <li>Best for SBOMs loaded from disk via <strong>Load SBOM…</strong>.</li>
-                  <li>Best-effort: packages without a usable purl or version may be skipped.</li>
+                  <li><strong>Package registries</strong> (declared) — the native registry for each ecosystem.</li>
+                  <li><strong>deps.dev</strong> (declared) — Google's metadata aggregator; fills what the registries miss, and is especially strong for <strong>Go</strong> modules. Skipped automatically when the machine is offline.</li>
+                  <li><strong>ClearlyDefined</strong> (scanned) — a lookup of precomputed, source-derived data for coordinates the declared sources left unknown.</li>
+                  <li><strong>ScanCode</strong> (scanned, local) — reads license text from files on disk; the last resort, and needs the source tree.</li>
                 </ul>
                 <p class="muted">
-                  It sends only package coordinates; it does not upload your source.
+                  The declared sources (registries + deps.dev) need only package coordinates (name + version), never source code, so they also work on an imported SBOM with no files on disk. There is no separate "Deep Enrich" step: deps.dev runs automatically as part of any Deep or Audit scan. Packages without a usable <code>purl</code> or version are skipped.
                 </p>
               </div>
             </section>
@@ -1039,8 +1042,8 @@
                   Syft is not required when using <code>--load-sbom</code>; Grype is still needed for CVE scanning.
                 </p>
                 <p>
-                  For a directory scan, add <code>--mode deep</code> to get the same license coverage as the UI's Deep scan: 
-                  this tells Syft to fetch license data from package registries and enables ClearlyDefined enrichment,
+                  For a directory scan, add <code>--mode deep</code> to get the same license coverage as the UI's Deep scan:
+                  this runs the registry, deps.dev, and ClearlyDefined lookups (plus local ScanCode),
                   producing results that match what you see when you scan the same project in the app.
                 </p>
                 <p>
@@ -1096,7 +1099,7 @@
                 <p>
                   After loading you can run a full CVE scan (Grype), review and filter licenses, export the License and CVE reports,
                   and prepare AI agent investigation prompts, without needing the original source code at all.
-                  Deep Enrich (network) can also fill in missing licenses using just the package coordinates (name + version) in the SBOM.
+                  Loading in <strong>Deep</strong> mode can also fill in missing licenses using just the package coordinates (name + version) in the SBOM, via the registry and deps.dev lookups.
                 </p>
                 <p class="muted">
                   The main thing that won't work without source files is copyleft import/reference analysis and ScanCode-based enrichment,
@@ -1179,7 +1182,7 @@
           </p>
           <ol>
             <li>
-              <strong>Run Deep Enrich (network)…</strong>: OSSScan will query ClearlyDefined and other registries
+              <strong>Load it in Deep mode</strong>: OSSScan will query the package registries, deps.dev, and ClearlyDefined
               using just the package name and version from your SBOM. This can resolve many unknowns without any source code.
             </li>
             <li>

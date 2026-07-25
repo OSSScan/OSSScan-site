@@ -153,7 +153,6 @@
         <li>Select scan mode: Light, Deep, or Audit</li>
         <li>Scan the project, or load a previously saved SBOM</li>
         <li>Use filters to review license findings; optionally export the License Report</li>
-        <li>Optionally run Deep Enrich to resolve remaining unknown licenses</li>
         <li>Optionally save the SBOM for later use</li>
         <li>Optionally run Bulk License Investigation to prepare AI Agent prompts, then use the Agent Instructions button</li>
         <li>Check and refresh the Grype CVE database</li>
@@ -378,14 +377,14 @@
       </p>
       <ul>
         <li>Review licenses and filter by risk (the full Licenses tab works normally).</li>
-        <li>Run <strong>Deep Enrich (network)…</strong> to fill in unknown licenses using package coordinates.</li>
+        <li>Load it in <strong>Deep</strong> or <strong>Audit</strong> mode to fill in unknown licenses from package coordinates (registry, deps.dev, and ClearlyDefined lookups run automatically).</li>
         <li>Run a <strong>CVE Scan</strong> using Grype, no source code needed.</li>
         <li>Run <strong>Bulk License Review</strong> or <strong>Bulk Investigate</strong> to prepare AI agent prompts.</li>
         <li>Export the License Report or CVE Report.</li>
       </ul>
       <p class="muted">
         Limitation: <strong>Copyleft analysis</strong> (import/reference scanning) and <strong>ScanCode-based license enrichment</strong> require the original source files on disk.
-        They will have limited or no evidence when you load an SBOM without the source tree. Deep Enrich can still improve license coverage using package coordinates alone.
+        They will have limited or no evidence when you load an SBOM without the source tree. A Deep-mode load can still improve license coverage using package coordinates alone (registry and deps.dev), which need no source files.
       </p>
 
       <h3 id="cyclonedx-xml">Got a CycloneDX XML SBOM?</h3>
@@ -502,17 +501,22 @@
       <li>Syft itself can still attempt outbound calls for certain ecosystems (e.g. Go module resolution) regardless of mode; <strong>network isolation</strong> (on by default) is what blocks that tool-process traffic, not the mode choice.</li>
     </ul>
 
-    <h3>Deep mode: add ClearlyDefined + ScanCode for residual unknowns</h3>
+    <h3>Deep mode: resolve residual unknowns, declared licenses first</h3>
     <p>
-      Deep mode is designed to reduce <code>NOASSERTION</code> / unknown licenses by adding two additional steps:
+      Deep mode reduces <code>NOASSERTION</code> / unknown licenses by resolving each still-unknown package
+      through a fixed order of sources. OSSScan always prefers the <strong>declared</strong> license (what the
+      package author actually granted) and only falls back to <strong>scanned</strong> sources (license text derived
+      from source code) for what the declared sources cannot resolve. The order is the trust order:
     </p>
     <ul>
-      <li><strong>ClearlyDefined</strong> (metadata lookup): helps fill in licenses for packages where manifest/registry metadata is incomplete.
-        This often improves coverage for ecosystems and packages that Syft and basic registry lookups can miss or underspecify, for example
-        <strong>RubyGems</strong>, <strong>NuGet</strong>, <strong>Composer</strong>, and some older or edge-case <strong>Maven</strong>/<strong>Cargo</strong> coordinates.</li>
-      <li><strong>ScanCode Toolkit</strong> (local content scan): for the remaining residual unknowns, ScanCode reads files on disk and detects license text.
-        This is useful for cases where there simply isn't reliable upstream license metadata.</li>
+      <li><strong>Package registries</strong> (declared): the native registry for each ecosystem (npm, PyPI, and so on) reports the author's stated license.</li>
+      <li><strong>deps.dev</strong> (declared): Google's package-metadata aggregator fills whatever the registries leave unknown. It is especially strong for <strong>Go</strong> modules, which carry no license field in <code>go.mod</code>. deps.dev needs only package coordinates (name + version), never source, and is <strong>skipped automatically when the machine is offline</strong>.</li>
+      <li><strong>ClearlyDefined</strong> (scanned): a lookup of ClearlyDefined's precomputed, source-derived data. It helps fill packages where declared metadata is incomplete, for example some <strong>RubyGems</strong>, <strong>NuGet</strong>, <strong>Composer</strong>, and older <strong>Maven</strong>/<strong>Cargo</strong> coordinates.</li>
+      <li><strong>ScanCode Toolkit</strong> (scanned, local): the last resort for remaining unknowns. ScanCode reads files on disk and detects license text, so it needs the source tree.</li>
     </ul>
+    <p class="muted">
+      The declared sources (registries + deps.dev) need only coordinates, so they work even on an imported SBOM with no source tree. The scanned sources are the fallback: ClearlyDefined for coordinates it has precomputed, and ScanCode for on-disk license text.
+    </p>
 
     <p>
       Examples of cases ScanCode can help with that metadata approaches typically do not:
@@ -523,24 +527,11 @@
       <li><strong>Dependency subtrees</strong> where license text exists in the installed files but the manifest-level license is absent.</li>
     </ul>
 
-    <h3>Deep Enrich (network) vs Deep scan</h3>
+    <h3>Audit mode: cross-check declared against found</h3>
     <p>
-      These sound similar, but they're used at different times:
-    </p>
-    <ul>
-      <li><strong>Deep scan</strong> is a scan mode. It runs as part of scanning a local folder and may combine metadata lookups with local on-disk evidence (for example via ScanCode).</li>
-      <li><strong>Deep Enrich (network)…</strong> is a separate button that enriches the <em>currently loaded SBOM</em> after the fact by querying <code>https://api.deps.dev</code> using package coordinates (name + version from PURLs). No source code or file contents are transmitted.</li>
-    </ul>
-    <p>
-      When should you use Deep Enrich?
-    </p>
-    <ul>
-      <li><strong>Most useful when you imported an SBOM</strong> (no filesystem context): enrichment can fill in missing licenses without re-scanning.</li>
-      <li><strong>Sometimes useful after a Deep scan</strong>: if you still have a meaningful number of unknown licenses, Deep Enrich can top up coverage using external metadata.</li>
-      <li><strong>Often unnecessary after a good Deep/Audit run</strong>: if local evidence already resolved licenses, Deep Enrich may not change much.</li>
-    </ul>
-    <p class="muted">
-      Rule of thumb: run Deep Enrich when the SBOM knows "what it is" (coordinates) but not "what it's licensed under".
+      Audit mode runs ScanCode across <em>every</em> package (not just the residual unknowns) to <strong>discover mismatches</strong>
+      between a package's declared license and the license text found in its files. Deep mode's declared-first order still
+      governs the primary license; Audit is the deliberate cross-check that surfaces where the two disagree.
     </p>
 
       <h3>Deeply nested dependencies</h3>
