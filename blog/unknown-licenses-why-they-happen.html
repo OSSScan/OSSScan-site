@@ -476,7 +476,7 @@
     <div class="article-body">
       <div class="article-wrap">
 
-        <p class="lede">Almost everyone who runs an open-source scan for the first time has the same experience. The report lands, the copyleft section is mercifully short, and then there is a long tail of packages whose license is simply <strong>Unknown</strong>. Dozens of them. Sometimes hundreds. They have names you do not recognise and versions from years before you started the project. The natural reaction is to decide the scanner is being noisy and get on with your day.</p>
+        <p class="lede">Almost everyone who runs an open-source scan for the first time has the same experience. The report lands, the copyleft section is mercifully short, and then there is a long tail of packages whose license is simply <strong>Unknown</strong>. Dozens of them. Sometimes hundreds. They have names you do not recognize and versions from years before you started the project. The natural reaction is to decide the scanner is being noisy and get on with your day.</p>
 
         <p>Here is the uncomfortable thing about that reaction. It is often correct about the individual rows, and still the wrong conclusion. "Unknown" is not one finding repeated three hundred times. It is a bin that several unrelated situations get swept into, some of them genuinely harmless and some of them a restriction on what you are allowed to do with your own product.</p>
 
@@ -488,7 +488,7 @@
 
         <p class="article-q">What did the scanner actually see, and why was it not enough to name a license?</p>
 
-        <p>Answer that for a given row and it stops being "unknown" and becomes something specific, with an obvious next step. The reasons repeat, and they sort into a handful of recognisable situations.</p>
+        <p>Answer that for a given row and it stops being "unknown" and becomes something specific, with an obvious next step. The reasons repeat, and they sort into a handful of recognizable situations.</p>
 
         <h2>The main categories of unknown licenses</h2>
 
@@ -569,10 +569,10 @@
         <h2>What to do about it</h2>
 
         <ol class="article-list">
-          <li><p><span class="li-title">Sort before you dismiss.</span> The goal is not to resolve every unknown, it is to know which category each one is in. Once a row is labelled a build artifact or a first-party proprietary component, dismissing it is a decision rather than a guess.</p></li>
+          <li><p><span class="li-title">Sort before you dismiss.</span> The goal is not to resolve every unknown, it is to know which category each one is in. Once a row is labeled a build artifact or a first-party proprietary component, dismissing it is a decision rather than a guess.</p></li>
           <li><p><span class="li-title">Treat an ambiguous string as worse than an empty one.</span> A blank license field is honest. "See website" is a blank field wearing a costume, and most tooling counts it as resolved. If your scanner reports a license you cannot map to real terms, that is an unknown regardless of what the column says.</p></li>
           <li><p><span class="li-title">Keep package coordinates intact.</span> A row that reaches your report without identifying coordinates is a row nothing can ever look up, in any registry, by any tool. It is condemned to unknown permanently no matter how well known the component is.</p></li>
-          <li><p><span class="li-title">Then read what is left.</span> Once the benign categories are labelled and the resolvable ones resolved, the residue is small. Small enough to actually read. That is the point of the whole exercise: not to drive the number to zero, but to make the remaining number mean something.</p></li>
+          <li><p><span class="li-title">Then read what is left.</span> Once the benign categories are labeled and the resolvable ones resolved, the residue is small. Small enough to actually read. That is the point of the whole exercise: not to drive the number to zero, but to make the remaining number mean something.</p></li>
         </ol>
 
         <h2>How OSSScan approaches this</h2>
@@ -619,7 +619,7 @@
         </div>
         <p class="scan-note">Illustrative rows in OSSScan's real layout and priority labels. Build and CI tooling does not appear in this table at all; it is tagged and counted separately, which is the point. Of four rows only one is an open question, and it is short enough to be worth reading.</p>
 
-        <p>For that last row, OSSScan can hand the work to an AI agent through <strong>Bulk License Review</strong>. The agent reads the actual component, checks the upstream project, and writes up what it found, under explicit instructions never to invent a license and to flag anything it cannot resolve. That is the right division of labour: deterministic facts from the scanner, judgement from something that can read files and reason about them, and no pretending in either direction.</p>
+        <p>For that last row, OSSScan can hand the work to an AI agent through <strong>Bulk License Review</strong>. The agent reads the actual component, checks the upstream project, and writes up what it found, under explicit instructions never to invent a license and to flag anything it cannot resolve. That is the right division of labor: deterministic facts from the scanner, judgment from something that can read files and reason about them, and no pretending in either direction.</p>
 
         <h2>Bottom line</h2>
 
