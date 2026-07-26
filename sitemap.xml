@@ -31,11 +31,23 @@
 
   <url>
     <loc>https://ossscan.com/blog/</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://ossscan.com/blog/how-we-test-ossscan.html</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ossscan.com/blog/unknown-licenses-why-they-happen.html</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://ossscan.com/blog/do-i-need-to-care-about-permissive-licenses.html</loc>
     <lastmod>2026-07-22</lastmod>
