@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <title>How We Test OSSScan: 40+ Real Projects, Every Layer, Every Run | OSSScan Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="description" content="A dependency scanner earns trust by being right, and being right the same way every time. Here is the test automation behind OSSScan: 40+ real open-source projects across a dozen ecosystems, checked at every layer, run the same way through both the CLI and the UI, cross-checked against other tools, and compared across macOS and Windows." />
+  <link rel="canonical" href="https://ossscan.com/blog/how-we-test-ossscan.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How We Test OSSScan: 40+ Real Projects, Every Layer, Every Run" />
+  <meta property="og:description" content="The test automation behind OSSScan: 40+ real projects across a dozen ecosystems, checked every layer, run through both the CLI and the UI, and compared across two operating systems." />
+  <meta property="og:url" content="https://ossscan.com/blog/how-we-test-ossscan.html" />
+  <meta property="og:image" content="https://ossscan.com/blog/og-how-we-test.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="How OSSScan is tested for consistent, accurate scan results across 40+ benchmarks." />
+  <meta property="og:site_name" content="OSSScan" />
+  <meta property="article:published_time" content="2026-07-26" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How We Test OSSScan: 40+ Real Projects, Every Layer, Every Run" />
+  <meta name="twitter:description" content="Consistent, accurate scan results do not happen by accident. A look at the test automation that stands behind every OSSScan release." />
+  <meta name="twitter:image" content="https://ossscan.com/blog/og-how-we-test.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How We Test OSSScan: 40+ Real Projects, Every Layer, Every Run",
+    "description": "A dependency scanner earns trust by being right, and being right the same way every time. Here is the test automation behind OSSScan: 40+ real open-source projects across a dozen ecosystems, checked at every layer, run the same way through both the CLI and the UI, cross-checked against other tools, and compared across macOS and Windows.",
+    "image": "https://ossscan.com/blog/og-how-we-test.png",
+    "datePublished": "2026-07-26",
+    "dateModified": "2026-07-26",
+    "author": { "@type": "Organization", "name": "OSSScan", "url": "https://ossscan.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BigBrainCorp LLC",
+      "logo": { "@type": "ImageObject", "url": "https://ossscan.com/BigBrainCorpIcon.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ossscan.com/blog/how-we-test-ossscan.html" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border-bottom: 2px solid #4ab3f4;
+      padding: 0 24px;
+    }
+    .site-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 64px;
+    }
+    .site-header img.logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #4ab3f4, 0 0 10px rgba(74,179,244,.4);
+    }
+    .site-header-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .site-header-wordmark .brand-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+    .site-header-wordmark .brand-tagline { font-size: 11px; color: #4ab3f4; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .header-nav a { color: #a8c8ea; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover { color: #fff; }
+    .header-nav .btn-nav { background: #4ab3f4; color: #0b1a3d; padding: 7px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .header-nav .btn-nav:hover { background: #6cc6f8; }
+
+    /* Secondary nav */
+    .secondary-nav { background:#060e22; border-bottom:1px solid #1a3360; padding:0 24px; }
+    .secondary-nav-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; min-height:34px; flex-wrap:wrap; }
+    .secondary-nav a { color:#6e8db5; text-decoration:none; font-size:12px; font-weight:500; padding:0 14px; height:34px; display:flex; align-items:center; border-right:1px solid #1a3360; transition:color .15s,background .15s; white-space:nowrap; }
+    .secondary-nav a:first-child { border-left:1px solid #1a3360; }
+    .secondary-nav a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .secondary-nav a.nav-action { color:#4ab3f4; }
+    .secondary-nav a.nav-action:hover { color:#fff; }
+    .secondary-nav a.is-current { color:#fff; background:rgba(74,179,244,.12); }
+
+    /* ── Article hero ── */
+    .page-body { flex: 1; }
+    .article-hero {
+      background: linear-gradient(160deg, #0b1a3d 0%, #0d2460 50%, #0e2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 60px;
+    }
+    .article-hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ab3f4;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow a { color: #4ab3f4; text-decoration: none; }
+    .hero-eyebrow a:hover { text-decoration: underline; }
+    .article-hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .article-standfirst {
+      font-size: 17px;
+      color: #a8c8ea;
+      line-height: 1.65;
+      margin: 0 0 24px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #6e8db5;
+      border-top: 1px solid rgba(74,179,244,.25);
+      padding-top: 18px;
+    }
+    .article-meta .dot { color: #4ab3f4; }
+
+    /* ── Article body ── */
+    .article-body { padding: 56px 24px 72px; }
+    .article-wrap { max-width: 720px; margin: 0 auto; }
+    .article-wrap h2 {
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 48px 0 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-wrap h2:first-child { margin-top: 0; }
+    .article-wrap h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0b1a3d;
+      margin: 32px 0 12px;
+      line-height: 1.35;
+    }
+    .article-wrap p {
+      font-size: 17px;
+      color: #334;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+    .article-wrap .lede {
+      font-size: 19px;
+      color: #223;
+      line-height: 1.7;
+    }
+    .article-wrap strong { color: #0b1a3d; }
+    .article-wrap a { color: #1056b8; }
+    .article-wrap code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      background: rgba(11,26,61,.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Question voice — the article's rhetorical asides */
+    .article-q {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1a3d;
+      line-height: 1.6;
+      margin: 32px 0 20px;
+      padding-left: 16px;
+      border-left: 3px solid #4ab3f4;
+    }
+
+    /* Aside callout */
+    .aside-note {
+      background: #f4f6f9;
+      border: 1px solid #d0d9e8;
+      border-left: 3px solid #f07c20;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 0 0 24px;
+    }
+    .aside-note p { font-size: 15px; color: #556; margin: 0; line-height: 1.65; }
+
+    /* Numbered list */
+    .article-list { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: item; }
+    .article-list li {
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 22px;
+      counter-increment: item;
+    }
+    .article-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b1a3d;
+      color: #4ab3f4;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-list li p { font-size: 16px; margin: 0; line-height: 1.7; }
+    .article-list li .li-title { font-weight: 700; color: #0b1a3d; }
+
+    /* Category cards */
+    .paths { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 28px; }
+    @media (min-width: 640px) { .paths { grid-template-columns: 1fr 1fr; } }
+    .path {
+      border: 1px solid #d0d9e8;
+      border-radius: 12px;
+      padding: 22px 20px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .path::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .path h3 { font-size: 17px; font-weight: 800; color: #0b1a3d; margin: 0 0 6px; }
+    .path .path-sub { font-size: 12px; font-weight: 600; margin: 0 0 12px; }
+    .path p { font-size: 15px; color: #556; line-height: 1.65; margin: 0; }
+    .path .path-req { display: block; margin-top: 12px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; color: #8494a8; }
+    .path.cat-a::before { background: #4ab3f4; }
+    .path.cat-b::before { background: #c2410c; }
+    .path.cat-a .path-sub { color: #1056b8; }
+    .path.cat-b .path-sub { color: #c2410c; }
+
+    /* Bulleted lists in body copy */
+    .article-wrap ul.bullets { margin: 0 0 24px; padding-left: 20px; }
+    .article-wrap ul.bullets li { font-size: 16px; color: #334; line-height: 1.7; margin-bottom: 12px; }
+    .article-wrap ul.bullets li strong { color: #0b1a3d; }
+
+    /* ── CTA ── */
+    .article-cta {
+      background: #f4f6f9;
+      border-top: 1px solid #d0d9e8;
+      padding: 56px 24px;
+    }
+    .article-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .article-cta h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; color: #0b1a3d; margin: 0 0 12px; }
+    .article-cta p { font-size: 16px; color: #556; line-height: 1.7; margin: 0 auto 24px; max-width: 560px; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1056b8;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #0e4aa0; }
+    .btn-secondary {
+      background: #fff;
+      color: #0b1a3d;
+      border: 1px solid #d0d9e8;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: #edf2fb; }
+
+    /* Engagement callout — rules must follow .article-cta so .engage h2 wins */
+    .engage {
+      background: linear-gradient(135deg, #0b1a3d 0%, #0d2460 60%, #0e2d7a 100%);
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .engage h2 {
+      font-size: clamp(19px, 2.4vw, 24px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+    .engage p.engage-body {
+      font-size: 15px;
+      color: #a8c8ea;
+      line-height: 1.7;
+      margin: 0 auto 24px;
+      max-width: 540px;
+    }
+    .engage-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .engage-buttons a {
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      transition: background .15s, color .15s;
+    }
+    .btn-engage-primary { background: #4ab3f4; color: #0b1a3d; }
+    .btn-engage-primary:hover { background: #6cc6f8; }
+    .btn-engage-secondary { background: transparent; color: #4ab3f4; border: 1px solid rgba(74,179,244,.5); }
+    .btn-engage-secondary:hover { background: rgba(74,179,244,.12); color: #fff; }
+    .engage-foot {
+      font-size: 12px;
+      color: #6e8db5;
+      line-height: 1.6;
+      margin: 22px 0 0;
+    }
+    .engage-foot a { color: #4ab3f4; text-decoration: none; }
+    .engage-foot a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #1056b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #0b1a3d;
+      border-top: 1px solid #1e3a6e;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 12px; color: #6e8db5; line-height: 1.6; }
+    .site-footer a { color: #4ab3f4; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .header-nav a:not(.btn-nav) { display: none; }
+      .header-nav .btn-nav { white-space: nowrap; flex-shrink: 0; }
+      .site-header-wordmark .brand-tagline { display: none; }
+    }
+
+    @media (max-width: 374px) {
+      .site-header { padding-left: 14px; padding-right: 14px; }
+      .site-header-inner { gap: 8px; }
+      .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
+      li a, p a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img class="logo" src="../logo.png" alt="OSSScan logo" />
+      <div class="site-header-wordmark">
+        <span class="brand-name">OSSScan</span>
+        <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
+      </div>
+      <nav class="header-nav">
+        <a href="../index.html">Home</a>
+        <a href="../downloads.html">Downloads</a>
+        <a href="../payments.html" class="btn-nav">Get Beta License</a>
+      </nav>
+    </div>
+  </header>
+  <nav class="secondary-nav">
+  <div class="secondary-nav-inner">
+    <a href="../index.html">Home</a>
+    <a href="../downloads.html" class="nav-action">Downloads</a>
+    <a href="../payments.html" class="nav-action">Beta License</a>
+    <a href="../tutorials.html">Video Tutorials</a>
+    <a href="../help.html">Help</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="index.html" class="is-current">Blog</a>
+    <a href="../support.html">Support</a>
+    <a href="../about.html">About</a>
+    <a href="../security.html">Security</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</nav>
+
+  <div class="page-body">
+
+    <article>
+    <header class="article-hero">
+      <div class="article-hero-inner">
+        <div class="hero-eyebrow"><a href="index.html">&larr; OSSScan Blog</a></div>
+        <h1>How We Test OSSScan: 40+ Real Projects, Every Layer, Every Run</h1>
+        <p class="article-standfirst">A dependency scanner earns trust one way: by being right, and by being right the same way every time. Consistent, accurate scan results do not happen by accident. This is the test automation that stands behind every OSSScan release, and the many conditions we deliberately put in front of the scanner before it ever reaches you.</p>
+        <div class="article-meta">
+          <span>OSSScan</span>
+          <span class="dot">&middot;</span>
+          <time datetime="2026-07-26">26 July 2026</time>
+          <span class="dot">&middot;</span>
+          <span>10 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="article-wrap">
+
+        <p class="lede">If OSSScan tells you a package is copyleft, or that a license is unknown and needs a human, or that your coverage is only partial, that answer has to hold up. It also has to be stable. The same project scanned today and next week should produce the same verdict, or we have a bug hiding behind noise.</p>
+
+        <p>So we built a test system whose whole job is to keep OSSScan consistent and accurate as the code underneath it keeps changing. This post walks through how it works. We are not going to dwell on any particular bug we caught along the way. The interesting part is the breadth: how many real conditions we try to put in front of the scanner before a release ever ships.</p>
+
+        <h2>We test against real software, not toy fixtures</h2>
+
+        <p>At the center of the system is a corpus of more than 40 well-known open-source projects. These are real repositories, cloned as they are, chosen deliberately to stretch the scanner across the messy variety of how software actually declares its dependencies.</p>
+
+        <p>The spread is the point. The corpus covers, among others:</p>
+
+        <ul class="bullets">
+          <li><strong>JavaScript / TypeScript:</strong> React, Next.js, Deno</li>
+          <li><strong>Go:</strong> Hugo, Kubernetes, Grafana, Syft, Grype</li>
+          <li><strong>Rust:</strong> the Rust toolchain samples, Serde</li>
+          <li><strong>Python:</strong> Django, Home Assistant, conda-lock</li>
+          <li><strong>Java / JVM:</strong> Apache Commons Lang, Jackson Databind, Gradle projects</li>
+          <li><strong>PHP:</strong> Laravel</li>
+          <li><strong>Ruby:</strong> Rails, Mastodon</li>
+          <li><strong>.NET:</strong> the .NET runtime, eShopOnWeb</li>
+          <li><strong>C / C++:</strong> FFmpeg, Mosquitto, CMake with Conan, vcpkg async samples</li>
+          <li><strong>And more:</strong> Swift and CocoaPods, Dart and Flutter, Elixir and Phoenix, R (renv), Terraform, Helm, Nix, and others</li>
+        </ul>
+
+        <p>Each benchmark ships with a human-readable expectation note, one file per project, recording why we picked it, which findings actually matter, what noise is acceptable, and which gaps are already understood. That note is the reasoning behind the automated checks, written down so it does not live only in someone's head.</p>
+
+        <p class="article-q">Why so many ecosystems? Because every packaging system states licenses and pins versions differently, and each has its own way of being ambiguous.</p>
+
+        <p>A scanner that is correct on npm can be quietly wrong on Conan or renv. The only way to know is to point it at all of them, over and over.</p>
+
+        <h2>A layered pipeline, fastest checks first</h2>
+
+        <p>We do not run one giant test. We run a staged pipeline, ordered from cheapest and fastest to slowest and most thorough, so a quick pass can catch obvious problems in seconds while the exhaustive pass grinds through every benchmark before a release. Every stage runs even if an earlier one fails, so a full pass gives you the complete picture in one shot rather than stopping at the first problem.</p>
+
+        <p>The stages, in order:</p>
+
+        <ol class="article-list">
+          <li><p><span class="li-title">Unit tests.</span> Fast, deterministic, no network and no benchmarks. They pin down focused logic like license-name normalization, attribution categories, and how a prior review carries forward.</p></li>
+          <li><p><span class="li-title">CLI smoke test.</span> Scans OSSScan's own repository through the real headless app and confirms it still produces an SBOM, a CVE report, a license report, and the bulk-export folders that AI agents consume.</p></li>
+          <li><p><span class="li-title">License classification.</span> Described in its own section below.</p></li>
+          <li><p><span class="li-title">Coverage assessment.</span> Validates the &ldquo;Check Project Coverage&rdquo; grade (Strong, Partial, or Limited) against every benchmark, so the scanner is honest about how much of a project it could actually see.</p></li>
+          <li><p><span class="li-title">CLI benchmark suite.</span> Scans every benchmark headlessly and checks each result against its recorded expectations.</p></li>
+          <li><p><span class="li-title">Evaluations.</span> A human-in-the-loop path: auto-classify a project, mark a license finding and a CVE finding as problems with reviewer comments, export, and confirm the review carries forward into the next delta export. This exercises the workflow a real reviewer uses, end to end.</p></li>
+          <li><p><span class="li-title">CLI vs UI comparison.</span> Described below.</p></li>
+          <li><p><span class="li-title">Cross-tool SBOM comparison.</span> Described below.</p></li>
+        </ol>
+
+        <p>The whole thing writes a single timestamped pass or fail report, plus a running scoreboard that lets you re-run just the benchmarks that need another look without re-running everything. Discipline like this matters more than it sounds: benchmark folders are shared across stages, so a stray build artifact left behind by one scan could quietly skew every later scan of that project. A cleanup stage sweeps them all before anything else starts, so every pass begins from a known-clean state.</p>
+
+        <h2>The CLI and the UI must agree</h2>
+
+        <p>OSSScan can be driven two ways: through the graphical app and through a command line meant for automation and AI agents. Those are two code paths to the same answer, and a scanner is only trustworthy if they never disagree.</p>
+
+        <p>So we scan the same project both ways and diff the results: packages found, license assignments, CVE and license exports, auto-classified items, and evaluations. We do this in two flavors on purpose:</p>
+
+        <ul class="bullets">
+          <li><strong>A comparison run</strong> reports every difference, so we can see and reason about it.</li>
+          <li><strong>A parity run</strong> treats differences as failures. It also builds the command line from the app's own &ldquo;create command line&rdquo; builder, so if that builder ever emits an incomplete or wrong command, the parity run catches it rather than letting it ship silently.</li>
+        </ul>
+
+        <p>Together they mean a change that helps the UI but quietly drifts the CLI, or the reverse, cannot slip through unnoticed.</p>
+
+        <h2>License classification: never guess, never under-report</h2>
+
+        <p>Getting a license right is the whole game, so it gets a dedicated harness driven from a single source of truth: one entry per current SPDX license identifier, each paired with the risk tier OSSScan should assign it. From that we generate two synthetic bills of materials.</p>
+
+        <div class="paths">
+          <div class="path cat-a">
+            <h3>The Known set</h3>
+            <p class="path-sub">Tests classification</p>
+            <p>Every license is already stated. Given a license it can read, does OSSScan land on the correct risk tier? The rule it must never break: it may not report a <em>lower</em> risk tier than the license actually carries. If it is going to err, it errs toward caution.</p>
+            <span class="path-req">Read a stated license correctly</span>
+          </div>
+          <div class="path cat-b">
+            <h3>The Unknown set</h3>
+            <p class="path-sub">Tests discovery</p>
+            <p>Every license is unresolved. Can Deep Mode find the real one through registry, ClearlyDefined, and deps.dev lookups? A few entries point at real, verifiable packages so there is something genuine to resolve, and everything else has no real package behind it and must stay unresolved.</p>
+            <span class="path-req">Resolve it, or fail closed</span>
+          </div>
+        </div>
+
+        <p>That last part is the important discipline. When the data is ambiguous or missing, OSSScan fails closed to &ldquo;unknown, needs review&rdquo; rather than guessing a convenient answer. There is a specific reason this matters so much in OSSScan: an unknown is not a dead end, it is a handoff. It is what gets routed to an AI agent to investigate, read the actual component, and reach a real conclusion. A scanner that guesses a wrong-but-plausible license does not just record a bad row, it feeds that false confidence into the agent and quietly steers the investigation off course. An honest &ldquo;I do not know&rdquo; sends the agent in to look; a confident wrong answer tells it there is nothing to look at. So a wrong &ldquo;safe&rdquo; guess is worse than an honest gap, and this test exists to keep the scanner honest about the difference.</p>
+
+        <h2>Cross-checking against other tools, and the network itself</h2>
+
+        <p>We do not assume OSSScan's view of a project is the only possible one. The cross-tool stage generates a bill of materials for the same project from independent tools (GitHub's own SBOM, cdxgen, and Syft) and compares license coverage and package counts across all of them. Where they diverge, we want to understand why, not paper over it.</p>
+
+        <p>We also treat the network as something to verify, not trust. During scans, tool traffic runs through an isolation proxy whose log is a security surface: it is how a user can tell whether a scanner reached somewhere it should not have. Tests hold that logging to account, so what the proxy reports is accurate and something a user can rely on.</p>
+
+        <h2>Auditing the bundled tools for source-code upload</h2>
+
+        <p>OSSScan orchestrates three third-party tools as child processes: Syft, which builds the bill of materials; Grype, which checks it for CVEs; and ScanCode, which reads license text. All three run with full read access to the source tree you point them at, which may be proprietary or sensitive. So we guard against a compromised or trojaned tool binary quietly shipping your source off-machine, and we do it two ways that back each other up.</p>
+
+        <p>The first is runtime enforcement. OSSScan's network isolation mode blocks internet access for those three tool processes during a scan while still allowing OSSScan's own enrichment lookups (ClearlyDefined, deps.dev, package registries). That is a live control that stops egress as it happens, and its logging is what the isolation proxy tests above lock down.</p>
+
+        <p>The second is a periodic point-in-time source review. On a recurring basis we pull each of Syft, Grype, and ScanCode to its latest commit and audit the actual source for any path that could take raw file contents, not just package names, versions, and hashes, and put them into an outbound request by any mechanism: HTTP bodies, headers, and query strings, but also VCS clones, shelled-out <code>git</code> / <code>scp</code> / <code>rsync</code> / <code>ssh</code> / <code>curl</code>, telemetry and crash-reporting SDKs, and custom transports. Each tool is reviewed on its own as a full-attention pass, and destination-selection logic (proxy chains, mirror lists, fallback branches) is traced through every branch, since a second egress mechanism can hide behind a case next to the one you already found.</p>
+
+        <p>The tools are held to different bars, because their expected behavior differs. Syft and Grype legitimately make some network calls to resolve package metadata, so for them the question is precisely what data flows into each call, and every call site is catalogued and tagged either package-metadata-only or needs-attention. ScanCode is expected to make no outbound calls at all, so the bar there is stricter: any network-capable code path is noteworthy, and a clean result still has to show its search methodology so the &ldquo;zero network calls&rdquo; claim is reproducible rather than merely asserted.</p>
+
+        <div class="aside-note">
+          <p>Each review produces a dated evidence report recording the exact commit and nearest release tag analyzed for each tool, the findings, and plain limitations: point-in-time, source not binary, an assisted review rather than a formal third-party audit. Prior reports are never overwritten, so they accumulate into a history, and are available on request. The runtime block and the periodic source review are deliberately redundant: one stops egress while a scan runs, the other checks the tools have no reason to attempt it in the first place.</p>
+        </div>
+
+        <p>We hold the same standard to the thing we hand you. Before a Windows OSSScan build is uploaded for download, it is submitted to VirusTotal, which runs it past a large panel of independent antivirus engines. It is one more point-in-time check, on our own artifact this time rather than a bundled tool, so a build has to clear an outside verdict and not just our own word before it reaches you.</p>
+
+        <h2>Same result on macOS and Windows</h2>
+
+        <p>OSSScan runs on macOS and Windows, so &ldquo;consistent&rdquo; has to mean consistent across both. We run the full pass on each platform and then diff a compact results digest between them, surfacing any place where the same project grades differently on one operating system than the other. Cross-platform drift is exactly the kind of subtle inconsistency that is easy to miss and embarrassing to ship, so we look for it directly.</p>
+
+        <h2>Practices that keep the suite usable</h2>
+
+        <p>A test system only helps if people actually run it, so we put real effort into making it easy to run and easy to act on.</p>
+
+        <p><strong>One command runs everything.</strong> A single script runs the whole pipeline, fastest stage to slowest, and writes one pass or fail report. It has lighter lanes too: a quick sanity subset for day-to-day work, and the exhaustive every-benchmark sweep reserved for a release gate. Before it runs, it checks its own prerequisites, so a missing dependency fails loudly up front instead of halfway through an hours-long pass.</p>
+
+        <p><strong>Re-run only what failed.</strong> A full pass writes a running scoreboard: one entry per test, each flipping to pass or fail in place as it runs. When something needs another look, one command reads that scoreboard, finds every entry currently failing, and re-runs exactly those. You can chase a problem to ground and watch the one scoreboard converge to all-green, without ever re-running the whole set to confirm it. Single-benchmark re-runs update that same scoreboard in place, so you never lose the picture of a completed pass while you work through the stragglers.</p>
+
+        <p><strong>We deliberately simulate the conditions that make scanners lie.</strong> A lot of the suite is not about the happy path at all. It is about what happens when something upstream degrades, and whether OSSScan stays honest when it does. A few examples, all deterministic and network-free because they stub the failure in on purpose:</p>
+
+        <ul class="bullets">
+          <li><strong>A metadata lookup that flakes.</strong> When a version-pinned registry lookup misses and the only thing left to match is a bare package name, OSSScan must not resolve it to some unrelated stranger's license that happens to share the name. The test asserts the answer fails closed to Unknown, because a confidently wrong license is worse than an honest gap.</li>
+          <li><strong>Copyleft hidden inside a permissive package.</strong> We build a package that declares MIT and vendor real GPL license text inside its source tree, in the hardest case with no manifest of its own, so nothing that only reads metadata can catch it and only a text scan can. Audit mode must raise the disagreement, that the tree contains copyleft the declaration never mentioned, rather than trusting the MIT label at the top.</li>
+          <li><strong>A dependency with no source on disk.</strong> Some dependencies live in a shared cache off to the side rather than inside your tree, and a naive scan can point the license reader at whatever code sits nearest instead, then stamp that neighbor's license, copyleft included, onto dozens of unrelated packages. The test forces this layout and asserts OSSScan fails closed to Unknown for those packages rather than borrowing a license that was never theirs.</li>
+          <li><strong>A speed optimization that could hide a finding.</strong> OSSScan can prune parts of a scan it can prove are noise, to cut how much you have to investigate. The test scans the same project both with and without pruning and asserts that no package carrying a real license, a copyleft one above all, ever disappears or downgrades to Unknown as a side effect. An optimization is not allowed to lose a finding.</li>
+        </ul>
+
+        <p>The thread through all of these is the same principle the license work follows: when conditions are bad, OSSScan should fail closed to a cautious, honest answer, and we write tests that force those bad conditions to prove it does.</p>
+
+        <h2>The point</h2>
+
+        <p>None of this guarantees perfection. What it does is make it hard for OSSScan to become quietly less accurate without something turning red first. More than 40 real projects across a dozen ecosystems, checked at every layer from a single function up to the full app, run the same way through both the CLI and the UI, cross-referenced against independent tools, and compared across two operating systems.</p>
+
+        <p>When the scanner tells you a package is copyleft, that a license needs a human, or that your coverage is only partial, this is the machinery standing behind that answer.</p>
+
+        <a class="back-link" href="index.html">&larr; Back to the OSSScan Blog</a>
+
+      </div>
+    </div>
+    </article>
+
+    <section class="article-cta">
+      <div class="article-cta-inner">
+        <h2>Scan results you can actually rely on</h2>
+        <p>OSSScan is built to be precise about what it observed and honest when it does not know, and it is tested that way: across 40+ real projects, both the CLI and the UI, and two operating systems, every release.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="../downloads.html">Download OSSScan</a>
+          <a class="btn-secondary" href="../index.html">How it works</a>
+        </div>
+
+        <div class="engage">
+          <h2>Questions about how we test? Or a topic you want covered?</h2>
+          <p class="engage-body">If there is something here you would like to dig into, or a topic you would rather read about next, tell us and we will take a run at it. We would rather write what you actually want than guess.</p>
+          <div class="engage-buttons">
+            <a class="btn-engage-primary" href="mailto:jim@ossscan.com?subject=Question%20about%3A%20How%20we%20test%20OSSScan">Ask a question</a>
+            <a class="btn-engage-secondary" href="mailto:jim@ossscan.com?subject=Blog%20topic%20request">Suggest a topic</a>
+          </div>
+          <p class="engage-foot">Both go straight to Jim at <a href="mailto:jim@ossscan.com">jim@ossscan.com</a>.<br>No form, no ticket queue, no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="https://ossscan.com">ossscan.com</a>
+    </p>
+    <p style="margin-top:6px;">
+      OSSScan is part of the <a href="https://www.bigbraincorp.com">BigBrainCorp LLC</a> portfolio &nbsp;&middot;&nbsp;
+      <a href="../about.html">About BigBrainCorp</a>
+    </p>
+    <p style="margin-top:6px;">
+      <a href="../privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../security.html">Security Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../support.html">Support Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../refund.html">Refund Policy</a> &nbsp;&middot;&nbsp;
+      <a href="../terms.html">Terms of Use</a>
+    </p>
+  </footer>
+</body>
+</html>
