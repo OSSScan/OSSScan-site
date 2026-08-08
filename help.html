@@ -246,6 +246,10 @@
       <li>After updating, click <strong>Re-check</strong> to refresh detection without restarting OSSScan.</li>
       <li>If you install via Homebrew on macOS, updating is typically <code>brew upgrade syft</code> and <code>brew upgrade grype</code>.</li>
     </ul>
+    <p class="muted">
+      Keeping your scanning tools current is not the same question as keeping every dependency current.
+      <a href="blog/should-you-always-install-latest-versions.html">Should you always install the latest versions?</a> covers where that instinct helps and where it backfires.
+    </p>
 
     <h3>Why OSSScan does not bundle Syft or Grype</h3>
     <p>
@@ -516,6 +520,9 @@
     </ul>
     <p class="muted">
       The declared sources (registries + deps.dev) need only coordinates, so they work even on an imported SBOM with no source tree. The scanned sources are the fallback: ClearlyDefined for coordinates it has precomputed, and ScanCode for on-disk license text.
+    </p>
+    <p class="muted">
+      Background on what puts a package in the unknown bucket to begin with: <a href="blog/unknown-licenses-why-they-happen.html">Unknown licenses in open source scanning</a>.
     </p>
 
     <p>
@@ -878,6 +885,10 @@
         This is strictly one-way and touches only <em>Dependabot alerts</em> (the Security tab). It never changes your code,
         your <code>.github/dependabot.yml</code>, or anything OSSScan hasn't evaluated.
       </p>
+      <p class="muted">
+        For how the two tools divide the work over a full cycle, and why replacing Dependabot is the wrong goal, see
+        <a href="blog/dependabot-and-ossscan-better-together.html">Dependabot and OSSScan: better together</a>.
+      </p>
 
       <h3>What you need: a short-lived token</h3>
       <p>
@@ -923,6 +934,10 @@
     <p class="muted">
       Import/reference evidence is strongest when you scanned a local folder (not just loaded an SBOM), because the analysis can use the
       on-disk project files as context.
+    </p>
+    <p class="muted">
+      For what is actually at stake if copyleft code reaches a distribution unnoticed, see
+      <a href="blog/what-happens-after-open-source-license-breach.html">"We shipped copyleft": what happens after an open source license breach?</a>
     </p>
 
     <h2>Advanced: Command Line Interface</h2>

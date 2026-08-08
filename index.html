@@ -543,7 +543,7 @@
         <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">GenAI coding assistants and vibe coding have made it dramatically faster to build and ship software, but speed came with a side effect: most teams generating code this way have no clear picture of the open source they pulled in along the way. Dependencies get added by an agent mid-task, not chosen deliberately by a developer, and the license and vulnerability exposure that comes with them often goes unreviewed.</p>
         <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">OSSScan closes that gap without slowing anyone down. It gives you one simple view of what's actually in your codebase, and lets the same kind of AI agent that helped write the code give you a first-level read on what in that exposure is worth worrying about.</p>
         <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">The risk is trending in the wrong direction, too. As more capable AI models become available to attackers as well as defenders, expect both an increase in critical open source vulnerabilities and more multi-step attacks that chain several CVEs together instead of relying on just one. Point-in-time reviews aren't enough for that world; continuous insight into what actually touches your codebase is what matters.</p>
-        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">Most scanners respond to that by producing more output: longer lists, more CVEs, more license flags. OSSScan takes the opposite approach. Its AI agent integration is built to narrow, not flood, turning a long list of theoretical concerns into a short list of what actually affects your application.</p>
+        <p style="font-size:16px; color:#334; line-height:1.7; margin:0;">Most scanners respond to that by producing more output: longer lists, more CVEs, more license flags. OSSScan takes the opposite approach. Its AI agent integration is built to narrow, not flood, turning a long list of theoretical concerns into a short list of what actually affects your application. Plenty of scanners now advertise AI, so it is worth being precise about the difference: <a href="blog/do-other-open-source-scanners-use-ai.html">don't other open source scanners use AI too?</a></p>
       </div>
     </div>
   </section>
@@ -880,6 +880,34 @@ for your AI agent to work through end to end.</pre>
           <p style="font-size:14px; color:#a8c8ea; line-height:1.7; margin:0;">Copyleft obligations can hide several layers deep in a transitive dependency tree, inside packages that look permissive at the surface. This is exactly why OSSScan's Deep scan enriches every dependency, resolves every unknown license, and traces obligations all the way down the graph. It is the only way to know what you are actually distributing.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ── Further reading ── -->
+  <section style="padding:64px 24px; background:#fff;">
+    <div class="wrap" style="max-width:1000px; margin:0 auto;">
+      <div class="section-label">From the blog</div>
+      <h2>The questions behind the tool</h2>
+      <p class="section-intro">OSSScan exists because these questions kept coming up. Here is how we think about them.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap:20px; margin-top:24px;">
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <p style="font-size:16px; font-weight:600; margin:0 0 10px; line-height:1.45;"><a href="blog/what-happens-after-open-source-license-breach.html" style="color:#1056b8; text-decoration:none;">What happens after an open source license breach?</a></p>
+          <p style="font-size:14px; color:#556; line-height:1.65; margin:0;">Shipping copyleft you did not intend to ship is recoverable, but the remediation path is longer and more public than most teams expect.</p>
+        </div>
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <p style="font-size:16px; font-weight:600; margin:0 0 10px; line-height:1.45;"><a href="blog/do-i-need-to-care-about-permissive-licenses.html" style="color:#1056b8; text-decoration:none;">Do I need to care about permissive licenses?</a></p>
+          <p style="font-size:14px; color:#556; line-height:1.65; margin:0;">MIT and Apache-2.0 are not obligation-free. What each permissive category actually requires you to do when you distribute.</p>
+        </div>
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <p style="font-size:16px; font-weight:600; margin:0 0 10px; line-height:1.45;"><a href="blog/technical-due-diligence-open-source-questions.html" style="color:#1056b8; text-decoration:none;">The eight open source questions every technical due diligence asks</a></p>
+          <p style="font-size:14px; color:#556; line-height:1.65; margin:0;">If an acquirer or investor is about to review your codebase, these are the questions you will be asked to answer with evidence.</p>
+        </div>
+        <div style="background:#fff; border:1px solid #d0d9e8; border-radius:12px; padding:24px; box-shadow:0 2px 6px rgba(11,26,61,.05);">
+          <p style="font-size:16px; font-weight:600; margin:0 0 10px; line-height:1.45;"><a href="blog/why-open-source-software-matters.html" style="color:#1056b8; text-decoration:none;">Why open source software matters</a></p>
+          <p style="font-size:14px; color:#556; line-height:1.65; margin:0;">The case for open source, and why depending on it responsibly means knowing exactly what you depend on.</p>
+        </div>
+      </div>
+      <p style="margin:24px 0 0;"><a href="/blog/" style="color:#1056b8; font-weight:600;">Read the OSSScan blog →</a></p>
     </div>
   </section>
 

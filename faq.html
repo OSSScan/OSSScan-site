@@ -170,6 +170,9 @@
                   Check coverage on your actual projects before purchasing. There is no obligation to buy if coverage doesn't meet your needs.
                 </p>
                 <p class="muted">
+                  We hold ourselves to the same standard before every release. <a href="blog/how-we-test-ossscan.html">How we test OSSScan</a> walks through the 40+ real projects we scan on every run, and what we do when coverage regresses.
+                </p>
+                <p class="muted">
                   After a license is installed, Check Project Coverage is also available any time from <strong>Help → Check Project Coverage…</strong> in the main app menu.
                 </p>
               </div>
@@ -559,6 +562,9 @@
                 <ul>
                   <li>Try <strong>Deep</strong> scan mode. Deep runs registry, deps.dev, and ClearlyDefined lookups (and, with source on disk, ScanCode) to fill unknown licenses. It works on an imported SBOM too: load it in Deep mode.</li>
                 </ul>
+                <p class="muted">
+                  For why packages end up with no license metadata in the first place, and why an unknown is not a safe default to ignore, see <a href="blog/unknown-licenses-why-they-happen.html">Unknown licenses in open source scanning</a>.
+                </p>
               </div>
             </section>
       <section class="faq-card">
@@ -719,10 +725,13 @@
                   Yes, as an opt-in check. In the <strong>Bulk License Review</strong> export dialog, tick <strong>Also check permissive-license attribution</strong> (off by default; a good idea when you establish a baseline). OSSScan writes an <code>AttributionReview.md</code> listing every permissive package in your project, its obligation category, and exactly what that category requires, then asks your AI agent to verify coverage and write an <strong>Attribution Report</strong>. From the CLI, the same option is <code>--check-attribution</code>.
                 </p>
                 <p>
-                  The division of labour is deliberate. OSSScan states only what it can establish deterministically: which packages are permissive, and what their license category obliges you to do. Your agent reads the real files (for example a <code>THIRD_PARTY_NOTICES</code> file, vendored <code>LICENSE</code> files, or a credits screen) and judges whether coverage is actually there. It is told never to invent license text and to flag anything it cannot resolve.
+                  The division of labor is deliberate. OSSScan states only what it can establish deterministically: which packages are permissive, and what their license category obliges you to do. Your agent reads the real files (for example a <code>THIRD_PARTY_NOTICES</code> file, vendored <code>LICENSE</code> files, or a credits screen) and judges whether coverage is actually there. It is told never to invent license text and to flag anything it cannot resolve.
                 </p>
                 <p>
                   What OSSScan will not do is inspect your built artifact and declare you compliant on its own. Whether a distribution reproduces every notice depends on what you ship and in what format, and a scanner guessing at that would do more harm than good. Many permissive licenses, including MIT, BSD-2-Clause, BSD-3-Clause, and Apache-2.0, require copyright and attribution notices to travel with distributions; confirming yours did is a review step, not a scan result.
+                </p>
+                <p class="muted">
+                  If you are wondering whether permissive licenses deserve this much attention at all, <a href="blog/do-i-need-to-care-about-permissive-licenses.html">Do I need to care about permissive licenses?</a> covers what each category actually obliges you to do.
                 </p>
               </div>
             </section>
@@ -791,6 +800,9 @@
                 </p>
                 <p class="muted">
                   For investigating many items at once, use <strong>Bulk License Review</strong> or <strong>Bulk Investigate</strong> instead. Each bulk export creates individual JSON prompt files plus an <strong>AgentPrompt.md</strong> that drives the entire batch with one instruction to your agent.
+                </p>
+                <p class="muted">
+                  OSSScan hands the reasoning to an agent you control rather than running a model itself. <a href="blog/do-other-open-source-scanners-use-ai.html">Don't other open source scanners use AI too?</a> explains why that distinction matters.
                 </p>
               </div>
             </section>
