@@ -356,14 +356,14 @@
 
           <div class="row" id="betaCodeRow">
             <div>
-              <label for="betaCode">Access code <span style="font-weight:400;color:#667;">(only if you were given one)</span></label>
+              <label for="betaCode">Access code</label>
               <div class="pw-wrap">
-                <input id="betaCode" name="betaCode" type="password" placeholder="Leave blank unless you have one" autocomplete="off" />
+                <input id="betaCode" name="betaCode" type="password" placeholder="Enter your access code" autocomplete="off" />
                 <button type="button" id="betaCodeToggle" class="pw-toggle" aria-label="Show access code" aria-pressed="false" title="Show code">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
-              <div class="help">Most people do not need this. Leave it blank unless you were sent a code.</div>
+              <div class="help">Purchasing is not open to everyone yet. If you would like a license, email <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> and we will issue one for your machine.</div>
             </div>
           </div>
 
@@ -582,6 +582,11 @@
       if (!validateEmail(email)) {
         setStatus('Enter a valid email address.', 'err');
         emailInput.focus();
+        return;
+      }
+      if (!betaCode) {
+        setStatus('Purchasing is not open to everyone yet. Email jim@ossscan.com and we will issue a license for your machine.', 'err');
+        betaCodeInput.focus();
         return;
       }
 
