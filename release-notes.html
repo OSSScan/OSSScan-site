@@ -148,8 +148,20 @@
 
     <div class="doc-section">
       <div class="rel-head">
-        <h2>Version 0.2.7</h2>
+        <h2>Version 1.0.0</h2>
         <span class="rel-badge current">Latest Release</span>
+      </div>
+      <p class="rel-summary">OSSScan leaves beta. Licenses are now bought directly, at introductory prices through the end of 2026, and the app drops its beta labelling. One security change ships alongside it: the network isolation allowlist for Syft is tighter than it was.</p>
+      <ul>
+        <li><strong>Out of beta.</strong> No access code, no beta license. Buy a <strong>7-day</strong> or <strong>30-day</strong> license from the <a href="payments.html">licensing page</a>, bound to one machine, with no subscription to manage. Introductory pricing runs through <strong>31 December 2026</strong>: 7-day <span style="text-decoration:line-through;">$100</span> <strong>$79</strong>, 30-day <span style="text-decoration:line-through;">$200</span> <strong>$149</strong>. Downloading stays free, and so do <strong>Compatibility Check</strong> and <strong>Check Project Coverage</strong>, so you can confirm OSSScan runs on your machine and see how well it covers your project before spending anything.</li>
+        <li><strong>Tighter network isolation for Syft in balanced mode.</strong> Three hosts were removed from Syft&rsquo;s allowlist because Syft never contacts them: <code>api.github.com</code>, <code>api.clearlydefined.io</code>, and bare <code>anchore.io</code>, which suffix-matched every <code>*.anchore.io</code> subdomain. In balanced mode an allowlisted host is forwarded to its real destination, so that list is a permission rather than a label, and a tampered tool could have reached all three and still been logged as expected. ClearlyDefined and deps.dev enrichment is made by OSSScan itself and never passes through this proxy, so a tool process reaching them is an anomaly by definition. Checked against real traffic rather than assumed: 281 live calls from five deep scans were replayed through both the old and new allowlists with no change in how any call was classified.</li>
+        <li><strong>A correction to what we claim about ScanCode.</strong> ScanCode&rsquo;s stock command line has a default-on version check that contacts pypi.org before a scan starts, and the flag is hidden from its own <code>--help</code>. OSSScan has always passed <code>--no-check-version</code>, so the behaviour was never present in OSSScan, but our documentation described the tool as making zero outbound calls when what is true is that OSSScan does not let it make them. The wording now says the latter.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <div class="rel-head">
+        <h2>Version 0.2.7</h2>
       </div>
       <p class="rel-summary">Two integrations that carry your review work outward: cleared CVE verdicts into GitHub, and permissive-license attribution obligations into a report you can act on. Plus direct control over what a scan counts, and faster ways to work through a long review queue.</p>
       <ul>
