@@ -79,8 +79,7 @@
     @media (max-width: 374px) {
       .site-header { padding-left: 14px; padding-right: 14px; }
       .site-header-inner { gap: 8px; }
-      /* payments.html's CTA reads "Request Beta License", 30px wider than the
-         "Get Beta License" everywhere else, and clipped without this. */
+      /* Keeps the header CTA from clipping at this width whatever its label. */
       .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
       /* long unbreakable URLs in body copy (e.g. the Grype install link) */
       li a, p a { overflow-wrap: anywhere; }
@@ -99,7 +98,7 @@
     <nav class="header-nav">
       <a href="/">Home</a>
       <a href="downloads.html">Downloads</a>
-      <a href="payments.html" class="btn-nav">Get Beta License</a>
+      <a href="payments.html" class="btn-nav">Buy a License</a>
     </nav>
   </div>
 </header>
@@ -108,7 +107,7 @@
   <div class="secondary-nav-inner">
     <a href="/">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="payments.html" class="nav-action">Buy a License</a>
     <a href="tutorials.html">Video Tutorials</a>
     <a href="help.html">Help</a>
     <a href="faq.html">FAQ</a>

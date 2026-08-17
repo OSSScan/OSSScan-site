@@ -92,8 +92,7 @@
     @media (max-width: 374px) {
       .site-header { padding-left: 14px; padding-right: 14px; }
       .site-header-inner { gap: 8px; }
-      /* payments.html's CTA reads "Request Beta License", 30px wider than the
-         "Get Beta License" everywhere else, and clipped without this. */
+      /* Keeps the header CTA from clipping at this width whatever its label. */
       .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
       /* long unbreakable URLs in body copy (e.g. the Grype install link) */
       li a, p a { overflow-wrap: anywhere; }
@@ -111,7 +110,7 @@
     <nav class="header-nav">
       <a href="/">Home</a>
       <a href="downloads.html">Downloads</a>
-      <a href="payments.html" class="btn-nav">Get Beta License</a>
+      <a href="payments.html" class="btn-nav">Buy a License</a>
     </nav>
   </div>
 </header>
@@ -119,7 +118,7 @@
   <div class="secondary-nav-inner">
     <a href="/">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="payments.html" class="nav-action">Buy a License</a>
     <a href="tutorials.html">Video Tutorials</a>
     <a href="help.html">Help</a>
     <a href="faq.html">FAQ</a>
@@ -197,7 +196,7 @@
                 </p>
                 <ul>
                   <li>Before requesting a license, run <strong>Compatibility Check</strong> and copy the <strong>Machine fingerprint</strong> shown.</li>
-                  <li>Use <strong>Request Beta License…</strong> to request a beta license (the beta license flow uses your machine fingerprint).</li>
+                  <li>Use <strong>Buy a License…</strong> to purchase a license (licensing uses your machine fingerprint).</li>
                   <li>If you rebuild/replace the machine (your "system of record" changes), your fingerprint will change and you will need a re-issued license.</li>
                 </ul>
                 <p class="muted">
@@ -285,7 +284,7 @@
                   <li>If you believe the error is unexpected, contact <strong>info@ossscan.com</strong> with the Compatibility Check output.</li>
                 </ul>
                 <p class="muted">
-                  When fingerprint generation fails, OSSScan will disable license request actions because the beta license flow and license file require a fingerprint.
+                  When fingerprint generation fails, OSSScan will disable license purchase actions because licensing and the license file both require a fingerprint.
                 </p>
               </div>
             </section>
@@ -297,7 +296,7 @@
                   If you edit the file contents, OSSScan will treat it as invalid.
                 </p>
                 <p>
-                  If you need a renewal or replacement, purchase one from the <a href="payments.html">Beta License page</a> using the same machine fingerprint. See <em>&ldquo;Can I renew my license before it expires?&rdquo;</em> below. Contact <strong>info@ossscan.com</strong> only if the self-service flow doesn't work for your situation.
+                  If you need a renewal or replacement, purchase one from the <a href="payments.html">licensing page</a> using the same machine fingerprint. See <em>&ldquo;Can I renew my license before it expires?&rdquo;</em> below. Contact <strong>info@ossscan.com</strong> only if the self-service flow doesn't work for your situation.
                 </p>
               </div>
             </section>
@@ -305,7 +304,7 @@
               <div class="faq-q">Can I renew my license before it expires?</div>
               <div class="faq-a">
                 <p>
-                  Yes, but not immediately: renewal purchases open starting <strong>2 days before</strong> your current license's expiry date. If you try earlier, the <a href="payments.html">Beta License page</a> will tell you the exact date renewal becomes available for your machine.
+                  Yes, but not immediately: renewal purchases open starting <strong>2 days before</strong> your current license's expiry date. If you try earlier, the <a href="payments.html">licensing page</a> will tell you the exact date renewal becomes available for your machine.
                 </p>
                 <p>
                   Buying inside that window gets you bonus days for free: whatever days were still left on your current license are added on top of the new one's tier length. For example, renewing a 30-day tier with 2 days still remaining gives you a license valid for 32 days once installed: renewing early only helps, it never costs you anything.
