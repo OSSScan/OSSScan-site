@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OSSScan: Request Beta License</title>
+  <title>OSSScan: Buy a License</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <meta name="description" content="Request a 7-day OSSScan beta license. Enter your machine fingerprint and email, and your license is delivered to your inbox. Licensed per machine, not per seat." />
+  <meta name="description" content="Buy an OSSScan license. Choose a 7-day or 30-day license, enter your machine fingerprint and email, and your download link is emailed to you. Licensed per machine, not per seat." />
   <link rel="canonical" href="https://ossscan.com/payments.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Request an OSSScan Beta License" />
-  <meta property="og:description" content="Request a 7-day OSSScan beta license. Enter your machine fingerprint and email, and your license is delivered to your inbox. Licensed per machine, not per seat." />
+  <meta property="og:title" content="Buy an OSSScan License" />
+  <meta property="og:description" content="Buy an OSSScan license. Choose a 7-day or 30-day license, enter your machine fingerprint and email, and your download link is emailed to you. Licensed per machine, not per seat." />
   <meta property="og:url" content="https://ossscan.com/payments.html" />
   <meta property="og:image" content="https://ossscan.com/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:site_name" content="OSSScan" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Request an OSSScan Beta License" />
-  <meta name="twitter:description" content="Request a 7-day OSSScan beta license. Enter your machine fingerprint and email, and your license is delivered to your inbox. Licensed per machine, not per seat." />
+  <meta name="twitter:title" content="Buy an OSSScan License" />
+  <meta name="twitter:description" content="Buy an OSSScan license. Choose a 7-day or 30-day license, enter your machine fingerprint and email, and your download link is emailed to you. Licensed per machine, not per seat." />
   <meta name="twitter:image" content="https://ossscan.com/og-image.png" />
   <style>
     /* ── Reset / base ── */
@@ -72,21 +72,6 @@
       font-size: 11px;
       color: #4ab3f4;
       letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .beta-badge {
-      display: inline-flex;
-      align-items: center;
-      align-self: flex-start;
-      margin-top: 6px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(74,179,244,.4);
-      background: rgba(74,179,244,.14);
-      color: #9fdcff;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
     .header-nav {
@@ -253,8 +238,7 @@
     @media (max-width: 374px) {
       .site-header { padding-left: 14px; padding-right: 14px; }
       .site-header-inner { gap: 8px; }
-      /* payments.html's CTA reads "Request Beta License", 30px wider than the
-         "Get Beta License" everywhere else, and clipped without this. */
+      /* Keeps the header CTA from clipping at this width whatever its label. */
       .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
       /* long unbreakable URLs in body copy (e.g. the Grype install link) */
       li a, p a { overflow-wrap: anywhere; }
@@ -270,12 +254,11 @@
       <div class="site-header-wordmark">
         <span class="brand-name">OSSScan</span>
         <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
-        <span class="beta-badge">Public Beta</span>
       </div>
       <nav class="header-nav">
         <a href="/">Home</a>
         <a href="downloads.html">Downloads</a>
-        <a href="payments.html" class="btn-nav">Request Beta License</a>
+        <a href="payments.html" class="btn-nav">Buy a License</a>
       </nav>
     </div>
   </header>
@@ -283,7 +266,7 @@
   <div class="secondary-nav-inner">
     <a href="/">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="payments.html" class="nav-action">Buy a License</a>
     <a href="tutorials.html">Video Tutorials</a>
     <a href="help.html">Help</a>
     <a href="faq.html">FAQ</a>
@@ -298,17 +281,17 @@
   <!-- ── Page content ── -->
   <div class="page-body">
     <div class="wrap">
-      <h1 class="page-title">Request Beta License</h1>
-      <p>Enter your machine fingerprint and email address below. Your 7-day beta license will be delivered to your inbox shortly after submitting.</p>
-      <div class="beta-page-note"><strong>Beta program note.</strong> Access is currently controlled by beta code, capacity can change, and license workflows may be adjusted before general availability.</div>
+      <h1 class="page-title">Buy a License</h1>
+      <p>Choose a license, then enter your machine fingerprint and email address. You will be taken to Stripe to pay, and your license download link is emailed to you straight afterwards.</p>
+      <div class="beta-page-note"><strong>Licensed per machine.</strong> A license is bound to the machine whose fingerprint you enter below, and it will not work on any other computer. Licenses must be downloaded within one year of purchase, and the license period starts when you download it.</div>
 
       <div style="background:#e8f1ff;border:1px solid #b8cff5;border-left:4px solid #1056b8;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#17325c;line-height:1.55;">
         <strong>Already have a license?</strong> You can purchase a renewal starting <strong>2 days before</strong> your current license expires. Only one purchase can be awaiting download per machine fingerprint at a time. See the <a href="faq.html">FAQ</a> for details.
       </div>
 
       <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
-        <strong>Beta is currently at capacity.</strong> We have reached the maximum number of beta participants.
-        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> to join the waitlist for the next cohort.
+        <strong>License issuing is temporarily paused.</strong> We have reached the current issuing limit.
+        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> and we will sort you out.
       </div>
 
       <!-- Shown when the fingerprint already has a pending undownloaded first purchase -->
@@ -360,39 +343,38 @@
             </div>
           </div>
 
-          <!-- Beta: tier is fixed at 7-day free. Restore the tier select for general availability. -->
-          <input id="tier" name="tier" type="hidden" value="7day" />
           <div class="row">
             <div>
-              <label>License</label>
-              <div style="padding:10px 12px;border-radius:8px;border:1px solid #d0d9e8;background:#f4f6f9;font-size:14px;color:#334;">
-                7-day Beta License &nbsp;&middot;&nbsp; <strong>Free</strong>
-              </div>
-              <div class="help">Beta participants receive a complimentary 7-day license. Pricing will apply at general availability.</div>
+              <label for="tier">License</label>
+              <select id="tier" name="tier">
+                <option value="7day">7-day license &nbsp;&middot;&nbsp; $79 (was $100)</option>
+                <option value="30day">30-day license &nbsp;&middot;&nbsp; $149 (was $200)</option>
+              </select>
+              <div class="help">Introductory pricing, ending 31 December 2026. One machine, no subscription. The price you see here is confirmed on Stripe's payment page before you pay.</div>
             </div>
           </div>
 
           <div class="row" id="betaCodeRow">
             <div>
-              <label for="betaCode">Beta access code</label>
+              <label for="betaCode">Access code <span style="font-weight:400;color:#667;">(only if you were given one)</span></label>
               <div class="pw-wrap">
-                <input id="betaCode" name="betaCode" type="password" placeholder="Enter your beta access code" autocomplete="off" />
-                <button type="button" id="betaCodeToggle" class="pw-toggle" aria-label="Show beta access code" aria-pressed="false" title="Show code">
+                <input id="betaCode" name="betaCode" type="password" placeholder="Leave blank unless you have one" autocomplete="off" />
+                <button type="button" id="betaCodeToggle" class="pw-toggle" aria-label="Show access code" aria-pressed="false" title="Show code">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
-              <div class="help">Required during the beta period. Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> if you do not have a code.</div>
+              <div class="help">Most people do not need this. Leave it blank unless you were sent a code.</div>
             </div>
           </div>
 
           <div class="actions">
-            <button id="submitBtn" type="submit">Request Beta License</button>
+            <button id="submitBtn" type="submit">Continue to payment</button>
             <button id="clearBtn" type="button" class="secondary">Clear</button>
             <span id="status" class="status"></span>
           </div>
 
           <div class="small">
-            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. No payment information is collected during the beta.</div>
+            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. Payment is handled entirely by Stripe; OSSScan never sees your card details.</div>
             <div>For details, see the <a href="privacy.html">Privacy Policy</a>.</div>
           </div>
         </form>
@@ -516,7 +498,7 @@
         if (loc) return { url: loc };
       }
       if (res.status === 403) {
-        const err = new Error('Incorrect beta access code. Please re-enter it and try again.');
+        const err = new Error('That access code was not accepted. Please check it and try again.');
         err.betaCodeError = true;
         throw err;
       }
@@ -539,7 +521,7 @@
     const fpFromQuery = getParam('fp');
     if (fpFromQuery) fpInput.value = fpFromQuery;
 
-    // Check beta license capacity on load — disable the form if the limit has been reached.
+    // Check issuing capacity on load; disable the form if the limit has been reached.
     (async () => {
       try {
         const resp = await fetch(BETA_STATUS_URL);
@@ -548,13 +530,13 @@
           if (!betaStatus.available) {
             document.getElementById('betaFullNotice').hidden = false;
             submitBtn.disabled = true;
-            setStatus('Beta is currently at capacity. No further licenses are available at this time.', 'err');
+            setStatus('License issuing is temporarily paused. Please contact jim@ossscan.com.', 'err');
           }
         }
       } catch { /* network error — allow through, server enforces the limit */ }
     })();
 
-    // Prefill beta code from sessionStorage so testers don't retype it.
+    // Prefill the access code from sessionStorage so it is not retyped every visit.
     const savedCode = sessionStorage.getItem('ossscan_beta_code');
     if (savedCode) betaCodeInput.value = savedCode;
 
@@ -568,7 +550,7 @@
       fpInput.focus();
     });
 
-    // Show/hide toggle for the beta access code field.
+    // Show/hide toggle for the access code field.
     const betaCodeToggle = document.getElementById('betaCodeToggle');
     const eyeIcon    = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
     const eyeOffIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
@@ -602,14 +584,9 @@
         emailInput.focus();
         return;
       }
-      if (!betaCode) {
-        setStatus('Enter your beta access code.', 'err');
-        betaCodeInput.focus();
-        return;
-      }
 
       submitBtn.disabled = true;
-      setStatus('Submitting beta license request…');
+      setStatus('Checking this machine…');
 
       let licenseStatus;
       try {
@@ -657,7 +634,7 @@
       // Buy state: newPurchaseAllowed or nearExpiryPurchaseAllowed
       const purchaseMode = status === 'nearExpiryPurchaseAllowed' ? 'nearExpiryPurchase' : 'newPurchase';
 
-      setStatus('Redirecting to secure beta request flow…');
+      setStatus('Redirecting to secure checkout…');
 
       try {
         const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode, purchaseMode });
@@ -667,7 +644,7 @@
 
         if (result && result.simulated === true) {
           sessionStorage.setItem('ossscan_checkout_notice',
-            'Request received. Your beta license will be delivered to your email address shortly.');
+            'Request received. Your license will be delivered to your email address shortly.');
           location.assign(CHECKOUT_SUCCESS_URL);
           return;
         }
@@ -680,7 +657,7 @@
         }
         location.assign(url);
       } catch (err) {
-        setStatus(err && err.message ? err.message : 'Failed to submit beta license request.', 'err');
+        setStatus(err && err.message ? err.message : 'Could not start checkout. Please try again.', 'err');
         if (err && err.betaCodeError) {
           sessionStorage.removeItem('ossscan_beta_code');
           betaCodeInput.focus();

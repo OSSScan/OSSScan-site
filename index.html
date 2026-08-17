@@ -73,21 +73,6 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
-    .beta-badge {
-      display: inline-flex;
-      align-items: center;
-      align-self: flex-start;
-      margin-top: 6px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(74,179,244,.4);
-      background: rgba(74,179,244,.14);
-      color: #9fdcff;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
     .header-nav {
       margin-left: auto;
       display: flex;
@@ -134,7 +119,7 @@
       margin: 0 auto 36px;
       line-height: 1.65;
     }
-    .hero-beta-note {
+    .hero-note {
       max-width: 720px;
       margin: -12px auto 28px;
       padding: 12px 16px;
@@ -145,7 +130,7 @@
       font-size: 14px;
       line-height: 1.6;
     }
-    .hero-beta-note strong { color: #fff; }
+    .hero-note strong { color: #fff; }
     .hero-actions {
       display: flex;
       gap: 14px;
@@ -425,7 +410,10 @@
     }
     .pricing-card .tier-name  { font-size: 13px; font-weight: 700; color: #4ab3f4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
     .pricing-card .tier-price { font-size: 36px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 6px; }
+    .pricing-card .tier-was { font-size: 16px; color: #7fa6cf; text-decoration: line-through; margin-bottom: 2px; }
+    .pricing-card .tier-note { font-size: 11px; font-weight: 700; color: #9fdcff; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
     .pricing-card .tier-duration { font-size: 13px; color: #a8c8ea; }
+    .pricing-deadline { color: #a8c8ea; font-size: 13px; margin: -18px auto 32px; max-width: 520px; line-height: 1.6; }
     .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
     /* ── Footer ── */
@@ -464,8 +452,7 @@
     @media (max-width: 374px) {
       .site-header { padding-left: 14px; padding-right: 14px; }
       .site-header-inner { gap: 8px; }
-      /* payments.html's CTA reads "Request Beta License", 30px wider than the
-         "Get Beta License" everywhere else, and clipped without this. */
+      /* Keeps the header CTA from clipping at this width whatever its label. */
       .header-nav .btn-nav { font-size: 12px; padding: 6px 10px; }
       /* long unbreakable URLs in body copy (e.g. the Grype install link) */
       li a, p a { overflow-wrap: anywhere; }
@@ -485,11 +472,10 @@
       <div class="site-header-wordmark">
         <span class="brand-name">OSSScan</span>
         <span class="brand-tagline">Open Source License &amp; Security Scanning</span>
-        <span class="beta-badge">Public Beta</span>
       </div>
       <nav class="header-nav">
         <a href="downloads.html">Downloads</a>
-        <a href="payments.html" class="btn-nav">Get Beta License</a>
+        <a href="payments.html" class="btn-nav">Buy a License</a>
       </nav>
     </div>
   </header>
@@ -497,7 +483,7 @@
   <div class="secondary-nav-inner">
     <a href="/">Home</a>
     <a href="downloads.html" class="nav-action">Downloads</a>
-    <a href="payments.html" class="nav-action">Beta License</a>
+    <a href="payments.html" class="nav-action">Buy a License</a>
     <a href="tutorials.html">Video Tutorials</a>
     <a href="help.html">Help</a>
     <a href="faq.html">FAQ</a>
@@ -515,11 +501,11 @@
   <section class="hero">
     <h1>Let your AI agent tell you<br><span>what to worry about.</span></h1>
     <p>Open source scanning shouldn't mean reading reports about hundreds of CVEs and license findings. OSSScan creates the investigation facts that let Claude Code, GitHub Copilot, and other AI coding agents do the analysis for you, delivering a concise briefing on which vulnerabilities are actually exploitable in your application, which license findings create real risk, and what actions to take. You review conclusions, not noise.</p>
-    <div class="hero-beta-note"><strong>OSSScan is currently in public beta.</strong> Builds, workflows, and report formats may change as we harden the product with early customer feedback. Beta access code and beta license required.</div>
+    <div class="hero-note"><strong>Free to download.</strong> Check that OSSScan runs on your machine, and see how well it covers your project, before you spend anything. A license unlocks the full license and CVE scan.</div>
     <div class="hero-actions">
-      <a href="downloads.html" class="btn-primary">Download Beta</a>
+      <a href="downloads.html" class="btn-primary">Download OSSScan</a>
       <a href="tutorials.html" class="btn-outline">Watch Tutorials</a>
-      <a href="payments.html" class="btn-outline">Get Beta License</a>
+      <a href="payments.html" class="btn-outline">Buy a License</a>
     </div>
     <div class="hero-agents">
       Works with your AI coding agent
@@ -949,19 +935,24 @@ for your AI agent to work through end to end.</pre>
       <p>Download OSSScan, run a scan, and let your AI coding agent turn the findings into a focused briefing, so you make decisions instead of sifting data.</p>
       <div class="pricing-cards">
         <div class="pricing-card">
-          <div class="tier-name">7-Day Beta License</div>
-          <div class="tier-price">Free</div>
-          <div class="tier-duration">Available during public beta</div>
+          <div class="tier-name">7-Day License</div>
+          <div class="tier-was">$100</div>
+          <div class="tier-price">$79</div>
+          <div class="tier-note">Introductory price</div>
+          <div class="tier-duration">One machine, 7 days</div>
         </div>
         <div class="pricing-card">
-          <div class="tier-name">General Availability Pricing</div>
-          <div class="tier-price">TBD</div>
-          <div class="tier-duration">Pricing may change at launch</div>
+          <div class="tier-name">30-Day License</div>
+          <div class="tier-was">$200</div>
+          <div class="tier-price">$149</div>
+          <div class="tier-note">Introductory price</div>
+          <div class="tier-duration">One machine, 30 days</div>
         </div>
       </div>
+      <div class="pricing-deadline">Introductory pricing ends 31 December 2026. Licensed per machine, not per seat, with no subscription.</div>
       <div class="cta-actions">
-        <a href="downloads.html" class="btn-primary">Download Beta</a>
-        <a href="payments.html" class="btn-outline">Get Beta License</a>
+        <a href="downloads.html" class="btn-primary">Download OSSScan</a>
+        <a href="payments.html" class="btn-outline">Buy a License</a>
       </div>
     </div>
   </section>
