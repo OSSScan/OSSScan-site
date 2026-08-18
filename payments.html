@@ -453,10 +453,15 @@
       return email.includes('@');
     }
 
+    // Mirrors the server's rule, so a mistyped or truncated paste is caught
+    // here instead of costing a round trip and a rate-limit slot. The message
+    // shown on failure says where to get the value, not what the rule is.
+    const FINGERPRINT_RE = /^ossscan-hwid-v\d+:[a-f0-9]{16,64}$/i;
+
     function validateFingerprint(fp) {
       if (!fp) return false;
       if (fp.length > 200) return false;
-      return fp.startsWith('ossscan-hwid-v');
+      return FINGERPRINT_RE.test(fp);
     }
 
     function formatRetryAfterMessage(retryAfter) {
@@ -575,7 +580,7 @@
       const betaCode = (betaCodeInput.value || '').trim();
 
       if (!validateFingerprint(machineFingerprint)) {
-        setStatus('Enter a valid machine fingerprint.', 'err');
+        setStatus('That does not look like a machine fingerprint. Copy it from the Compatibility Check window in OSSScan.', 'err');
         fpInput.focus();
         return;
       }
