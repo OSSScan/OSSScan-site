@@ -149,15 +149,6 @@
       box-shadow: 0 0 0 3px rgba(74,179,244,.18);
     }
     .help { font-size: 13px; color: #556; line-height: 1.45; margin-top: 6px; }
-    .pw-wrap { position: relative; }
-    .pw-wrap input { padding-right: 44px; }
-    .pw-toggle {
-      position: absolute; top: 0; right: 0; height: 100%; width: 42px;
-      display: flex; align-items: center; justify-content: center;
-      background: none; border: none; padding: 0; cursor: pointer; color: #556;
-    }
-    .pw-toggle:hover { color: #1a6bbf; }
-    .pw-toggle:focus-visible { outline: 2px solid #1a6bbf; outline-offset: -2px; border-radius: 8px; }
 
     /* ── Actions ── */
     .actions { display: flex; gap: 10px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
@@ -354,19 +345,6 @@
             </div>
           </div>
 
-          <div class="row" id="betaCodeRow">
-            <div>
-              <label for="betaCode">Access code</label>
-              <div class="pw-wrap">
-                <input id="betaCode" name="betaCode" type="password" placeholder="Enter your access code" autocomplete="off" />
-                <button type="button" id="betaCodeToggle" class="pw-toggle" aria-label="Show access code" aria-pressed="false" title="Show code">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
-              </div>
-              <div class="help">Purchasing is not open to everyone yet. If you would like a license, email <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> and we will issue one for your machine.</div>
-            </div>
-          </div>
-
           <div class="actions">
             <button id="submitBtn" type="submit">Continue to payment</button>
             <button id="clearBtn" type="button" class="secondary">Clear</button>
@@ -418,7 +396,6 @@
     const fpInput       = document.getElementById('machineFingerprint');
     const emailInput    = document.getElementById('email');
     const tierInput     = document.getElementById('tier');
-    const betaCodeInput = document.getElementById('betaCode');
     const submitBtn     = document.getElementById('submitBtn');
     const clearBtn      = document.getElementById('clearBtn');
     const statusEl      = document.getElementById('status');
@@ -502,11 +479,10 @@
         const loc = res.headers.get('Location');
         if (loc) return { url: loc };
       }
-      if (res.status === 403) {
-        const err = new Error('That access code was not accepted. Please check it and try again.');
-        err.betaCodeError = true;
-        throw err;
-      }
+      // The only 403 from CreateCheckout is the purchase gate (BETA_CODE set
+      // server-side). Report it as a pause rather than as a code problem, since
+      // there is no longer a code for anyone to enter.
+      if (res.status === 403) throw new Error(PAUSED_MESSAGE);
       if (res.status === 429) throw new Error(formatRetryAfterMessage(res.headers.get('Retry-After')));
       if (!res.ok) throw new Error(`Server error (${res.status}). Please try again.`);
 
@@ -522,6 +498,8 @@
       return data;
     }
 
+    const PAUSED_MESSAGE = 'License issuing is temporarily paused. Please contact jim@ossscan.com.';
+
     // Prefill fingerprint from ?fp=...
     const fpFromQuery = getParam('fp');
     if (fpFromQuery) fpInput.value = fpFromQuery;
@@ -535,38 +513,18 @@
           if (!betaStatus.available) {
             document.getElementById('betaFullNotice').hidden = false;
             submitBtn.disabled = true;
-            setStatus('License issuing is temporarily paused. Please contact jim@ossscan.com.', 'err');
+            setStatus(PAUSED_MESSAGE, 'err');
           }
         }
       } catch { /* network error — allow through, server enforces the limit */ }
     })();
 
-    // Prefill the access code from sessionStorage so it is not retyped every visit.
-    const savedCode = sessionStorage.getItem('ossscan_beta_code');
-    if (savedCode) betaCodeInput.value = savedCode;
-
     clearBtn.addEventListener('click', () => {
       fpInput.value = '';
       emailInput.value = '';
-      betaCodeInput.value = '';
-      sessionStorage.removeItem('ossscan_beta_code');
       hideAllNotices();
       setStatus('');
       fpInput.focus();
-    });
-
-    // Show/hide toggle for the access code field.
-    const betaCodeToggle = document.getElementById('betaCodeToggle');
-    const eyeIcon    = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
-    const eyeOffIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
-    betaCodeToggle.addEventListener('click', () => {
-      const show = betaCodeInput.type === 'password';
-      betaCodeInput.type = show ? 'text' : 'password';
-      betaCodeToggle.innerHTML = show ? eyeOffIcon : eyeIcon;
-      betaCodeToggle.setAttribute('aria-pressed', String(show));
-      betaCodeToggle.setAttribute('aria-label', show ? 'Hide beta access code' : 'Show beta access code');
-      betaCodeToggle.setAttribute('title', show ? 'Hide code' : 'Show code');
-      betaCodeInput.focus();
     });
 
     form.addEventListener('submit', async (e) => {
@@ -577,7 +535,6 @@
       const machineFingerprint = (fpInput.value || '').trim();
       const email    = (emailInput.value || '').trim();
       const tier     = (tierInput.value || '').trim();
-      const betaCode = (betaCodeInput.value || '').trim();
 
       if (!validateFingerprint(machineFingerprint)) {
         setStatus('That does not look like a machine fingerprint. Copy it from the Compatibility Check window in OSSScan.', 'err');
@@ -587,11 +544,6 @@
       if (!validateEmail(email)) {
         setStatus('Enter a valid email address.', 'err');
         emailInput.focus();
-        return;
-      }
-      if (!betaCode) {
-        setStatus('Purchasing is not open to everyone yet. Email jim@ossscan.com and we will issue a license for your machine.', 'err');
-        betaCodeInput.focus();
         return;
       }
 
@@ -647,10 +599,7 @@
       setStatus('Redirecting to secure checkout…');
 
       try {
-        const result = await createCheckoutSession({ email, machineFingerprint, tier, betaCode, purchaseMode });
-
-        // Server accepted the code — safe to remember it for prefill on the next visit.
-        sessionStorage.setItem('ossscan_beta_code', betaCode);
+        const result = await createCheckoutSession({ email, machineFingerprint, tier, purchaseMode });
 
         if (result && result.simulated === true) {
           sessionStorage.setItem('ossscan_checkout_notice',
@@ -668,11 +617,6 @@
         location.assign(url);
       } catch (err) {
         setStatus(err && err.message ? err.message : 'Could not start checkout. Please try again.', 'err');
-        if (err && err.betaCodeError) {
-          sessionStorage.removeItem('ossscan_beta_code');
-          betaCodeInput.focus();
-          betaCodeInput.select();
-        }
         submitBtn.disabled = false;
       }
     });
