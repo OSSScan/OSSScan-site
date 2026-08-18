@@ -215,9 +215,8 @@
       line-height: 1.6;
     }
     .info-banner strong { color: #0b1a3d; }
-    /* Release-notes callout. Sits above the access gate so it is reachable
-       without an access code, and styled as an action rather than another
-       banner so it does not read as a third warning. */
+    /* Release-notes callout. Styled as an action rather than another banner
+       so it does not read as a second warning. */
     .release-callout {
       display: flex;
       align-items: center;
@@ -364,22 +363,6 @@
         <a href="mailto:info@ossscan.com">info@ossscan.com</a>.
       </div>
 
-      <div id="betaGate" hidden>
-        <div style="background:#fff;border:1px solid #d0d9e8;border-radius:12px;padding:24px;max-width:420px;box-shadow:0 2px 8px rgba(11,26,61,.07);">
-          <p style="font-weight:700;color:#0b1a3d;margin:0 0 6px;">Access code required</p>
-          <p style="font-size:13px;color:#556;margin:0 0 16px;">Downloads are not open to everyone yet. Enter your access code to continue. If you do not have one, email <a href="mailto:info@ossscan.com">info@ossscan.com</a> and we will sort you out.</p>
-          <label style="display:block;font-size:13px;font-weight:600;color:#0b1a3d;margin-bottom:6px;" for="betaCodeInput">Access code</label>
-          <input id="betaCodeInput" type="password" placeholder="Enter your access code"
-            style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid #c2cfe0;font-size:14px;outline:none;box-sizing:border-box;" />
-          <div style="display:flex;gap:10px;align-items:center;margin-top:12px;">
-            <button id="betaCodeSubmit"
-              style="padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#1056b8,#0d2460);color:#fff;font-weight:700;font-size:14px;cursor:pointer;">
-              Continue
-            </button>
-            <span id="betaCodeError" style="font-size:13px;color:#b00020;"></span>
-          </div>
-        </div>
-      </div>
 
       <div id="content" hidden>
 
@@ -529,38 +512,15 @@
     return card;
   }
 
-  function showBetaGate(message) {
-    const errorEl = document.getElementById('betaCodeError');
-    document.getElementById('loading').hidden = true;
-    document.getElementById('content').hidden = true;
-    document.getElementById('error').hidden = true;
-    document.getElementById('betaGate').hidden = false;
-    errorEl.textContent = message || '';
-  }
-
   (async () => {
     try {
-      const betaCode = (sessionStorage.getItem('ossscan_beta_code') || '').trim();
-      const resp = await fetch(
-        MANIFEST_URL,
-        betaCode ? { headers: { 'X-Beta-Code': betaCode } } : undefined
-      );
-      if (resp.status === 403) {
-        sessionStorage.removeItem('ossscan_beta_code');
-        showBetaGate(betaCode ? 'Saved access code was rejected. Please try again.' : '');
-        return;
-      }
+      const resp = await fetch(MANIFEST_URL);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const manifest = await resp.json();
       renderManifest(manifest);
 
     } catch (err) {
       console.error('GetDownloads fetch failed:', err);
-      if ((sessionStorage.getItem('ossscan_beta_code') || '').trim()) {
-        sessionStorage.removeItem('ossscan_beta_code');
-        showBetaGate('Access code could not be verified. Please try again.');
-        return;
-      }
       document.getElementById('loading').hidden = true;
       document.getElementById('error').hidden   = false;
     }
@@ -602,57 +562,6 @@
     document.getElementById('content').hidden = false;
   }
 
-  // ── Access gate submit ─────────────────────────────────────────────────────
-  document.getElementById('betaCodeSubmit').addEventListener('click', async () => {
-    const input    = document.getElementById('betaCodeInput');
-    const errorEl  = document.getElementById('betaCodeError');
-    const code     = (input.value || '').trim();
-    const btn      = document.getElementById('betaCodeSubmit');
-
-    errorEl.textContent = '';
-    if (!code) { errorEl.textContent = 'Please enter your access code.'; return; }
-
-    btn.disabled = true;
-    btn.textContent = 'Checking...';
-
-    try {
-      const resp = await fetch(MANIFEST_URL, {
-        headers: { 'X-Beta-Code': code }
-      });
-
-      if (resp.status === 403) {
-        errorEl.textContent = 'Incorrect code. Please try again.';
-        input.value = '';
-        input.focus();
-        btn.disabled = false;
-        btn.textContent = 'Continue';
-        return;
-      }
-
-      if (!resp.ok) {
-        errorEl.textContent = 'Unable to connect. Please try again later.';
-        btn.disabled = false;
-        btn.textContent = 'Continue';
-        return;
-      }
-
-      // Code accepted — store it and render the page.
-      sessionStorage.setItem('ossscan_beta_code', code);
-      document.getElementById('betaGate').hidden = true;
-      const manifest = await resp.json();
-      renderManifest(manifest);
-    } catch (err) {
-      console.error('GetDownloads access-code check failed:', err);
-      errorEl.textContent = 'Access code could not be verified. Please try again.';
-      input.focus();
-      btn.disabled = false;
-      btn.textContent = 'Continue';
-    }
-  });
-
-  document.getElementById('betaCodeInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') document.getElementById('betaCodeSubmit').click();
-  });
 
   </script>
 </body>
