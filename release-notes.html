@@ -148,8 +148,22 @@
 
     <div class="doc-section">
       <div class="rel-head">
-        <h2>Version 1.0.0</h2>
+        <h2>Version 1.1.0</h2>
         <span class="rel-badge current">Latest Release</span>
+      </div>
+      <p class="rel-summary">Four command-line additions that let an automated agent drive OSSScan end to end: check the machine is ready, keep the scanning tools current, open a finished export in the Review tab, and turn reviewed evaluations into the annotated reports without a dialog. They are the foundation for the OSSScan Agent, which scans your projects on a schedule and brings its findings and fixes to you as pull requests.</p>
+      <ul>
+        <li><strong><code>--headless --status --json</code>.</strong> Reports everything a scan depends on before any scan runs: build state, license and expiry, Terms acceptance, Syft, Grype, and ScanCode with installed and latest versions, the Grype database age, what kinds of scan are ready, and a list of problems with the command that fixes each.</li>
+        <li><strong><code>--headless --upgrade-components</code>.</strong> Installs or upgrades Syft, Grype, the Grype database, and ScanCode through the package manager that owns each (Homebrew on macOS, winget or scoop on Windows, pipx for ScanCode). A tool OSSScan did not install is never overwritten; you get the command to run instead.</li>
+        <li><strong><code>--ui --review &lt;folder&gt;</code>.</strong> Opens OSSScan straight onto the Review tab with an export folder loaded, so a link or a script can land you on the evaluations that need a decision.</li>
+        <li><strong><code>--headless --report --evaluations &lt;folder&gt; --out &lt;dir&gt;</code>.</strong> Writes the annotated CVE and License HTML reports from an export folder, including every acceptance, dispute, and completed review beside the results, with no save dialog.</li>
+        <li>Details for all four are in the app's <code>docs/CLI.md</code> and in <code>OSSScan --headless --help</code>.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <div class="rel-head">
+        <h2>Version 1.0.0</h2>
       </div>
       <p class="rel-summary">OSSScan leaves beta. Licenses are now bought directly, at introductory prices through the end of 2026, and the app drops its beta labelling.</p>
       <ul>
