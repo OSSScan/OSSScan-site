@@ -137,7 +137,7 @@
     <div class="doc-header">
       <h1>Privacy Policy</h1>
       <div class="doc-meta">
-        <strong>Effective date:</strong> May 10, 2026 &nbsp;&middot;&nbsp;
+        <strong>Effective date:</strong> September 16, 2026 &nbsp;&middot;&nbsp;
         <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
         <strong>Contact:</strong> <a href="mailto:info@ossscan.com">info@ossscan.com</a>
       </div>
@@ -147,7 +147,7 @@
       <h2>Summary</h2>
       <ul>
         <li><strong>No telemetry.</strong> OSSScan collects zero usage analytics, crash reports, or behavioral telemetry.</li>
-        <li><strong>Your source code never leaves your machine.</strong> OSSScan reads files locally; it does not upload source code, scan results, SBOM data, company information, or product details to any server.</li>
+        <li><strong>OSSScan never uploads your source code.</strong> License and CVE scans read and process your files on your machine; OSSScan does not upload source code, scan results, SBOM data, company information, or product details to any server. The only features that involve an AI coding agent (the Agent prompts you paste into your own coding agent, and the optional OSSScan Agent) work through a coding-agent tool you chose and logged in to; there, that tool, not OSSScan, reads your repository and sends what it reads to its model provider under your account. See "OSSScan Never Uploads Your Source Code" below.</li>
         <li><strong>No licensing server.</strong> License validation happens entirely on your device using a signed license file tied to your hardware. There is no backend licensing server and no call home on launch.</li>
         <li><strong>Designed for anonymous use.</strong> You can purchase and use OSSScan without associating it with your company or product. Any email address works for license delivery; it does not have to be a corporate address or linked to the codebase you are scanning.</li>
         <li><strong>Outbound network requests are minimal and purposeful.</strong> In normal operation, requests go only to well-known package registries and metadata services (deps.dev, ClearlyDefined, npm, PyPI, etc.) to look up license and vulnerability data for the packages you scan.</li>
@@ -209,13 +209,30 @@
       <p>All requests use HTTPS. There is no licensing server: license validation happens entirely on-device and involves no network request at all. OSSScan does not check its own application version over the network: the only mention of <strong>ossscan.com</strong> is a download link opened in your browser if you choose to update after seeing an in-app notice.</p>
     </div>
 
+    <div class="doc-section">
+      <h2>OSSScan Never Uploads Your Source Code; AI Coding Agents You Choose Are Yours</h2>
+      <p><strong>OSSScan's license and CVE scans process your source code on your machine.</strong> They read your files locally, build the SBOM and reports locally, and send nothing but package coordinates (above) to anyone. File contents never leave your device through a scan, in any scan mode, whether or not the Agent is installed.</p>
+      <p>Two OSSScan features involve an <strong>AI coding agent</strong>. In both, the work is done by a coding-agent tool that <strong>you</strong> have chosen, installed, and logged in to (for example Claude Code, GitHub Copilot CLI, or Cursor CLI). OSSScan does not control that tool, does not see what it sends, and does not receive anything from it or its model provider.</p>
+      <ul>
+        <li><strong>Agent prompts you paste.</strong> The Bulk License Review and Bulk Investigate exports, and the per-row robot button, write prompt files to your disk for your own coding agent. OSSScan stops there. When you open or paste those prompts in your coding agent, that tool reads your repository and sends what it reads, together with OSSScan's findings, to its model provider under your account and its terms.</li>
+        <li><strong>The optional OSSScan Agent (beta).</strong> If your build includes it and you install it from the Tools menu, it schedules OSSScan scans and hands the findings to your coding-agent tool to investigate and prepare fixes. That tool sends the instructions, OSSScan's findings, and the contents of the repository files it reads to its model provider, from your machine, under your account with the provider and its terms and privacy policy. Which files it reads is decided by the model during a run, so assume any file in an assigned repository may be read. The OSSScan Agent adds no channel of its own and holds no credentials of its own.</li>
+      </ul>
+      <p>For the OSSScan Agent specifically:</p>
+      <ul>
+        <li><strong>Source-code hosting.</strong> Commits, branches, and pull requests it prepares are pushed to your GitHub or GitLab repository through a machine account you create, using the GitHub CLI or GitLab CLI, and are visible to everyone who can see that repository.</li>
+        <li><strong>What the Vendor receives.</strong> Nothing. The Vendor has no access to your Agent installation, its data folder, its results folder, its reports, or anything your coding-agent tool sends or receives.</li>
+        <li><strong>What stays local.</strong> The Agent's settings, project list, approval decisions, incidents, logs, and results are files in the Agent data folder and results folder you chose at install, on your machine. Removing the Agent from the Tools menu leaves those folders for you to delete.</li>
+        <li><strong>Your control.</strong> If you do not want repository contents read by a coding agent and sent to its model provider, do not paste OSSScan's prompts into one and do not install the Agent. Scans alone never do this. Use these features only with repositories whose contents you are permitted to share with your provider under your own policies and agreements.</li>
+      </ul>
+    </div>
+
     <div class="doc-section" style="border-color:#1056b8; background:#f0f4fa;">
       <h2 style="color:#1056b8;">Designed for Anonymous Use</h2>
       <p>OSSScan is built to protect your privacy at every level. There is no backend server that knows what you are scanning, no licensing server that tracks your activity, and no telemetry of any kind. The following design choices are intentional:</p>
       <ul>
         <li><strong>No scan data ever leaves your machine.</strong> Your SBOM, license findings, CVE results, source-file references, and the names of the codebases you scan are never transmitted to the Vendor or any third party controlled by the Vendor.</li>
         <li><strong>No licensing server.</strong> OSSScan does not call home to validate your license. The license file is verified locally on your device using a cryptographic signature tied to your hardware fingerprint. Once delivered, the license works entirely offline.</li>
-        <li><strong>Any email address works for license delivery.</strong> You are not required to use a company email address. A personal address, an alias, or any address you control is sufficient. The email is used only to deliver your license file and for re-send support; it is not linked to the codebases you scan.</li>
+        <li><strong>Any email address works for license delivery.</strong> You are not required to use a company email address. A personal address, an alias, or any address you control is sufficient. The email is used only to deliver your license file, for re-send support, and for legal notices about your license under the Terms of Use; it is not linked to the codebases you scan.</li>
         <li><strong>Your company and product names are never collected.</strong> The Vendor has no knowledge of which products you scan, which repositories you analyze, or which organization you belong to.</li>
         <li><strong>Hardware fingerprint is pseudonymous and local.</strong> The fingerprint sent at purchase is a one-way hash of OS-provided hardware identifiers. It cannot be used to identify you or your machine beyond binding your license to it.</li>
       </ul>

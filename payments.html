@@ -282,21 +282,21 @@
 
       <div id="betaFullNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.55;">
         <strong>License issuing is temporarily paused.</strong> We have reached the current issuing limit.
-        Contact <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> and we will sort you out.
+        Contact <a href="mailto:info@ossscan.com">info@ossscan.com</a> and we will sort you out.
       </div>
 
       <!-- Shown when the fingerprint already has a pending undownloaded first purchase -->
       <div id="pendingFirstDownloadNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
         <strong>A license for this machine has already been purchased but not yet downloaded.</strong><br/>
         Please check your inbox and junk mail folder for the original download link.
-        If you cannot find the email, contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> with your machine fingerprint to have it resent.
+        If you cannot find the email, contact <a href="mailto:info@ossscan.com" style="color:#4a3800;">info@ossscan.com</a> with your machine fingerprint to have it resent.
       </div>
 
       <!-- Shown when a renewal purchase is waiting to be downloaded -->
       <div id="pendingRenewalNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
         <strong>An additional license for this machine has already been purchased and is waiting to be downloaded.</strong><br/>
         Current license expires: <strong id="pendingRenewalExpiry"></strong>.<br/>
-        Please check your inbox for the renewal download link, or contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> to have it resent.
+        Please check your inbox for the renewal download link, or contact <a href="mailto:info@ossscan.com" style="color:#4a3800;">info@ossscan.com</a> to have it resent.
       </div>
 
       <!-- Shown when purchase window has not opened yet -->
@@ -311,7 +311,7 @@
       <div id="checkoutInProgressNotice" hidden style="background:#fff3cd;border:1px solid #e6b800;border-left:4px solid #e6b800;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#4a3800;line-height:1.6;">
         <strong>A purchase is already in progress for this machine.</strong><br/>
         Please complete the existing checkout, or wait about 30 minutes for it to expire before trying again.
-        Contact <a href="mailto:jim@ossscan.com" style="color:#4a3800;">jim@ossscan.com</a> if you need help.
+        Contact <a href="mailto:info@ossscan.com" style="color:#4a3800;">info@ossscan.com</a> if you need help.
       </div>
 
       <div class="card">
@@ -330,7 +330,7 @@
             <div>
               <label for="email">Email</label>
               <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" />
-              <div class="help">Used for license delivery. Please double-check for typos. If your address is wrong we can still resend using your machine fingerprint, but it causes delays.</div>
+              <div class="help">Used for license delivery and for legal notices about your license, including any notice under the <a href="terms.html">Terms of Use</a>. Notices sent to this address count as received, so use one you monitor. Please double-check for typos. If your address is wrong we can still resend using your machine fingerprint, but it causes delays.</div>
             </div>
           </div>
 
@@ -352,7 +352,7 @@
           </div>
 
           <div class="small">
-            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license and bind it to your machine. Payment is handled entirely by Stripe; OSSScan never sees your card details.</div>
+            <div><strong>Privacy note:</strong> your email and fingerprint are used to deliver your license, bind it to your machine, and send you legal notices about it. Payment is handled entirely by Stripe; OSSScan never sees your card details.</div>
             <div>For details, see the <a href="privacy.html">Privacy Policy</a>.</div>
           </div>
         </form>
@@ -364,7 +364,7 @@
   <footer class="site-footer">
     <p>
       &copy; 2026 OSSScan &nbsp;&middot;&nbsp;
-      <a href="mailto:jim@ossscan.com">jim@ossscan.com</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:info@ossscan.com">info@ossscan.com</a> &nbsp;&middot;&nbsp;
       <a href="https://ossscan.com">ossscan.com</a>
     </p>
     <p style="margin-top:6px;">
@@ -498,7 +498,7 @@
       return data;
     }
 
-    const PAUSED_MESSAGE = 'License issuing is temporarily paused. Please contact jim@ossscan.com.';
+    const PAUSED_MESSAGE = 'License issuing is temporarily paused. Please contact info@ossscan.com.';
 
     // Prefill fingerprint from ?fp=...
     const fpFromQuery = getParam('fp');

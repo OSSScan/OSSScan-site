@@ -125,7 +125,7 @@
     <div class="doc-header">
       <h1>Terms of Use</h1>
       <div class="doc-meta">
-        <strong>Effective date:</strong> May 4, 2026 &nbsp;&middot;&nbsp;
+        <strong>Effective date:</strong> September 16, 2026 &nbsp;&middot;&nbsp;
         <strong>Vendor:</strong> BigBrainCorp LLC &nbsp;&middot;&nbsp;
         <strong>Contact:</strong> <a href="mailto:info@ossscan.com">info@ossscan.com</a>
       </div>
@@ -135,12 +135,13 @@
       <h2>Plain-English Summary</h2>
       <p>This summary is provided for convenience only and is not part of the agreement. OSSScan is an advisory tool that helps identify open-source licensing and vulnerability risks in code and dependency inventories.</p>
       <p>OSSScan is not a substitute for legal, security, or compliance review. BigBrainCorp LLC does not guarantee that OSSScan will detect every copyleft obligation, vulnerability, or other issue, and is not liable for consequences arising from your use of or reliance on the Software's output.</p>
+      <p>If your build includes the optional <strong>OSSScan Agent</strong> and you install it, you are choosing to run an autonomous tool on your own machine, under your own accounts, that changes files in your repositories and opens pull requests for you to review. You operate it, you set its permissions, and you review its work before anything is merged. The Vendor does not run it, cannot see it, and is not liable for what it does in your environment. Section 12 has the details.</p>
       <p>By installing, launching, or otherwise using OSSScan, you agree to these Terms of Use. If you do not agree, do not install or use the Software, and delete any copies in your possession.</p>
     </div>
 
     <div class="doc-section">
       <h2>1. License Grant</h2>
-      <p>Subject to your continuous compliance with these Terms and your payment of any applicable fees, the Vendor grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to install and run the Software on machines you own or control, solely for your internal business purposes and only for the duration permitted by your active license file, <code>license.json</code>, issued by the Vendor.</p>
+      <p>Subject to your continuous compliance with these Terms and your payment of any applicable fees, the Vendor grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to install and run the Software on machines you own or control, solely for your internal business purposes and only for the duration permitted by your active license file, <code>license.json</code>, issued by the Vendor. Where your build includes the OSSScan Agent, the same license covers it.</p>
       <p>This license terminates automatically upon expiry of your license file, upon any breach of these Terms, or upon revocation by the Vendor.</p>
     </div>
 
@@ -155,12 +156,13 @@
         <li>Circumvent, disable, or otherwise interfere with any licensing, authentication, expiry, or anti-tampering mechanism of the Software, including by tampering with the license file, the embedded public key, or the system clock.</li>
         <li>Use the Software to develop a competing product, or to benchmark the Software for the purpose of public comparison, without the Vendor's prior written consent.</li>
         <li>Use the Software in any way that violates applicable law or third-party rights.</li>
+        <li>Install, configure, or run the OSSScan Agent (Section 12) in a way that disables, weakens, or circumvents its safeguards (including its approval policy, its tool allowlist, its push guard, and its machine-account identity), grant it or the accounts it acts through more permission than Section 12 requires, or point it at repositories, systems, or accounts you are not authorized to modify.</li>
       </ul>
     </div>
 
     <div class="doc-section">
       <h2>3. Open-Source Components</h2>
-      <p>The Software bundles or depends on third-party open-source components, including but not limited to <strong>Syft</strong> (Apache-2.0), <strong>Grype</strong> (Apache-2.0), and <strong>Electron</strong> (MIT). Those components are licensed under their own terms; nothing in these Terms modifies your rights or obligations with respect to those components. Applicable notices are described in the <code>THIRD_PARTY_NOTICES.md</code> file shipped with the Software, and the full license texts for redistributed components are shipped with the Software in the files referenced there.</p>
+      <p>The Software bundles or depends on third-party open-source components, including but not limited to <strong>Syft</strong> (Apache-2.0), <strong>Grype</strong> (Apache-2.0), and <strong>Electron</strong> (MIT). Those components are licensed under their own terms; nothing in these Terms modifies your rights or obligations with respect to those components. Applicable notices are described in the <code>THIRD_PARTY_NOTICES.md</code> file shipped with the Software, and the full license texts for redistributed components are shipped with the Software in the files referenced there. A build that includes the OSSScan Agent also ships the Agent's own third-party notices, available from the Help menu as "OSSScan Agent Third-Party Notices".</p>
     </div>
 
     <div class="doc-section">
@@ -173,43 +175,53 @@
         <li>The Software may fail to detect dependencies, misidentify licenses, miss obligations, and produce false positives or false negatives.</li>
         <li>Deep-enrichment features may introduce additional inaccuracies, and any license assertion you accept or enter through the Software is your responsibility.</li>
         <li>You are solely responsible for your own legal and license compliance and for independently verifying the Software's output before relying on it for any decision.</li>
+        <li>Where your build includes the OSSScan Agent, every verdict, review flag, proposal, report, code change, and pull request the Agent produces is likewise the output of an automated system driven by a machine-learning model and is subject to this Section 4. A verdict that a vulnerability is "not exploitable" or that a finding needs no action is not a security determination and does not relieve you of your own review.</li>
       </ul>
     </div>
 
     <div class="doc-section">
       <h2>5. No Warranty</h2>
       <p><strong>The Software is provided "AS IS" and "AS AVAILABLE," with all faults and without warranty of any kind.</strong> To the maximum extent permitted by applicable law, the Vendor disclaims all warranties, whether express, implied, statutory, or otherwise, including without limitation the implied warranties of merchantability, fitness for a particular purpose, title, accuracy, completeness, quiet enjoyment, and non-infringement, and any warranties arising from a course of dealing, usage, or trade practice.</p>
-      <p>Without limiting the foregoing, the Vendor does not warrant that the Software will meet your requirements, operate uninterrupted or error-free, be free of harmful components, have all defects corrected, produce accurate or reliable output, detect every applicable open-source or security issue, or retain access to any third-party service the Software depends on.</p>
+      <p>Without limiting the foregoing, the Vendor does not warrant that the Software will meet your requirements, operate uninterrupted or error-free, be free of harmful components, have all defects corrected, produce accurate or reliable output, detect every applicable open-source or security issue, or retain access to any third-party service the Software depends on, or that the OSSScan Agent, or any Coding-Agent Tool or machine-learning model it relies on, will act only within the scope you intend, follow every instruction, or be prevented by any safeguard from taking an unintended action. A "<strong>Coding-Agent Tool</strong>" is a third-party AI coding tool that you install and log in to, such as Claude Code, GitHub Copilot CLI, or Cursor CLI.</p>
+      <p><strong>Outdated versions.</strong> The Vendor issues updates, security patches, and bug fixes as new downloadable versions of the Software, published at ossscan.com. The Software does not check for new versions over the network. Instead, each build carries a retirement date: the Software warns you inside the application as that date approaches and refuses to start once it has passed, directing you to the download page. Between those points, checking for a newer version is your responsibility. (The Software does tell you when newer versions of the components it uses, such as Syft, Grype, ScanCode, or the Agent, are available.) Running an outdated version of the Software or of the Agent increases operational, security, and financial risk. To the maximum extent permitted by applicable law, the Vendor disclaims all liability for damages, data loss, code corruption, or unexpected Agent behavior arising from your failure to install the latest available version.</p>
     </div>
 
     <div class="doc-section">
       <h2>6. Limitation of Liability</h2>
       <p><strong>To the maximum extent permitted by applicable law, in no event shall the Vendor be liable to you or any third party for any indirect, incidental, special, consequential, exemplary, or punitive damages</strong>, including damages for lost profits, lost revenue, lost data, lost goodwill, business interruption, procurement of substitute goods or services, regulatory fines, settlement payments, royalties, license-compliance liabilities, litigation costs, or any other damages, however caused and under any theory of liability, even if the Vendor has been advised of the possibility of such damages.</p>
+      <p><strong>Without limiting the foregoing, the Vendor shall not be liable for any loss or damage arising from the OSSScan Agent or from any Coding-Agent Tool or machine-learning model it drives</strong>, including: changes made to, or the loss of, files, branches, commits, or uncommitted work in any repository or checkout the Agent was given access to; commits, pushes, or pull requests made through accounts you control, whether or not you intended them; any merge, build, test, deployment, or continuous-integration run that results from Agent output, and the cost of those runs; usage charges billed to you by the provider of your Coding-Agent Tool or model; incorrect, incomplete, insecure, or harmful code changes, dependency upgrades, license remediations, attribution changes, or verdicts; actions taken through, or exposure of, credentials, tokens, or logins present on the machine where the Agent runs; and any act or omission of the provider of a Coding-Agent Tool, model, or source-code hosting service.</p>
       <p><strong>The Vendor's aggregate liability</strong> arising out of or relating to these Terms or the Software, whether in contract, tort, or otherwise, shall not exceed the lesser of the total fees actually paid by you to the Vendor for the Software in the twelve months immediately preceding the event giving rise to the claim, or US $100.</p>
       <p>These limitations apply notwithstanding the failure of any limited remedy of its essential purpose and to the maximum extent permitted by law.</p>
     </div>
 
     <div class="doc-section">
       <h2>7. Indemnification</h2>
-      <p>You shall defend, indemnify, and hold harmless the Vendor and the Vendor's affiliates, officers, employees, and agents from and against any and all claims, demands, actions, liabilities, damages, losses, costs, and expenses, including reasonable attorneys' fees, arising out of or related to your use of the Software, your reliance on any Software output, your failure to comply with applicable open-source license obligations, your breach of these Terms, or your violation of any law or third-party right.</p>
+      <p>You shall defend, indemnify, and hold harmless the Vendor and the Vendor's members, managers, affiliates, officers, employees, and agents from and against any and all claims, demands, actions, liabilities, damages, losses, costs, and expenses, including reasonable attorneys' fees, arising out of or related to: your use of the Software; your reliance on any Software output; your failure to comply with applicable open-source license obligations; your breach of these Terms; your violation of any law or third-party right; your installation, configuration, or operation of the OSSScan Agent, including the permissions you grant it and the accounts it acts through; any change, pull request, merge, or deployment made by or resulting from the Agent's output, including claims by your employer, clients, collaborators, or the owners of any repository the Agent touched; any claim that the Agent's use of your Coding-Agent Tool, model provider, or source-code hosting service breached your agreement with that provider; or any unauthorized access to systems, repositories, or data through the machine or the accounts the Agent runs under.</p>
     </div>
 
     <div class="doc-section">
       <h2>8. License File and Expiry</h2>
-      <p>The Software requires a valid, unexpired license file, <code>license.json</code>, signed by the Vendor. You acknowledge that license files have an expiry date, features remain available only while a valid license file is installed and unexpired, and tampering with the license file, the embedded public key, the license-state file, or the system clock is a material breach of these Terms and may also violate applicable computer-misuse laws.</p>
+      <p>The Software requires a valid, unexpired license file, <code>license.json</code>, signed by the Vendor, which the Software validates entirely on your machine; there is no licensing server. You acknowledge and agree that:</p>
+      <ul>
+        <li>License files carry an expiry date and the Software will refuse to operate after that date.</li>
+        <li>The Software's features are available only while a valid, unexpired license file is installed.</li>
+        <li>A license file is bound to the machine fingerprint it was issued for. Copying, sharing, or deploying a license file to any other machine, user, team, or environment, or attempting to defeat the fingerprint binding, is a material breach of these Terms.</li>
+        <li>Tampering with the license file, the embedded public key, the license-state file, or the system clock to extend usage or escalate privileges is a material breach of these Terms, may also violate applicable computer-misuse laws, and voids any warranty or remedy that might otherwise apply. The Vendor is not liable for any software failure, data corruption, inaccurate or missing scan output, false positive, false negative, or unintended Agent behavior resulting from modification of the system clock, the license file, or the license-state file.</li>
+      </ul>
     </div>
 
     <div class="doc-section">
       <h2>9. Network Features and Data Handling</h2>
       <p>The Software's Deep and Audit scan modes make outbound network requests to third-party services, including, depending on the ecosystem, <code>proxy.golang.org</code>, <code>registry.npmjs.org</code>, <code>pypi.org</code>, and <code>api.deps.dev</code>. These modes transmit only package coordinates, consisting of name, version, and ecosystem identifier; the Software does not transmit your source code or repository contents.</p>
+      <p><strong>Scans process your code on your machine; AI coding agents are yours.</strong> OSSScan's license and CVE scans read and process your source code on your machine and upload none of it. OSSScan involves AI in two entirely separate ways: (1) <strong>Agent Prompts</strong>, static prompt files OSSScan writes to your disk for you to copy or paste into your own coding agent by hand; and (2) the optional, autonomous <strong>OSSScan Agent</strong>, a separate component described in Section 12 that drives a Coding-Agent Tool on a schedule. In both, the work is done by a third-party Coding-Agent Tool that you have chosen, installed, and logged in to (for example Claude Code). That tool reads your repository and sends what it reads, together with OSSScan's findings, to its model provider, from your machine, under your account with the provider and subject to the provider's terms and privacy policy, not the Vendor's. OSSScan does not control that tool and the Vendor receives none of what it sends. If you do not want repository contents sent to a model provider, do not paste OSSScan's prompts into a coding agent and do not install the Agent; scans alone never do this. References to "the Agent" in these Terms mean the OSSScan Agent of Section 12, never Agent Prompts.</p>
       <p>The Vendor is not responsible for the policies, availability, or accuracy of those third-party services, and your use of those features is subject to their respective terms. The Vendor does not collect telemetry from the Software. For additional details, see the Privacy Policy shipped with the Software.</p>
       <p>If you purchase a paid license, support, if any, is provided as described in the Support &amp; Maintenance Policy shipped with the Software. Vulnerability scanning also relies on Grype's vulnerability database, which is downloaded and refreshed from third-party infrastructure operated for the Grype ecosystem.</p>
     </div>
 
     <div class="doc-section">
       <h2>10. Term and Termination</h2>
-      <p>These Terms remain in effect until terminated. They terminate automatically without notice upon expiry of your license file or upon your breach of any provision. The Vendor may also terminate these Terms at any time by revoking your license.</p>
-      <p>Upon termination, you shall cease all use of the Software and delete all copies in your possession or control. Sections 2, 4, 5, 6, 7, 11, 12, and any other provisions that by their nature should survive termination, will survive.</p>
+      <p>These Terms remain in effect until terminated. They terminate automatically without notice upon expiry of your license file or upon your breach of any provision; no notice is required and your continued use after that point is unlicensed. Separately, the Vendor may also terminate these Terms at any time at its sole discretion by revoking your license. Because the license is validated on your machine and the Vendor has no remote means to disable it, such discretionary revocation takes effect immediately upon transmission of electronic notice: when the Vendor sends notice of revocation to the email address you provided at checkout (or the address to which your license file was delivered), that notice is effective whether or not you read it, and you shall immediately cease all use of the Software, uninstall it, and permanently delete all copies of the Software and of any license file in your possession or control.</p>
+      <p>Upon any other termination, you shall likewise cease all use of the Software and delete all copies in your possession or control. Sections 2, 4, 5, 6, 7, 11, 12, 13, and any other provisions that by their nature should survive termination, will survive.</p>
     </div>
 
     <div class="doc-section">
@@ -218,13 +230,74 @@
     </div>
 
     <div class="doc-section">
-      <h2>12. Miscellaneous</h2>
+      <h2>12. OSSScan Agent (Beta)</h2>
+      <p>The Software may include <strong>OSSScan Agent</strong> (the "Agent"), an optional component that you may choose to install from the Tools menu. This Section applies if you install or use it. It adds to, and does not replace, the rest of these Terms; Sections 4 through 7 apply in full to the Agent and to everything it produces.</p>
+
+      <h3>12.1 What the Agent is</h3>
+      <p>The Agent runs OSSScan scans of the repositories you assign to it on a schedule you set, has a Coding-Agent Tool of your choice (defined in Section 5) investigate the findings, and, subject to the approval policy you configure, changes dependency manifests and other files in those repositories, runs your test command, and opens pull requests (or, on GitLab, merge requests) for you to review. Every reference to a pull request in these Terms includes a GitLab merge request. It is an autonomous system: during a run a machine-learning model, not the Vendor and not code the Vendor wrote, decides which findings to investigate, which of its permitted commands to run, whether a change is warranted, and how to write it.</p>
+      <p><strong>Not active by default.</strong> Nothing in this Section 12 runs unless you make it run. A build that includes the Agent ships it inactive; it does nothing, and can interact with no repository, account, or model provider, until you install it from the Tools menu, choose its folders, add projects, and set a schedule or start a run in its Admin View. Removing it from the Tools menu returns the Software to that state.</p>
+
+      <h3>12.2 You are the operator</h3>
+      <p>The Agent runs entirely on your machine, under accounts you control, against repositories you choose, on a schedule you set, with a policy you configure. The Vendor does not host, operate, monitor, or have access to your installation, cannot see what it does, and cannot stop it. Everything the Agent does is done by you, through software you chose to run, and is attributed to you (or to the machine account you created for it) and not to the Vendor. Nothing in these Terms makes the Vendor your agent, contractor, or service provider with respect to the repositories or accounts the Agent touches, and the Vendor is not a party to any agreement between you and your Coding-Agent Tool provider, model provider, or source-code hosting service.</p>
+      <p>The Vendor claims no intellectual property right, ownership, or copyright in any code change, pull request, commit, report, or file generated or altered by the Agent or by a Coding-Agent Tool acting on Agent Prompts, and makes no representation that such output is original or free of third-party rights. Your rights in that output, and your responsibility for it, are governed by your agreement with your Coding-Agent Tool and model provider and by applicable law.</p>
+
+      <h3>12.3 Third-party Coding-Agent Tool and model provider</h3>
+      <p>The Agent embeds no machine-learning model and no provider software development kit. All AI work is performed by the Coding-Agent Tool and its model provider, which are third parties with their own terms, acceptable-use policies, pricing, availability, and data-handling practices. You are responsible for holding a valid account or subscription with them, for complying with their terms, and for any charges they bill you for the Agent's usage. The Vendor is not affiliated with, and the Agent is not endorsed by, Anthropic, GitHub, Cursor, GitLab, or any other provider, and the Vendor makes no representation about the behavior, accuracy, or safety of any third-party tool or model.</p>
+
+      <h3>12.4 Accounts and credentials</h3>
+      <p>The Agent reads no API key, token, or password from its configuration, the environment, or any URL, and holds no credentials of the Vendor's. It acts only through logins you set up on your machine:</p>
+      <ul>
+        <li>the Coding-Agent Tool's own login, which is yours;</li>
+        <li>the GitHub or GitLab command-line login of a machine account (such as <code>ossscan-bot</code>) that you create and log in once, which the GitHub CLI stores in a folder inside the Agent data folder on your machine; and</li>
+        <li>the operating-system user account under which the Agent and its scheduled runs execute.</li>
+      </ul>
+      <p>You are solely responsible for those accounts, for the scope of the permissions and tokens you grant them, for keeping the machine that holds them secure, and for revoking them when you remove the Agent. Any action the Agent, the Coding-Agent Tool, or the model performs is performed with the permissions of those accounts.</p>
+
+      <h3>12.5 Autonomous behavior and its limits</h3>
+      <p>You acknowledge that:</p>
+      <ul>
+        <li>Machine-learning models can misread instructions, pursue an instruction in an unintended way, take an action outside the scope you meant, stop short of what you asked, invent facts ("hallucinate"), including package names, versions, advisories, or license terms that do not exist, so that a proposed dependency change could pull in a non-existent, typosquatted, or malicious package, or produce code, dependency changes, verdicts, and explanations that are wrong, incomplete, insecure, or harmful, and this can happen without any defect in the Software.</li>
+        <li>The Agent is designed with safeguards described in its documentation, including an allowlist of the tools the model may use with everything else denied without prompting, an approval policy the model cannot alter, a least-privilege machine identity separate from your own login, and a push guard that refuses any push to your default branch, records an incident, and pauses that project's scheduled runs until you acknowledge it. These safeguards reduce risk, their strength varies by Coding-Agent Tool (the Agent's documentation states which tools are verified), no software control is infallible, any of them can fail because of a defect in the Software, a change in a Coding-Agent Tool, or the configuration of your environment, and the Vendor does not warrant that any of them will prevent every unintended action. Server-side branch protection and your own review before merging remain your obligations under Section 12.6 whether or not any safeguard works.</li>
+        <li>Within the tools it is allowed, the Agent runs commands in your project checkouts, including version-control and package-manager commands, and can create, change, delete, commit, and push files and branches there. Uncommitted or unpushed work in a checkout you assign to the Agent can be lost.</li>
+        <li>A pull request the Agent opens can trigger continuous-integration, build, test, deployment, or notification workflows that you or your source-code host have configured, and their effects and costs are yours.</li>
+        <li>The Agent is designed never to merge and has no setting that lets it merge, but merging is a server-side action governed by your source-code host. Branch protection on your default branch that requires a person's review is your responsibility to set up where your plan allows it, and where it is not available your review before merging is the final barrier.</li>
+        <li>The Agent's output, including every verdict, review flag, proposal, code change, report, and pull request, is a proposal for your review and is subject to Section 4.</li>
+      </ul>
+
+      <h3>12.6 Your obligations when you deploy the Agent</h3>
+      <p>You shall:</p>
+      <ul>
+        <li>run the Agent only against repositories, systems, and accounts you own or are authorized to modify in this way, and only on machines you own or control;</li>
+        <li>give it a dedicated machine account with the least permission its job needs (write access to repository contents and pull requests, and no administration, merge, or protection-bypass rights), never your own login or an administrator's;</li>
+        <li>enable branch protection on your default branch requiring a person's review wherever your source-code host offers it;</li>
+        <li>review, test, and approve every pull request and proposal the Agent produces before merging or deploying it, verify that every package, version, and advisory a proposed change relies on actually exists and is legitimate, and treat every verdict as unverified until you have checked it;</li>
+        <li>assign the Agent clean, dedicated checkouts rather than working copies that hold uncommitted work, and keep backups of anything you cannot afford to lose;</li>
+        <li>keep the machine that runs the Agent secure and up to date, keep the Coding-Agent Tool current, and protect the logins described in Section 12.4;</li>
+        <li>monitor the Admin View, act on every incident and paused project, and stop or remove the Agent if it behaves in a way you did not intend;</li>
+        <li>not disable, weaken, or circumvent any of the safeguards described in Section 12.5, not extend the Agent's tool allowlist beyond what your project's build and test commands require, and not run the Coding-Agent Tool with its permission checks bypassed; and</li>
+        <li>comply with the terms of your Coding-Agent Tool provider, model provider, and source-code host, and with the policies of any employer, client, or project whose repositories you assign to the Agent.</li>
+      </ul>
+      <p>Failure to meet these obligations is a breach of these Terms, and any loss that meeting them would have prevented is your responsibility.</p>
+
+      <h3>12.7 Beta status</h3>
+      <p>The Agent is provided as a beta feature. It may change, break, or be withdrawn in any release without notice, and the Vendor may decline to include it in any build. The beta provisions of the Support &amp; Maintenance Policy apply to it. No refund is available on account of the Agent's inclusion, absence, behavior, or withdrawal.</p>
+
+      <h3>12.8 Documentation</h3>
+      <p>The Agent's behavior, safeguards, files, and configuration are described in the documentation shipped with it and in its Admin View. You are responsible for reading that documentation before installing the Agent and after each update, and for configuring the Agent in accordance with it.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>13. Miscellaneous</h2>
       <ul>
         <li><strong>Entire agreement.</strong> These Terms constitute the entire agreement between you and the Vendor regarding the Software and supersede any prior or contemporaneous agreements on the subject.</li>
+        <li><strong>Incorporated policies.</strong> The Privacy Policy, Support &amp; Maintenance Policy, and Refund Policy shipped with the Software are incorporated into these Terms by reference.</li>
+        <li><strong>No third-party beneficiaries.</strong> These Terms are for the benefit of you and the Vendor only. No other person, including any collaborator, repository owner, or provider whose systems the Software or the Agent interacts with, has any right under them.</li>
         <li><strong>Severability.</strong> If any provision of these Terms is held unenforceable, the remaining provisions remain in full force.</li>
         <li><strong>No waiver.</strong> No failure or delay by the Vendor in exercising any right shall operate as a waiver.</li>
         <li><strong>Assignment.</strong> You may not assign or transfer these Terms or any rights hereunder without the Vendor's prior written consent. The Vendor may assign these Terms freely.</li>
         <li><strong>Updates.</strong> The Vendor may revise these Terms from time to time. Continued use of the Software after revised Terms are made available constitutes your acceptance of the revised Terms.</li>
+        <li><strong>Class action and jury trial waiver.</strong> TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, ALL CLAIMS ARISING OUT OF OR RELATING TO THESE TERMS OR THE SOFTWARE MUST BE BROUGHT IN THE PARTIES' INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS, COLLECTIVE, OR REPRESENTATIVE PROCEEDING. EACH PARTY KNOWINGLY AND VOLUNTARILY WAIVES ITS RIGHT TO A JURY TRIAL FOR ANY DISPUTE ARISING OUT OF OR RELATING TO THESE TERMS OR THE SOFTWARE.</li>
+        <li><strong>Notices.</strong> The Vendor gives notice under these Terms, including notice of revocation, by email to the address you provided at checkout or the most recent address you have given the Vendor in writing, and such notice is effective when sent, whether or not you read it. You are responsible for keeping that address current and monitored. You give notice to the Vendor by email to <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</li>
         <li><strong>Refunds.</strong> Refunds, if any, are governed by the OSSScan Refund Policy shipped with the Software and available from the Vendor upon request.</li>
         <li><strong>Contact.</strong> Questions about these Terms should be sent to <a href="mailto:info@ossscan.com">info@ossscan.com</a>.</li>
       </ul>
